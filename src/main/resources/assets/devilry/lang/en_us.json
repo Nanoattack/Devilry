@@ -1,0 +1,27 @@
+{
+  "item.devilry.tin_ingot": "Tin Ingot",
+  "item.devilry.tin_nugget": "Tin Nugget",
+  "block.devilry.tin_ore": "Tin Ore",
+  "block.devilry.tin_block": "Block of Tin",
+  "item.devilry.copper_ingot": "Copper Ingot",
+  "item.devilry.copper_nugget": "Copper Nugget",
+  "block.devilry.copper_ore": "Copper Ore",
+  "block.devilry.copper_block": "Block of Copper",
+  "item.devilry.bronze_ingot": "Bronze Alloy",
+  "item.devilry.bronze_nugget": "Bronze Nugget",
+  "item.devilry.bronze_dust": "Bronze Blend",
+  "block.devilry.bronze_block": "Block of Bronze",
+  "item.devilry.eldritch_idol": "Eldritch Idol",
+  "item.devilry.eldritch_idol_dormant": "Dormant Eldritch Idol",
+  "block.devilry.alchemy_station": "Alchemy Station",
+
+  "item.devilry.devils_snare_crop": "Devil's Snare",
+  "block.devilry.devils_snare_crop": "Devil's Snare Seeds",
+
+  "item.devilry.corinthian_bronze_helmet": "Corinthian Bronze Helmet",
+  "item.devilry.corinthian_bronze_chestplate": "Corinthian Bronze Chestplate",
+  "item.devilry.corinthian_bronze_leggings": "Corinthian Bronze Leggings",
+  "item.devilry.corinthian_bronze_boots": "Corinthian Bronze Boots",
+
+  "itemGroup.devilrytab": "Devilry"
+}

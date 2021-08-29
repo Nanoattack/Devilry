@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "devilry:copper_block"
+    }
+  ],
+  "result": {
+    "item": "devilry:copper_ingot",
+    "count": 9
+  }
+}

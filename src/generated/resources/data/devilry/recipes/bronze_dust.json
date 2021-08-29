@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "CCC",
+    "CTC"
+  ],
+  "key": {
+    "C": {
+      "item": "devilry:copper_nugget"
+    },
+    "T": {
+      "item": "devilry:tin_nugget"
+    }
+  },
+  "result": {
+    "item": "devilry:bronze_dust"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "devilry:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "devilry:copper_block"
+  }
+}

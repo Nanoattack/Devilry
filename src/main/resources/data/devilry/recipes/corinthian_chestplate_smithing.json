@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:golden_chestplate"
+  },
+  "addition": {
+    "item": "devilry:bronze_ingot"
+  },
+  "result": {
+    "item": "devilry:corinthian_bronze_chestplate"
+  }
+}

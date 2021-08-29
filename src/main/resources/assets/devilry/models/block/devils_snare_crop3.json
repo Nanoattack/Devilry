@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "devilry:block/devils_snare_crop_stage3"
+      }
+}

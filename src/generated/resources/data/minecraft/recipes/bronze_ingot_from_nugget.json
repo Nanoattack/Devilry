@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "devilry:bronze_nugget"
+    }
+  },
+  "result": {
+    "item": "devilry:bronze_ingot"
+  }
+}
