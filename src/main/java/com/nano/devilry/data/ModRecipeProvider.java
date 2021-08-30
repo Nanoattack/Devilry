@@ -1,6 +1,8 @@
 package com.nano.devilry.data;
 
 import net.minecraft.data.*;
+import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import com.nano.devilry.ModMain;
@@ -16,6 +18,25 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+
+        // GENERAL RECIPES
+
+        ShapedRecipeBuilder.shaped(ModItems.ALCHEMICAL_BLEND.get())
+                .define('R', Items.REDSTONE)
+                .define('G', Items.GLOWSTONE_DUST)
+                .define('g', Items.GUNPOWDER)
+                .define('S', Items.SUGAR)
+                .define('B', ModItems.BONE_ASH.get())
+                .define('b', Items.BLAZE_POWDER)
+                .pattern("BSB")
+                .pattern("gRG")
+                .pattern("bBb")
+                .unlockedBy("has_item", has(ModItems.BONE_ASH.get()))
+                .save(consumer);
+
+        CookingRecipeBuilder.smelting(Ingredient.of(Items.BONE_MEAL), ModItems.BONE_ASH.get(), 0.7f, 200)
+                .unlockedBy("has_item", has(Items.BONE_MEAL))
+                .save(consumer, modId("bone_ash_smelting"));
 
          // TIN RELATED RECIPES
 
@@ -48,6 +69,7 @@ public class ModRecipeProvider extends RecipeProvider {
         CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.TIN_ORE.get()), ModItems.TIN_INGOT.get(), 0.7f, 200)
                 .unlockedBy("has_item", has(ModBlocks.TIN_ORE.get()))
                 .save(consumer, modId("tin_ingot_smelting"));
+
         CookingRecipeBuilder.blasting(Ingredient.of(ModBlocks.TIN_ORE.get()), ModItems.TIN_INGOT.get(), 0.7f, 100)
                 .unlockedBy("has_item", has(ModBlocks.TIN_ORE.get()))
                 .save(consumer, modId("tin_ingot_blasting"));

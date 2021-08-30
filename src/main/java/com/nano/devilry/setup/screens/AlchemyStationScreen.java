@@ -32,7 +32,7 @@ public class AlchemyStationScreen extends ContainerScreen<AlchemyStationContaine
     @Override
     protected void renderLabels(MatrixStack matrixStack, int x, int y)
     {
-        drawString(matrixStack, Minecraft.getInstance().font, "Dark Energy: 0",
+        drawString(matrixStack, Minecraft.getInstance().font, "Dark Energy: " + menu.getEnergy(),
                         28, 10, 0xffffff );
     }
 
@@ -45,5 +45,6 @@ public class AlchemyStationScreen extends ContainerScreen<AlchemyStationContaine
         int j = this.getGuiTop();
         this.blit(matrixStack, i, j, 0 , 0,this.getXSize(), this.getYSize());
 
+        this.blit(matrixStack, i + 13, j + 9, 176, 0, 11, 64 - menu.getEnergy());
     }
 }

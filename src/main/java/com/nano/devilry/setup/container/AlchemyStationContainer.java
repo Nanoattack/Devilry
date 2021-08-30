@@ -1,6 +1,8 @@
 package com.nano.devilry.setup.container;
 
 import com.nano.devilry.setup.ModBlocks;
+import com.nano.devilry.setup.tileentity.AlchemyStationTile;
+import com.nano.devilry.setup.tileentity.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -9,8 +11,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -42,7 +49,44 @@ public class AlchemyStationContainer extends Container
         }
 
             layoutPlayerinventorySlots(8, 84);
+            trackPower();
     }
+    private void trackPower() {
+        addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return getEnergy() & 0xffff;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
+                    int energyStored = h.getEnergyStored() & 0xffff0000;
+                    ((CustomEnergyStorage)h).setEnergy(energyStored + (value & 0xffff));
+                });
+            }
+        });
+
+        addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return (getEnergy() >> 16) & 0xffff;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
+                    int energyStored = h.getEnergyStored() & 0x0000ffff;
+                    ((CustomEnergyStorage)h).setEnergy(energyStored | (value << 16));
+                });
+            }
+        });
+    }
+
+    public int getEnergy() {
+        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    }
+
 
     @Override
     public boolean stillValid(PlayerEntity playerIn)

@@ -27,6 +27,8 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "eldritch_idol");
     builder(itemGenerated, "eldritch_idol_dormant");
     builder(itemGenerated, "devils_snare_seed");
+    builder(itemGenerated, "bone_ash");
+    builder(itemGenerated, "alchemical_blend");
 
     // Ore Related
 

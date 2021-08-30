@@ -24,11 +24,17 @@ public class ModItems
             new Item(new Item.Properties().tab(ModMain.DEVILRY_TAB)));
     public static final RegistryObject<Item> BRONZE_BLEND = Registration.ITEMS.register("bronze_dust",()->
             new Item(new Item.Properties().tab(ModMain.DEVILRY_TAB)));
+    public static final RegistryObject<Item> BONE_ASH = Registration.ITEMS.register("bone_ash",()->
+            new Item(new Item.Properties().tab(ModMain.DEVILRY_TAB)));
+    public static final RegistryObject<Item> ALCHEMICAL_BLEND = Registration.ITEMS.register("alchemical_blend",()->
+            new Item(new Item.Properties().tab(ModMain.DEVILRY_TAB)));
     public static final RegistryObject<Item> ELDRITCH_IDOL = Registration.ITEMS.register("eldritch_idol",()->
             new Item(new Item.Properties().tab(ModMain.DEVILRY_TAB)));
     public static final RegistryObject<Item> ELDRITCH_IDOL_DORMANT = Registration.ITEMS.register("eldritch_idol_dormant",()->
             new Item(new Item.Properties().tab(ModMain.DEVILRY_TAB)));
-
+    public static final RegistryObject<BlockItem> DEVILS_SNARE_SEED =
+            Registration.ITEMS.register("devils_snare_seed",
+                    ()->new BlockItem(ModBlocks.DEVILS_SNARE_CROP.get(), new Item.Properties().tab(ModMain.DEVILRY_TAB)));
 
     // Armour
 
@@ -51,10 +57,6 @@ public class ModItems
             Registration.ITEMS.register("corinthian_bronze_boots",
                     ()-> new ArmorItem(ModArmorMaterial.CORINTHIAN_BRONZE, EquipmentSlotType.FEET,
                             new Item.Properties().tab(ModMain.DEVILRY_TAB)));
-
-    public static final RegistryObject<BlockItem> DEVILS_SNARE_SEED =
-            Registration.ITEMS.register("devils_snare_seed",
-                    ()->new BlockItem(ModBlocks.DEVILS_SNARE_CROP.get(), new Item.Properties().tab(ModMain.DEVILRY_TAB)));
 
     static void register() {}
 

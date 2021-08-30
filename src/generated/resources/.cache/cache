@@ -8,6 +8,8 @@ a5d6d25987df741a2085431ebf1c2315bb64c9e6 assets/devilry/models/block/copper_bloc
 a860a0597500fd49ad3463059eae7937f0f450f9 assets/devilry/models/block/copper_ore.json
 7ea9f6ccf49bee3c049e556a47852201ced4d250 assets/devilry/models/block/tin_block.json
 1f6545d29f472bbccd0d4cb79a0fb032d4941bca assets/devilry/models/block/tin_ore.json
+aa4279c12063dbff4156edbbd516b23d3657107b assets/devilry/models/item/alchemical_blend.json
+b8a08344ecd9373188d01cad7cbc157f45680718 assets/devilry/models/item/bone_ash.json
 982c13c30160451dc7a894b8a74ccdb8ab103662 assets/devilry/models/item/bronze_block.json
 1705ada929066e5087cc7b8c32c0b4184e8b1514 assets/devilry/models/item/bronze_dust.json
 8250690765e8528116348ebe5812f028d7f66ba4 assets/devilry/models/item/bronze_ingot.json
@@ -27,6 +29,8 @@ d58a6d1b211912bfdd31d0b153fddd18791285fe assets/devilry/models/item/eldritch_ido
 ee45701a6ee28865bd33337c801de024141f3426 assets/devilry/models/item/tin_ingot.json
 96483eca84b03d93d819df2bfc7f757b237aedcf assets/devilry/models/item/tin_nugget.json
 e66292412d60cebc2ec655c0d6d052d9694a9bd1 assets/devilry/models/item/tin_ore.json
+78836d71c4990f2708ad1f013c727bdaf9b1956e data/devilry/advancements/recipes/devilrytab/alchemical_blend.json
+97ad269df22e94d0b01bad0a945f4a97d703ed19 data/devilry/advancements/recipes/devilrytab/bone_ash_smelting.json
 a1eba9e83e3f58c31f1543dab096d4c6ba39183b data/devilry/advancements/recipes/devilrytab/bronze_block.json
 4fcb602d7736c659f8ab75167f0ccfad46f81d34 data/devilry/advancements/recipes/devilrytab/bronze_dust.json
 80a8d51ad4c88767251ee51b1e06dea6ce15c8f2 data/devilry/advancements/recipes/devilrytab/bronze_ingot.json
@@ -49,6 +53,8 @@ dcae46a8c24d04e72a1a0552c1eb4b234b2ad004 data/devilry/loot_tables/blocks/bronze_
 c26d73ba37bbacc34f77e0f4ebfafd2bdbeba266 data/devilry/loot_tables/blocks/devils_snare_crop.json
 6e848a03485d835cfde3d762cb30fdd7a87db681 data/devilry/loot_tables/blocks/tin_block.json
 f1035f26fe264cc7e2ba6f052b23b9cba3d9fac8 data/devilry/loot_tables/blocks/tin_ore.json
+21715ed5568884a3c5c917cf2a1d825a6c3b7097 data/devilry/recipes/alchemical_blend.json
+ac7b670331cfe315efc7349027a1f1f659ba0e56 data/devilry/recipes/bone_ash_smelting.json
 63d43ded61be7d84f0826e128e0126c0ee7bc76c data/devilry/recipes/bronze_block.json
 fd8ea192fcc6ac4a967029fcb3797dbe6829c20f data/devilry/recipes/bronze_dust.json
 e6c3ca8decd14c061125d9ba6036226fa0cc22f5 data/devilry/recipes/bronze_ingot.json
