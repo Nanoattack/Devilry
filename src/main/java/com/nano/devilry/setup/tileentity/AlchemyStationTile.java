@@ -70,7 +70,7 @@ public class AlchemyStationTile extends TileEntity implements ITickableTileEntit
         tick++;
         if(tick > 10) // should be configurable
         {
-            if(this.itemHandler.getStackInSlot(0).getItem() == Items.TOTEM_OF_UNDYING && this.energyStorage.getEnergyStored() < 64)
+            if(this.itemHandler.getStackInSlot(0).getItem() == ModItems.ALCHEMICAL_BLEND.get() && this.energyStorage.getEnergyStored() < 64)
             {
                 itemHandler.extractItem(0, 1, false);
                 energyStorage.generatePower(1);
@@ -80,8 +80,8 @@ public class AlchemyStationTile extends TileEntity implements ITickableTileEntit
                 && energyStorage.getEnergyStored() > 0 && this.itemHandler.getStackInSlot(2).getCount() < 64)
             {
                 itemHandler.extractItem(1, 1, false);
-                itemHandler.insertItem(2, new ItemStack(ModItems.ALCHEMICAL_BLEND.get(), 1), false);
-                energyStorage.extractEnergy(1, false);
+                itemHandler.insertItem(2, new ItemStack(ModItems.ELDRITCH_IDOL_DORMANT.get(), 1), false);
+                energyStorage.consumePower(1);
             }
 
             tick = 0;
@@ -125,7 +125,7 @@ public class AlchemyStationTile extends TileEntity implements ITickableTileEntit
                 {
                     case 0: return stack.getItem() == ModItems.ALCHEMICAL_BLEND.get();
                     case 1: return stack.getItem() == Items.HEART_OF_THE_SEA;
-                    case 2: return stack.getItem() == ModItems.ELDRITCH_IDOL.get();
+                    case 2: return stack.getItem() == ModItems.ELDRITCH_IDOL_DORMANT.get();
                     default: return false;
 
                 }

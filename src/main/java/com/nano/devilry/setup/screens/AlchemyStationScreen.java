@@ -32,8 +32,8 @@ public class AlchemyStationScreen extends ContainerScreen<AlchemyStationContaine
     @Override
     protected void renderLabels(MatrixStack matrixStack, int x, int y)
     {
-        drawString(matrixStack, Minecraft.getInstance().font, "Dark Energy: " + menu.getEnergy(),
-                        28, 10, 0xffffff );
+        drawString(matrixStack, Minecraft.getInstance().font, ": " + menu.getEnergy(),
+                        28, 25, 0xffffff );
     }
 
     @Override
