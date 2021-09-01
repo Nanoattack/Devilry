@@ -1,6 +1,7 @@
 package com.nano.devilry.setup;
 
 import com.nano.devilry.ModMain;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
@@ -89,6 +90,11 @@ public class ModItems
         public int getDurabilityForSlot(EquipmentSlotType p_200896_1_)
         {
             return max_damage_array[p_200896_1_.getIndex()] * this.durability;
+        }
+        //haven't set this up yet just remembering it exists
+        public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer)
+        {
+            return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == ModArmorMaterial.CORINTHIAN_BRONZE;
         }
 
         @Override

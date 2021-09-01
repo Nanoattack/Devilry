@@ -20,6 +20,16 @@ public class ModRecipeProvider extends RecipeProvider {
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         // GENERAL RECIPES
+        ShapedRecipeBuilder.shaped(ModBlocks.ALCHEMY_STATION.get())
+                .define('G', Items.GLASS_BOTTLE)
+                .define('I', Items.IRON_INGOT)
+                .define('T', Items.TORCH)
+                .define('#', ModItems.TIN_INGOT.get())
+                .pattern(" G ")
+                .pattern("#I#")
+                .pattern("ITI")
+                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.ALCHEMICAL_BLEND.get())
                 .define('R', Items.REDSTONE)
