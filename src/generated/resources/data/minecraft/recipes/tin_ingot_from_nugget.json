@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    },
+    {
+      "item": "devilry:tin_nugget"
+    }
+  ],
+  "result": {
+    "item": "devilry:tin_ingot"
+  }
+}

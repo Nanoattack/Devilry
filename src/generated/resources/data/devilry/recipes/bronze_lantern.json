@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B",
+    "T",
+    "B"
+  ],
+  "key": {
+    "B": {
+      "item": "devilry:bronze_ingot"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  },
+  "result": {
+    "item": "devilry:bronze_lantern"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    },
+    {
+      "item": "devilry:tin_ingot"
+    }
+  ],
+  "result": {
+    "item": "devilry:tin_block"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "devilry:grinding",
+  "ingredients": [
+    {
+      "item": "minecraft:raw_copper"
+    }
+  ],
+  "output": {
+    "item": "devilry:bronze_blend"
+  }
+}

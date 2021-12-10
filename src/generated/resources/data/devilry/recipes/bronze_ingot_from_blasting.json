@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "devilry:bronze_blend"
+  },
+  "result": "devilry:bronze_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}
