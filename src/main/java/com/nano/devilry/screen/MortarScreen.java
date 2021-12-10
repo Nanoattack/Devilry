@@ -23,6 +23,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarContainer>
     {
         this.renderBackground(stack);
         super.render(stack, x, y, partialTicks);
+        this.renderTooltip(stack, x, y);
         this.renderComponentHoverEffect(stack, null, x, y);
     }
 
