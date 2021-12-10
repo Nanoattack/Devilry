@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BSB",
+    "gRG",
+    "bBb"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "g": {
+      "item": "minecraft:gunpowder"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "B": {
+      "item": "devilry:bone_ash"
+    },
+    "b": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "result": {
+    "item": "devilry:alchemical_essence"
+  }
+}
