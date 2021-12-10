@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "devilry:block/bronze_lantern"
+    },
+    "hanging=true": {
+      "model": "devilry:block/bronze_lantern_hanging"
+    }
+  }
+}

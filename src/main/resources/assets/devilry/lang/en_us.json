@@ -1,0 +1,28 @@
+{
+  "block.devilry.mortar": "Mortar",
+  "screen.devilry.mortar": "Mortar",
+  "item.devilry.pestle": "Pestle",
+
+  "item.devilry.tin_ingot": "Tin Ingot",
+  "item.devilry.tin_nugget": "Tin Nugget",
+  "item.devilry.raw_tin": "Raw Tin",
+  "block.devilry.raw_tin_block": "Block of Raw Tin",
+  "block.devilry.tin_block": "Block of Tin",
+  "block.devilry.tin_ore": "Tin Ore",
+  "block.devilry.deepslate_tin_ore": "Deepslate Tin Ore",
+
+  "item.devilry.copper_nugget": "Copper Nugget",
+
+  "item.devilry.bronze_ingot": "Bronze Ingot",
+  "item.devilry.bronze_blend": "Bronze Blend",
+  "block.devilry.bronze_block": "Block of Bronze",
+  "block.devilry.bronze_bars": "Bronze Bars",
+  "block.devilry.bronze_lantern": "Bronze Lantern",
+  "block.devilry.bronze_chain": "Bronze Chain",
+
+  "item.devilry.alchemical_essence": "Alchemist's Essence",
+  "item.devilry.bone_ash": "Bone Ash",
+
+  "itemGroup.devilrymaterials": "Devilry - Materials",
+  "itemGroup.devilryblocks" : "Devilry - Decoration Blocks"
+}

@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    },
+    {
+      "item": "devilry:raw_tin"
+    }
+  ],
+  "result": {
+    "item": "devilry:raw_tin_block"
+  }
+}

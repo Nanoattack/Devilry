@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "devilry:bronze_ingot"
+    }
+  },
+  "result": {
+    "item": "devilry:bronze_bars",
+    "count": 16
+  }
+}

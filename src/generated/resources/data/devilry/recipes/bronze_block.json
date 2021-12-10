@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    },
+    {
+      "item": "devilry:bronze_ingot"
+    }
+  ],
+  "result": {
+    "item": "devilry:bronze_block"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "D D",
+    "DSD"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:polished_deepslate"
+    },
+    "S": {
+      "item": "minecraft:polished_deepslate_slab"
+    }
+  },
+  "result": {
+    "item": "devilry:mortar"
+  }
+}

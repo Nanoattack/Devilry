@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "devilry:raw_tin"
+  },
+  "result": "devilry:tin_ingot",
+  "experience": 0.7,
+  "cookingtime": 200
+}

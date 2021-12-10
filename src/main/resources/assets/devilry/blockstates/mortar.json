@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model":  "devilry:block/mortar"},
+    "facing=south": {"model":  "devilry:block/mortar", "y": 180 },
+    "facing=west": {"model":  "devilry:block/mortar", "y": 270 },
+    "facing=east": {"model":  "devilry:block/mortar", "y": 90 }
+  }
+}
