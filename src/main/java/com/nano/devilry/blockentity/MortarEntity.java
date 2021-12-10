@@ -6,9 +6,16 @@ import com.nano.devilry.item.ModItems;
 import net.minecraft.client.renderer.texture.Tickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.LockCode;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,7 +40,8 @@ public class MortarEntity extends BlockEntity
     {
         super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
     }
-        
+
+
     private ItemStackHandler createHandler() {
         return new ItemStackHandler(8)
         {
@@ -62,7 +70,7 @@ public class MortarEntity extends BlockEntity
 
             @Override
             public int getSlotLimit(int slot) {
-                return 1;
+                return 64;
             }
 
             @Nonnull
@@ -97,12 +105,15 @@ public class MortarEntity extends BlockEntity
                 craftTheItem(output);
 
                 setChanged();
+
+                level.playSound((Player) null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+
             });
 
         }
 
     private void craftTheItem(ItemStack output) {
-        itemHandler.extractItem(0, 1, false);
+
         itemHandler.extractItem(1, 1, false);
         itemHandler.extractItem(2, 1, false);
         itemHandler.extractItem(3, 1, false);

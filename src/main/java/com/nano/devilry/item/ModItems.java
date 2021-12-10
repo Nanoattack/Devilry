@@ -2,6 +2,7 @@ package com.nano.devilry.item;
 
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
+import com.nano.devilry.item.custom.Pestle;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -47,7 +48,7 @@ public class ModItems
     public static final RegistryObject<Item> MORTAR = ITEMS.register("mortar",
             () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
 
-    public static final RegistryObject<Item> PESTLE  = ITEMS.register("pestle", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+    public static final RegistryObject<Item> PESTLE  = ITEMS.register("pestle", ()-> new Pestle(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP).stacksTo(1).durability(131)));
 
     public static void register(IEventBus eventBus)
     {

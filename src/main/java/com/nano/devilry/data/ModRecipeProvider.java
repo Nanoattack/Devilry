@@ -134,12 +134,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModBlocks.BRONZE_BLOCK.get()))
                 .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(ModItems.BRONZE_BLEND.get())
-                .requires (Items.RAW_COPPER, 5)
-                .requires(ModItems.RAW_TIN.get())
-                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
-                .save(consumer);
-
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.BRONZE_BLEND.get()), ModItems.BRONZE_INGOT.get(), 0.7f, 100)
                 .unlockedBy("has_item", has(ModItems.BRONZE_BLEND.get()))
                 .save(consumer, modId("bronze_ingot_from_blasting"));
