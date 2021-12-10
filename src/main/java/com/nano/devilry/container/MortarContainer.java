@@ -33,13 +33,13 @@ public class MortarContainer extends AbstractContainerMenu
         if(blockEntity != null) {
             blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 80,10));
-                addSlot(new SlotItemHandler(h, 1, 80,46));
-                addSlot(new SlotItemHandler(h, 2, 48,10));
-                addSlot(new SlotItemHandler(h, 3, 35,32));
-                addSlot(new SlotItemHandler(h, 4, 48,54));
-                addSlot(new SlotItemHandler(h, 5, 112,10));
-                addSlot(new SlotItemHandler(h, 6, 125,32));
-                addSlot(new SlotItemHandler(h, 7, 112,54));
+                addSlot(new SlotItemHandler(h, 1, 48,10));
+                addSlot(new SlotItemHandler(h, 2, 35,32));
+                addSlot(new SlotItemHandler(h, 3, 48,54));
+                addSlot(new SlotItemHandler(h, 4, 112,10));
+                addSlot(new SlotItemHandler(h, 5, 125,32));
+                addSlot(new SlotItemHandler(h, 6, 112,54));
+                addSlot(new SlotItemHandler(h, 7, 80,46));
             });
         }
 

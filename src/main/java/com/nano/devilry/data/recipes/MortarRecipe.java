@@ -36,12 +36,12 @@ public class MortarRecipe implements IMortarRecipe
         @Override
     public boolean matches(SimpleContainer inv, Level plevel) {
                 if(recipeItems.get(0).test(inv.getItem(0)) &&
+                recipeItems.get(1).test(inv.getItem(1)) &&
                 recipeItems.get(2).test(inv.getItem(2)) &&
                 recipeItems.get(3).test(inv.getItem(3)) &&
                 recipeItems.get(4).test(inv.getItem(4)) &&
                 recipeItems.get(5).test(inv.getItem(5)) &&
-                recipeItems.get(6).test(inv.getItem(6)) &&
-                recipeItems.get(7).test(inv.getItem(7)))
+                recipeItems.get(6).test(inv.getItem(6)))
         {
             return true;
         }
@@ -101,7 +101,7 @@ public class MortarRecipe implements IMortarRecipe
             JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(8, Ingredient.EMPTY);
 
-            for (int i = 0; i < inputs.size(); i++) {
+            for (int i = 0; i < Math.min(inputs.size(), ingredients.size()); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 

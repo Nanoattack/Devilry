@@ -46,15 +46,15 @@ public class MortarEntity extends BlockEntity
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 switch (slot) {
                     case 0: return stack.getItem() == ModItems.PESTLE.get();
-                    case 1: return stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get() ||
-                                   stack.getItem() == ModItems.BRONZE_BLEND.get();
+                    case 1:
                     case 2:
                     case 3:
                     case 4:
                     case 5:
                     case 6:
-                    case 7:
                         return true;
+                    case 7: return stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get() ||
+                            stack.getItem() == ModItems.BRONZE_BLEND.get();
                     default:
                         return false;
                 }
@@ -98,19 +98,20 @@ public class MortarEntity extends BlockEntity
 
                 setChanged();
             });
+
         }
 
     private void craftTheItem(ItemStack output) {
         itemHandler.extractItem(0, 1, false);
-
+        itemHandler.extractItem(1, 1, false);
         itemHandler.extractItem(2, 1, false);
         itemHandler.extractItem(3, 1, false);
         itemHandler.extractItem(4, 1, false);
         itemHandler.extractItem(5, 1, false);
         itemHandler.extractItem(6, 1, false);
-        itemHandler.extractItem(7, 1, false);
 
-        itemHandler.insertItem(1, output, false);
+
+        itemHandler.insertItem(7, output, false);
     }
 
         @Override

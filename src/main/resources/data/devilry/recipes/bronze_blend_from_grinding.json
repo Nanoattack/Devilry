@@ -2,7 +2,25 @@
   "type": "devilry:grinding",
   "ingredients": [
     {
+      "item": "devilry:pestle"
+    },
+    {
       "item": "minecraft:raw_copper"
+    },
+    {
+      "item": "minecraft:raw_copper"
+    },
+    {
+      "item": "minecraft:raw_copper"
+    },
+    {
+      "item": "minecraft:raw_copper"
+    },
+    {
+      "item": "minecraft:raw_copper"
+    },
+    {
+      "item": "devilry:raw_tin"
     }
   ],
   "output": {
