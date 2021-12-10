@@ -2,30 +2,10 @@
   "type": "devilry:grinding",
   "ingredients": [
     {
-      "tag": "devilry:pestle_in_mortar"
-    },
-    {
       "item": "minecraft:raw_copper"
-    },
-    {
-      "item": "minecraft:raw_copper"
-    },
-    {
-      "item": "minecraft:raw_copper"
-    },
-    {
-      "item": "minecraft:raw_copper"
-    },
-    {
-      "item": "minecraft:raw_copper"
-    },
-    {
-      "item": "devilry:raw_tin"
     }
   ],
   "output": {
-    "item": "devilry:bronze_blend",
-    "count": 2
-  },
-  "amount": 2
+    "item": "devilry:bronze_blend"
+  }
 }

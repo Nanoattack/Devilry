@@ -6,7 +6,7 @@
   ],
   "key": {
     "B": {
-      "tag": "forge:ingots/bronze"
+      "item": "devilry:bronze_ingot"
     }
   },
   "result": {

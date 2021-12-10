@@ -1,16 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  T",
+    "  C",
     " C ",
     "C  "
   ],
   "key": {
     "C": {
       "item": "minecraft:calcite"
-    },
-    "T": {
-      "tag": "forge:ingots/tin"
     }
   },
   "result": {

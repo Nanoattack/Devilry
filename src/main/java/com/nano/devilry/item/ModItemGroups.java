@@ -12,7 +12,7 @@ public class ModItemGroups
             @Override
             public ItemStack makeIcon()
             {
-                return new ItemStack(ModItems.ALCHEMICAL_ESSENCE.get());
+                return new ItemStack(ModItems.TIN_INGOT.get());
             }
         };
 
@@ -21,16 +21,7 @@ public class ModItemGroups
         @Override
         public ItemStack makeIcon()
         {
-            return new ItemStack(ModBlocks.MORTAR.get());
-        }
-    };
-
-    public static final CreativeModeTab MOD_MISC_GROUP = new CreativeModeTab("devilrymisc")
-    {
-        @Override
-        public ItemStack makeIcon()
-        {
-            return new ItemStack(ModItems.ENCHANTED_FOREST_MUSIC_DISC.get());
+            return new ItemStack(ModBlocks.BRONZE_BARS.get());
         }
     };
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "devilry:tin_ingot"
+      "devilry:alchemical_essence"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "devilry:tin_block"
+              "devilry:bone_ash"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "devilry:tin_ingot"
+        "recipe": "devilry:alchemical_essence"
       }
     }
   },
