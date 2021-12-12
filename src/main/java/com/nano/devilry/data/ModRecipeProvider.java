@@ -24,29 +24,6 @@ public class ModRecipeProvider extends RecipeProvider {
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         // GENERAL RECIPES
- /*       ShapedRecipeBuilder.shaped(ModBlocks.JUICER.get())
-                .define('P', Items.PISTON)
-                .define('C', Items.COBBLESTONE)
-                .define('G', Items.GLASS_PANE)
-                .define('H', Items.HOPPER)
-                .pattern("CPC")
-                .pattern("CHC")
-                .pattern("CGC")
-                .unlockedBy("has_item", has(Items.PISTON))
-                .save(consumer);
-*/
-        ShapedRecipeBuilder.shaped(ModItems.ALCHEMICAL_ESSENCE.get())
-                .define('R', Items.REDSTONE)
-                .define('G', Items.GLOWSTONE_DUST)
-                .define('g', Items.GUNPOWDER)
-                .define('S', Items.SUGAR)
-                .define('B', ModItems.BONE_ASH.get())
-                .define('b', Items.BLAZE_POWDER)
-                .pattern("BSB")
-                .pattern("gRG")
-                .pattern("bBb")
-                .unlockedBy("has_item", has(ModItems.BONE_ASH.get()))
-                .save(consumer);
 
         SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(Items.BONE_MEAL), ModItems.BONE_ASH.get(), 0.35f, 200)
                 .unlockedBy("has_item", has(Items.BONE_MEAL))
@@ -66,6 +43,31 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern(" C ")
                 .pattern("C  ")
                 .unlockedBy("has_item", has(Blocks.CALCITE))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(Items.BLAZE_POWDER, 3)
+                .requires(Items.BLAZE_ROD)
+                .requires(ModItems.PESTLE.get())
+                .unlockedBy("has_item", has(Items.BLAZE_ROD))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL, 4)
+                .requires(Items.BONE)
+                .requires(ModItems.PESTLE.get())
+                .unlockedBy("has_item", has(Items.BONE))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(Items.SUGAR, 3)
+                .requires(Items.SUGAR_CANE)
+                .requires(ModItems.PESTLE.get())
+                .unlockedBy("has_item", has(Items.SUGAR_CANE))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(Items.HONEY_BOTTLE)
+                .requires(Items.HONEYCOMB)
+                .requires(Items.GLASS_BOTTLE)
+                .requires(ModItems.PESTLE.get())
+                .unlockedBy("has_item", has(Items.HONEYCOMB))
                 .save(consumer);
 
         //TIN

@@ -3,23 +3,20 @@ package com.nano.devilry.blockentity;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
 import com.nano.devilry.data.recipes.MortarRecipe;
 import com.nano.devilry.item.ModItems;
-import net.minecraft.client.renderer.texture.Tickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.LockCode;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -35,12 +32,54 @@ public class MortarEntity extends BlockEntity
 {
     private final ItemStackHandler itemHandler = createHandler();
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(()-> itemHandler);
+    int progress = 0;
+    int max_progress = 72;
 
     public MortarEntity(BlockPos pos, BlockState state)
     {
         super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
     }
 
+    @Override
+    public CompoundTag save(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("inv", itemHandler.serializeNBT());
+        return tag;
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag compound) {
+        compound.put("inv", itemHandler.serializeNBT());
+    }
+
+    @Override
+    public void load(CompoundTag compoundTag) {
+        super.load(compoundTag);
+        itemHandler.deserializeNBT(compoundTag.getCompound("inv"));
+    }
+
+    @Override
+    public CompoundTag getUpdateTag()
+    {
+        return this.save(new CompoundTag());
+    }
+
+    @Nullable
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+
+        return ClientboundBlockEntityDataPacket.create(this, (tag) -> this.getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(final Connection net, final ClientboundBlockEntityDataPacket pkt)
+    {
+        this.deserializeNBT(pkt.getTag());
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
+    }
 
     private ItemStackHandler createHandler() {
         return new ItemStackHandler(8)
@@ -83,10 +122,32 @@ public class MortarEntity extends BlockEntity
             }
         };
     }
+    private boolean hasRecipe(MortarEntity entity) {
+        Level world = entity.level;
+        SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+        for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
+            inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
+        }
+        Optional<MortarRecipe> match = world.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inventory, world);
+        return match.isPresent();
+    }
+
     public void tick() {
-        if(level.isClientSide)
-               return;
-        craft();
+        if (!level.isClientSide) {
+            if (hasRecipe(this)) {
+                this.progress++;
+                if (this.progress > this.max_progress) {
+                    craft();
+                }
+            } else {
+                this.resetProgress();
+            }
+        }
+    }
+
+    private void resetProgress() {
+        this.progress = 0;
     }
 
     public void craft()
@@ -123,18 +184,6 @@ public class MortarEntity extends BlockEntity
 
 
         itemHandler.insertItem(7, output, false);
-    }
-
-        @Override
-    public void load(CompoundTag pTag) {
-        itemHandler.deserializeNBT(serializeNBT().getCompound("inv"));
-        super.load(pTag);
-    }
-
-    @Override
-    public CompoundTag save(CompoundTag pTag) {
-        pTag.put("inv", itemHandler.serializeNBT());
-        return super.save(pTag);
     }
 
     @Nonnull

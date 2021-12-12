@@ -33,26 +33,28 @@ public class Pestle extends Item
             Player player = Objects.requireNonNull(context.getPlayer());
             BlockState clickedBlock = level.getBlockState(context.getClickedPos());
 
-            rightClickOnCertainBlockState(clickedBlock, context, player);
-            stack.hurtAndBreak( 1, player, player1 -> player1.broadcastBreakEvent(context.getHand()));
+            rightClickOnCertainBlockState(clickedBlock, context, player, stack);
         }
 
         return super.onItemUseFirst(stack, context);
     }
 
-    private void rightClickOnCertainBlockState(BlockState clickedBlock, UseOnContext context, Player player)
-    {
-        if( random.nextFloat() > 0.5f)
-        {
-            context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.PLAYERS, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
-        }
-        else  if (blockIsValidForFlint(clickedBlock))
-        {
-            destroyBlockGiveFlint(player, context.getLevel(), context.getClickedPos());
-        }
-        else
-        {
-            context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.PLAYERS, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+    private void rightClickOnCertainBlockState(BlockState clickedBlock, UseOnContext context, Player player, ItemStack stack) {
+        if (player.isCrouching()) {
+            stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(context.getHand()));
+            if (random.nextFloat() < 0.33f) {
+                if (blockIsValidForFlint(clickedBlock)) {
+                    destroyBlockGiveFlint(player, context.getLevel(), context.getClickedPos());
+                } else if (blockIsValidForGlowStone(clickedBlock)) {
+                    destroyBlockGiveGlowstone(player, context.getLevel(), context.getClickedPos());
+                } else if (blockIsValidForAmethyst(clickedBlock)) {
+                    destroyBlockGiveAmethyst(player, context.getLevel(), context.getClickedPos());
+                }else {
+                    context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.PLAYERS, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                }
+            }else {
+                context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.PLAYERS, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+            }
         }
     }
 
@@ -73,6 +75,29 @@ public class Pestle extends Item
     {
         player.addItem(new ItemStack(Items.FLINT));
         level.playSound((Player) null, blockPos, SoundEvents.GRINDSTONE_USE, SoundSource.PLAYERS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.destroyBlock(blockPos, false);
+    }
+
+    private boolean blockIsValidForGlowStone(BlockState clickedBlock) {
+        return clickedBlock.getBlock() == Blocks.GLOWSTONE;
+    }
+
+    private void destroyBlockGiveGlowstone(Player player, Level level, BlockPos blockPos)
+    {
+        player.addItem(new ItemStack(Items.GLOWSTONE_DUST, 4));
+        level.playSound((Player) null, blockPos, SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.destroyBlock(blockPos, false);
+    }
+
+    private boolean blockIsValidForAmethyst(BlockState clickedBlock) {
+        return clickedBlock.getBlock() == Blocks.AMETHYST_BLOCK
+                |clickedBlock.getBlock() == Blocks.BUDDING_AMETHYST;
+    }
+
+    private void destroyBlockGiveAmethyst(Player player, Level level, BlockPos blockPos)
+    {
+        player.addItem(new ItemStack(Items.AMETHYST_SHARD, 4));
+        level.playSound((Player) null, blockPos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
