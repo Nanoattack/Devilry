@@ -29,11 +29,15 @@ public class MortarScreen extends AbstractContainerScreen<MortarContainer>
 
     @Override
     protected void renderBg(PoseStack pPoseStack, float pPartialTicks, int pMouseX, int pMouseY)
-        {
-            RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-            RenderSystem.setShaderTexture(0, GUI);
-            int i = this.leftPos;
-            int j = this.topPos;
-            this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+    {
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderTexture(0, GUI);
+        int i = this.leftPos;
+        int j = this.topPos;
+        this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+
+        if(menu.isCrafting()) {
+            this.font.draw(pPoseStack, " " + menu.getScaledProgress(), 25f, 25f, 500000);
         }
+    }
 }

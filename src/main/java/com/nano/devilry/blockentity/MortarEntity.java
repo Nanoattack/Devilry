@@ -14,6 +14,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,10 +37,28 @@ public class MortarEntity extends BlockEntity
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(()-> itemHandler);
     int progress = 0;
     int max_progress = 72;
+    public final ContainerData mortarData;
 
-    public MortarEntity(BlockPos pos, BlockState state)
-    {
+    public MortarEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
+        mortarData = new SimpleContainerData(2) {
+            @Override
+            public int get(int index) {
+                switch (index) {
+                    case 0: return MortarEntity.this.progress;
+                    case 1: return MortarEntity.this.max_progress;
+                    default: return 0;
+                }
+            }
+
+            @Override
+            public void set(int index, int value) {
+                switch (index) {
+                    case 0: MortarEntity.this.progress = value;
+                    case 1: MortarEntity.this.max_progress  = value;
+                }
+            }
+        };
     }
 
     @Override
@@ -177,7 +197,6 @@ public class MortarEntity extends BlockEntity
         }
 
     private void craftTheItem(ItemStack output) {
-
         itemHandler.extractItem(1, 1, false);
         itemHandler.extractItem(2, 1, false);
         itemHandler.extractItem(3, 1, false);
@@ -185,8 +204,9 @@ public class MortarEntity extends BlockEntity
         itemHandler.extractItem(5, 1, false);
         itemHandler.extractItem(6, 1, false);
 
-
         itemHandler.insertItem(7, output, false);
+
+        this.resetProgress();
     }
 
     @Nonnull

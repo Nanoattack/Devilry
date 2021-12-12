@@ -1,12 +1,11 @@
 package com.nano.devilry.container;
 
 import com.nano.devilry.block.ModBlocks;
+import com.nano.devilry.screen.slot.ResultSlotItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -14,6 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.lwjgl.system.CallbackI;
 
 public class MortarContainer extends AbstractContainerMenu
 {
@@ -21,13 +21,21 @@ public class MortarContainer extends AbstractContainerMenu
     private final Player playerEntity;
     private final IItemHandler playerInventory;
 
+    private final ContainerData containerData;
 
     public MortarContainer(int windowId, Level world, BlockPos pos,
                            Inventory inventory, Player player) {
+        this(windowId, world, pos, inventory, player, new SimpleContainerData(2));
+    }
+
+    public MortarContainer(int windowId, Level world, BlockPos pos,
+                           Inventory inventory, Player player, ContainerData data) {
         super(ModContainers.MORTAR_CONTAINER.get(), windowId);
         this.blockEntity = world.getBlockEntity(pos);
         playerEntity = player;
         this.playerInventory = new InvWrapper(inventory);
+        containerData = data;
+
         layoutPlayerInventorySlots(8, 86);
 
         if(blockEntity != null) {
@@ -39,10 +47,23 @@ public class MortarContainer extends AbstractContainerMenu
                 addSlot(new SlotItemHandler(h, 4, 112,10));
                 addSlot(new SlotItemHandler(h, 5, 125,32));
                 addSlot(new SlotItemHandler(h, 6, 112,54));
-                addSlot(new SlotItemHandler(h, 7, 80,46));
+                addSlot(new ResultSlotItemHandler(h, 7, 80,46));
             });
         }
 
+        addDataSlots(data);
+    }
+
+    public boolean isCrafting() {
+        return containerData.get(0) > 0;
+    }
+
+    public int getScaledProgress() {
+        int progress = this.containerData.get(0);
+        int maxProgress = this.containerData.get(1);  // Max Progress
+        int progressArrowSize = 26; // This is the width in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
     @Override
