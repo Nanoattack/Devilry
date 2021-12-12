@@ -27,6 +27,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.Random;
 
 public class MortarEntity extends BlockEntity
 {
@@ -162,6 +163,8 @@ public class MortarEntity extends BlockEntity
 
             recipe.ifPresent(iRecipe -> {
                 ItemStack output = iRecipe.getResultItem();
+
+                itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
 
                 craftTheItem(output);
 

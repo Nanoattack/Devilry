@@ -28,6 +28,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "raw_tin");
     builder(itemGenerated, "tin_nugget");
     builder(itemGenerated, "bronze_ingot");
+    builder(itemGenerated, "bronze_nugget");
     builder(itemGenerated, "bronze_blend");
     builder(itemGenerated, "copper_nugget");
     builder(itemGenerated, "alchemical_essence");
