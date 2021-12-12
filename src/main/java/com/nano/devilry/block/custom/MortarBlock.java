@@ -183,7 +183,7 @@ public class MortarBlock extends BaseEntityBlock
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new MortarContainer(windowId, level, pos, playerInventory, playerEntity);
+                        return new MortarContainer(windowId, level, pos, playerInventory, playerEntity, ((MortarEntity)blockEntity).mortarData);
                     }
                 };
                 NetworkHooks.openGui((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());
