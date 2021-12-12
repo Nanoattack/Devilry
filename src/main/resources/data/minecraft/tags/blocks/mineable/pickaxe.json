@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "devilry:tin_ore",
+    "devilry:deepslate_tin_ore",
+    "devilry:tin_block",
+    "devilry:raw_tin_block",
+    "devilry:bronze_block",
+    "devilry:bronze_bars",
+    "devilry:bronze_chain",
+    "devilry:bronze_lantern",
+    "devilry:mortar"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "devilry:tin_ore",
+    "devilry:deepslate_tin_ore",
+    "devilry:tin_block",
+    "devilry:raw_tin_block",
+    "devilry:mortar"
+  ]
+}

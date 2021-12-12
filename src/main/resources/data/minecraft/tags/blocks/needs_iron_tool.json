@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "devilry:bronze_block",
+    "devilry:bronze_bars",
+    "devilry:bronze_chain",
+    "devilry:bronze_lantern"
+  ]
+}
