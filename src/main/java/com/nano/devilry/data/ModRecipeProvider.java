@@ -136,6 +136,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModBlocks.BRONZE_BLOCK.get()))
                 .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(ModItems.BRONZE_INGOT.get())
+                .requires (ModItems.BRONZE_NUGGET.get(), 9)
+                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .save(consumer, "bronze_ingot_from_nugget");
+
+        ShapelessRecipeBuilder.shapeless(ModItems.BRONZE_NUGGET.get(), 9)
+                .requires (ModItems.BRONZE_INGOT.get())
+                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .save(consumer);
+
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.BRONZE_BLEND.get()), ModItems.BRONZE_INGOT.get(), 0.7f, 100)
                 .unlockedBy("has_item", has(ModItems.BRONZE_BLEND.get()))
                 .save(consumer, modId("bronze_ingot_from_blasting"));
@@ -148,19 +158,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModBlocks.BRONZE_LANTERN.get())
-                .define('B', ModItems.BRONZE_INGOT.get())
+                .define('B', ModItems.BRONZE_NUGGET.get())
                 .define('T', Items.TORCH)
-                .pattern("B")
-                .pattern("T")
-                .pattern("B")
+                .pattern("BBB")
+                .pattern("BTB")
+                .pattern("BBB")
                 .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModBlocks.BRONZE_CHAIN.get(), 3)
+        ShapedRecipeBuilder.shaped(ModBlocks.BRONZE_CHAIN.get())
                 .define('B', ModItems.BRONZE_INGOT.get())
+                .define('b', ModItems.BRONZE_NUGGET.get())
+                .pattern("b")
                 .pattern("B")
-                .pattern("B")
-                .pattern("B")
+                .pattern("b")
                 .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
                 .save(consumer);
 
