@@ -1,0 +1,10 @@
+{
+  "enchanted_forest": {
+    "sounds": [
+      {
+        "name": "devilry:enchanted_forest",
+        "stream": true
+      }
+    ]
+  }
+}

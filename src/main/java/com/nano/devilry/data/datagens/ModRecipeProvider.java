@@ -1,4 +1,4 @@
-package com.nano.devilry.data;
+package com.nano.devilry.data.datagens;
 
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
@@ -39,7 +39,8 @@ public class ModRecipeProvider extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(ModItems.PESTLE.get())
                 .define('C', Items.CALCITE)
-                .pattern("  C")
+                .define('T', ModItems.TIN_INGOT.get())
+                .pattern("  T")
                 .pattern(" C ")
                 .pattern("C  ")
                 .unlockedBy("has_item", has(Blocks.CALCITE))
@@ -49,26 +50,26 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(Items.BLAZE_ROD)
                 .requires(ModItems.PESTLE.get())
                 .unlockedBy("has_item", has(Items.BLAZE_ROD))
-                .save(consumer);
+                .save(consumer, "blaze_powder_from_pestle");
 
         ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL, 4)
                 .requires(Items.BONE)
                 .requires(ModItems.PESTLE.get())
                 .unlockedBy("has_item", has(Items.BONE))
-                .save(consumer);
+                .save(consumer, "bone_meal_from_pestle");
 
         ShapelessRecipeBuilder.shapeless(Items.SUGAR, 3)
                 .requires(Items.SUGAR_CANE)
                 .requires(ModItems.PESTLE.get())
                 .unlockedBy("has_item", has(Items.SUGAR_CANE))
-                .save(consumer);
+                .save(consumer, "sugar_from_pestle");
 
         ShapelessRecipeBuilder.shapeless(Items.HONEY_BOTTLE)
                 .requires(Items.HONEYCOMB)
                 .requires(Items.GLASS_BOTTLE)
                 .requires(ModItems.PESTLE.get())
                 .unlockedBy("has_item", has(Items.HONEYCOMB))
-                .save(consumer);
+                .save(consumer, "honey_bottle_from_pestle");
 
         //TIN
         ShapelessRecipeBuilder.shapeless(ModBlocks.TIN_BLOCK.get())

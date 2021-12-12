@@ -1,4 +1,4 @@
-package com.nano.devilry.data.client;
+package com.nano.devilry.data.datagens.client;
 
 import com.nano.devilry.ModMain;
 import net.minecraft.data.DataGenerator;
@@ -38,6 +38,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "bronze_lantern");
     builder(itemGenerated, "mortar");
     builder(itemGenerated, "pestle");
+    builder(itemGenerated, "enchanted_forest_music_disc");
 }
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
         return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);

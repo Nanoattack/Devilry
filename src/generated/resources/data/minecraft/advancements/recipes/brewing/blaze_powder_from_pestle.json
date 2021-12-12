@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:honey_bottle"
+      "minecraft:blaze_powder_from_pestle"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "minecraft:honeycomb"
+              "minecraft:blaze_rod"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:honey_bottle"
+        "recipe": "minecraft:blaze_powder_from_pestle"
       }
     }
   },

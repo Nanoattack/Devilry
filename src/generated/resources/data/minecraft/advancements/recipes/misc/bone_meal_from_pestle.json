@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:sugar"
+      "minecraft:bone_meal_from_pestle"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "minecraft:sugar_cane"
+              "minecraft:bone"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:sugar"
+        "recipe": "minecraft:bone_meal_from_pestle"
       }
     }
   },
