@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:bone_meal"
+      "minecraft:honey_bottle_from_pestle"
     ]
   },
   "criteria": {
@@ -12,7 +12,7 @@
         "items": [
           {
             "items": [
-              "minecraft:bone"
+              "minecraft:honeycomb"
             ]
           }
         ]
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:bone_meal"
+        "recipe": "minecraft:honey_bottle_from_pestle"
       }
     }
   },

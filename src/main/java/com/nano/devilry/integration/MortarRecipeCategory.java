@@ -20,13 +20,13 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
 
 {
     public final static ResourceLocation UID = new ResourceLocation(ModMain.MOD_ID, "grinding");
-    public final static ResourceLocation TEXTURE = new ResourceLocation(ModMain.MOD_ID, "textures/gui/mortar_gui.png");
+    public final static ResourceLocation TEXTURE = new ResourceLocation(ModMain.MOD_ID, "textures/gui/mortar_gui_jei.png");
 
     private final IDrawable background;
     private final IDrawable icon;
 
     public MortarRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 85);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 114, 86);
         this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.MORTAR.get()));
     }
 
@@ -63,14 +63,14 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, MortarRecipe recipe, IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, true, 79,9);
-        recipeLayout.getItemStacks().init(1, true, 47,9);
-        recipeLayout.getItemStacks().init(2, true, 34,31);
-        recipeLayout.getItemStacks().init(3, true, 47,53);
-        recipeLayout.getItemStacks().init(4, true, 111,9);
-        recipeLayout.getItemStacks().init(5, true, 124,31);
-        recipeLayout.getItemStacks().init(6, true, 111,53);
-        recipeLayout.getItemStacks().init(7, false, 79,45);
+        recipeLayout.getItemStacks().init(0, true, 48,9);
+        recipeLayout.getItemStacks().init(1, true, 16,9);
+        recipeLayout.getItemStacks().init(2, true, 3,31);
+        recipeLayout.getItemStacks().init(3, true, 16,53);
+        recipeLayout.getItemStacks().init(4, true, 80,9);
+        recipeLayout.getItemStacks().init(5, true, 93,31);
+        recipeLayout.getItemStacks().init(6, true, 80,53);
+        recipeLayout.getItemStacks().init(7, false, 48,45);
         recipeLayout.getItemStacks().set(ingredients);
     }
 }

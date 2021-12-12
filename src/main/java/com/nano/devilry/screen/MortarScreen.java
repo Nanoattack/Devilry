@@ -37,7 +37,9 @@ public class MortarScreen extends AbstractContainerScreen<MortarContainer>
         this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
         if(menu.isCrafting()) {
-            this.font.draw(pPoseStack, " " + menu.getScaledProgress(), 25f, 25f, 500000);
+            int k = this.menu.getScaledProgress();
+            this.blit(pPoseStack, i + 81, j + 32 + 12 - k, 178, 16 - k, 14, k + 1);
+        //    this.font.draw(pPoseStack, " " + menu.getScaledProgress(), 25f, 25f, 500000);
         }
     }
 }

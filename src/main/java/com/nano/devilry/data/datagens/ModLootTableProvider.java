@@ -1,4 +1,4 @@
-package com.nano.devilry.data;
+package com.nano.devilry.data.datagens;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;

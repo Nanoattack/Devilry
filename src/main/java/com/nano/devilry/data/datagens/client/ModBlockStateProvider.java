@@ -1,4 +1,4 @@
-package com.nano.devilry.data.client;
+package com.nano.devilry.data.datagens.client;
 
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;

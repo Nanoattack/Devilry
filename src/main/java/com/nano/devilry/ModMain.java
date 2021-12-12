@@ -5,6 +5,7 @@ import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.blockentity.ModBlockEntities;
 import com.nano.devilry.container.ModContainers;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
+import com.nano.devilry.events.ModSoundEvents;
 import com.nano.devilry.item.ModItems;
 import com.nano.devilry.screen.MortarScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -40,6 +41,7 @@ public class ModMain
         ModBlockEntities.register(eventbus);
         ModContainers.register(eventbus);
         ModRecipeTypes.register(eventbus);
+        ModSoundEvents.register(eventbus);
 
         eventbus.addListener(this::setup);
         eventbus.addListener(this::doClientStuff);

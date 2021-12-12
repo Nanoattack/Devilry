@@ -113,7 +113,8 @@ public class MortarEntity extends BlockEntity
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 switch (slot) {
-                    case 0: return stack.getItem() == ModItems.PESTLE.get();
+                    case 0: return stack.getItem() == ModItems.PESTLE.get()||
+                            stack.getItem() == ModItems.NETHERITE_PESTLE.get();
                     case 1:
                     case 2:
                     case 3:
@@ -171,30 +172,30 @@ public class MortarEntity extends BlockEntity
         this.progress = 0;
     }
 
-    public void craft()
-        {
-            SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
-            for (int i = 0; i < itemHandler.getSlots(); i++) {
-                inv.setItem(i, itemHandler.getStackInSlot(i));
-            }
-
-            Optional<MortarRecipe> recipe = level.getRecipeManager()
-                    .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
-
-            recipe.ifPresent(iRecipe -> {
-                ItemStack output = iRecipe.getResultItem();
-
-                itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
-
-                craftTheItem(output);
-
-                setChanged();
-
-                level.playSound((Player) null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
-
-            });
-
+    public void craft() {
+        SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inv.setItem(i, itemHandler.getStackInSlot(i));
         }
+            if (itemHandler.getStackInSlot(7).getCount() < 64) {
+
+                Optional<MortarRecipe> recipe = level.getRecipeManager()
+                        .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
+
+                recipe.ifPresent(iRecipe -> {
+
+                    ItemStack output = iRecipe.getResultItem();
+
+                    itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
+
+                    craftTheItem(output);
+
+                    setChanged();
+
+                    level.playSound((Player) null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+                });
+            }
+    }
 
     private void craftTheItem(ItemStack output) {
         itemHandler.extractItem(1, 1, false);
@@ -205,6 +206,12 @@ public class MortarEntity extends BlockEntity
         itemHandler.extractItem(6, 1, false);
 
         itemHandler.insertItem(7, output, false);
+
+        if (itemHandler.getStackInSlot(0).getDamageValue() > itemHandler.getStackInSlot(0).getMaxDamage() - 1)
+        {
+            itemHandler.extractItem(0,1,false);
+            level.playSound((Player) null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        }
 
         this.resetProgress();
     }

@@ -1,4 +1,4 @@
-package com.nano.devilry.data;
+package com.nano.devilry.data.datagens;
 
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.item.ModItems;
