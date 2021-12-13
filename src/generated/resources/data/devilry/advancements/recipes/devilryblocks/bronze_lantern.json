@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "devilry:bronze_ingot"
-            ]
+            "tag": "forge:ingots/bronze"
           }
         ]
       }

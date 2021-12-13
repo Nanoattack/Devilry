@@ -5,7 +5,7 @@
       "item": "minecraft:sugar_cane"
     },
     {
-      "item": "devilry:pestle"
+      "tag": "devilry:pestle_in_mortar"
     }
   ],
   "result": {

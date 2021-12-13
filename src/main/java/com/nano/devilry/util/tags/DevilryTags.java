@@ -23,8 +23,30 @@ public class DevilryTags
 
     public static class Items{
 
+        //GENERAL
         public static final Tags.IOptionalNamedTag<Item> PESTLE_IN_MORTAR =
                 createTag("pestle_in_mortar");
+
+        //INGOTS
+        public static final Tags.IOptionalNamedTag<Item> INGOTS_TIN =
+                createForgeTag("ingots/tin");
+
+        public static final Tags.IOptionalNamedTag<Item> INGOTS_BRONZE =
+                createForgeTag("ingots/bronze");
+
+        //DUSTS
+        public static final Tags.IOptionalNamedTag<Item> DUST_BRONZE =
+                createForgeTag("dusts/bronze");
+
+        //NUGGETS
+        public static final Tags.IOptionalNamedTag<Item> NUGGET_TIN =
+                createForgeTag("nuggets/tin");
+
+        public static final Tags.IOptionalNamedTag<Item> NUGGET_BRONZE =
+                createForgeTag("nuggets/bronze");
+
+        public static final Tags.IOptionalNamedTag<Item> NUGGET_COPPER =
+                createForgeTag("nuggets/copper");
 
         private static Tags.IOptionalNamedTag<Item> createTag(String name) {
             return ItemTags.createOptional(new ResourceLocation(ModMain.MOD_ID, name));

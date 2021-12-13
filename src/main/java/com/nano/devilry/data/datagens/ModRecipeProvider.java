@@ -3,6 +3,7 @@ package com.nano.devilry.data.datagens;
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.item.ModItems;
+import com.nano.devilry.util.tags.DevilryTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
 
@@ -39,7 +40,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(ModItems.PESTLE.get())
                 .define('C', Items.CALCITE)
-                .define('T', ModItems.TIN_INGOT.get())
+                .define('T', DevilryTags.Items.INGOTS_TIN)
                 .pattern("  T")
                 .pattern(" C ")
                 .pattern("C  ")
@@ -48,48 +49,48 @@ public class ModRecipeProvider extends RecipeProvider {
 
         ShapelessRecipeBuilder.shapeless(Items.BLAZE_POWDER, 3)
                 .requires(Items.BLAZE_ROD)
-                .requires(ModItems.PESTLE.get())
+                .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.BLAZE_ROD))
                 .save(consumer, "blaze_powder_from_pestle");
 
         ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL, 4)
                 .requires(Items.BONE)
-                .requires(ModItems.PESTLE.get())
+                .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.BONE))
                 .save(consumer, "bone_meal_from_pestle");
 
         ShapelessRecipeBuilder.shapeless(Items.SUGAR, 3)
                 .requires(Items.SUGAR_CANE)
-                .requires(ModItems.PESTLE.get())
+                .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.SUGAR_CANE))
                 .save(consumer, "sugar_from_pestle");
 
         ShapelessRecipeBuilder.shapeless(Items.HONEY_BOTTLE)
                 .requires(Items.HONEYCOMB)
                 .requires(Items.GLASS_BOTTLE)
-                .requires(ModItems.PESTLE.get())
+                .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.HONEYCOMB))
                 .save(consumer, "honey_bottle_from_pestle");
 
         //TIN
         ShapelessRecipeBuilder.shapeless(ModBlocks.TIN_BLOCK.get())
                 .requires(ModItems.TIN_INGOT.get(), 9)
-                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_TIN))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(ModItems.TIN_INGOT.get(), 9)
                 .requires (ModBlocks.TIN_BLOCK.get())
-                .unlockedBy("has_item", has(ModBlocks.TIN_BLOCK.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_TIN))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(ModItems.TIN_INGOT.get())
                 .requires (ModItems.TIN_NUGGET.get(), 9)
-                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_TIN))
                 .save(consumer, "tin_ingot_from_nugget");
 
         ShapelessRecipeBuilder.shapeless(ModItems.TIN_NUGGET.get(), 9)
                 .requires (ModItems.TIN_INGOT.get())
-                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_TIN))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(ModBlocks.RAW_TIN_BLOCK.get())
@@ -99,7 +100,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         ShapelessRecipeBuilder.shapeless(ModItems.RAW_TIN.get(), 9)
                 .requires (ModBlocks.RAW_TIN_BLOCK.get())
-                .unlockedBy("has_item", has(ModBlocks.RAW_TIN_BLOCK.get()))
+                .unlockedBy("has_item", has(ModItems.RAW_TIN.get()))
                 .save(consumer);
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.RAW_TIN.get()), ModItems.TIN_INGOT.get(), 0.7f, 200)
@@ -129,22 +130,22 @@ public class ModRecipeProvider extends RecipeProvider {
         //BRONZE
         ShapelessRecipeBuilder.shapeless(ModBlocks.BRONZE_BLOCK.get())
                 .requires(ModItems.BRONZE_INGOT.get(), 9)
-                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(ModItems.BRONZE_INGOT.get(), 9)
                 .requires (ModBlocks.BRONZE_BLOCK.get())
-                .unlockedBy("has_item", has(ModBlocks.BRONZE_BLOCK.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(ModItems.BRONZE_INGOT.get())
                 .requires (ModItems.BRONZE_NUGGET.get(), 9)
-                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer, "bronze_ingot_from_nugget");
 
         ShapelessRecipeBuilder.shapeless(ModItems.BRONZE_NUGGET.get(), 9)
-                .requires (ModItems.BRONZE_INGOT.get())
-                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .requires (DevilryTags.Items.INGOTS_BRONZE)
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer);
 
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.BRONZE_BLEND.get()), ModItems.BRONZE_INGOT.get(), 0.7f, 100)
@@ -152,10 +153,10 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(consumer, modId("bronze_ingot_from_blasting"));
 
         ShapedRecipeBuilder.shaped(ModBlocks.BRONZE_BARS.get(), 16)
-                .define('B', ModItems.BRONZE_INGOT.get())
+                .define('B', DevilryTags.Items.INGOTS_BRONZE)
                 .pattern("BBB")
                 .pattern("BBB")
-                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModBlocks.BRONZE_LANTERN.get())
@@ -164,16 +165,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("BBB")
                 .pattern("BTB")
                 .pattern("BBB")
-                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModBlocks.BRONZE_CHAIN.get())
-                .define('B', ModItems.BRONZE_INGOT.get())
+                .define('B', DevilryTags.Items.INGOTS_BRONZE)
                 .define('b', ModItems.BRONZE_NUGGET.get())
                 .pattern("b")
                 .pattern("B")
                 .pattern("b")
-                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .unlockedBy("has_item", has(DevilryTags.Items.INGOTS_BRONZE))
                 .save(consumer);
 
         //COPPER
