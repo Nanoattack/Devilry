@@ -63,7 +63,7 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, MortarRecipe recipe, IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, true, 48,9);
+        recipeLayout.getItemStacks().init(0, true, 49,9);
         recipeLayout.getItemStacks().init(1, true, 16,9);
         recipeLayout.getItemStacks().init(2, true, 3,31);
         recipeLayout.getItemStacks().init(3, true, 16,53);

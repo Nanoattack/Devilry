@@ -7,7 +7,7 @@
   ],
   "key": {
     "B": {
-      "item": "devilry:bronze_ingot"
+      "tag": "forge:ingots/bronze"
     },
     "b": {
       "item": "devilry:bronze_nugget"
