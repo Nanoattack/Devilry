@@ -42,7 +42,7 @@ public class ModItems
 
     //GENERAL
 
-    public static final RegistryObject<Item> ALCHEMICAL_ESSENCE  = ITEMS.register("alchemical_essence", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+    public static final RegistryObject<Item> ALCHEMICAL_ESSENCE  = ITEMS.register("alchemical_essence", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP).stacksTo(16)));
 
     public static final RegistryObject<Item> BONE_ASH = ITEMS.register("bone_ash", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
