@@ -177,7 +177,7 @@ public class MortarEntity extends BlockEntity
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inv.setItem(i, itemHandler.getStackInSlot(i));
         }
-            if (itemHandler.getStackInSlot(7).getCount() < 64) {
+            if (itemHandler.getStackInSlot(7).getCount() < itemHandler.getStackInSlot(7).getMaxStackSize()) {
 
                 Optional<MortarRecipe> recipe = level.getRecipeManager()
                         .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
@@ -186,18 +186,24 @@ public class MortarEntity extends BlockEntity
 
                     ItemStack output = iRecipe.getResultItem();
 
-                    itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
-
                     craftTheItem(output);
+
+                    if (itemHandler.getStackInSlot(0).getDamageValue() > itemHandler.getStackInSlot(0).getMaxDamage() - 1)
+                    {
+                        itemHandler.extractItem(0,1,false);
+                        level.playSound((Player) null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+                    }
 
                     setChanged();
 
-                    level.playSound((Player) null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
                 });
             }
     }
 
     private void craftTheItem(ItemStack output) {
+
+        if (itemHandler.insertItem(7, output, true) != output ) {
+
         itemHandler.extractItem(1, 1, false);
         itemHandler.extractItem(2, 1, false);
         itemHandler.extractItem(3, 1, false);
@@ -205,15 +211,13 @@ public class MortarEntity extends BlockEntity
         itemHandler.extractItem(5, 1, false);
         itemHandler.extractItem(6, 1, false);
 
-        itemHandler.insertItem(7, output, false);
+        itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
 
-        if (itemHandler.getStackInSlot(0).getDamageValue() > itemHandler.getStackInSlot(0).getMaxDamage() - 1)
-        {
-            itemHandler.extractItem(0,1,false);
-            level.playSound((Player) null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
-        }
+        level.playSound((Player) null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
 
         this.resetProgress();
+    }
+        output.setCount(itemHandler.insertItem(7, output, false).getCount() + 1);
     }
 
     @Nonnull
