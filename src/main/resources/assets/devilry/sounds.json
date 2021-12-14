@@ -1,4 +1,24 @@
 {
+  "owl_ambient": {
+    "subtitle": "devilry.owl_ambient",
+    "sounds": [
+      "devilry:owl_ambient_1",
+      "devilry:owl_ambient_2",
+      "devilry:owl_ambient_3"
+    ]
+  },
+  "owl_hurt": {
+    "subtitle": "devilry.owl_hurt",
+    "sounds": [
+      "devilry:owl_hurt"
+    ]
+  },
+  "owl_death": {
+    "subtitle": "devilry.owl_death",
+    "sounds": [
+      "devilry:owl_death"
+    ]
+  },
   "enchanted_forest": {
     "sounds": [
       {

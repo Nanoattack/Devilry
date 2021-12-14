@@ -15,6 +15,16 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> ENCHANTED_FOREST =
             registerSoundEvent("enchanted_forest");
 
+    public static final RegistryObject<SoundEvent> OWL_AMBIENT =
+            registerSoundEvent("owl_ambient");
+
+    public static final RegistryObject<SoundEvent> OWL_HURT =
+            registerSoundEvent("owl_hurt");
+
+    public static final RegistryObject<SoundEvent> OWL_DEATH =
+            registerSoundEvent("owl_death");
+
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(ModMain.MOD_ID, name)));
     }

@@ -39,6 +39,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "mortar");
     builder(itemGenerated, "pestle");
     builder(itemGenerated, "netherite_pestle");
+    builder(itemGenerated, "flint_knife");
     builder(itemGenerated, "enchanted_forest_music_disc");
 }
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
