@@ -3,6 +3,7 @@ package com.nano.devilry.item;
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.events.ModSoundEvents;
+import com.nano.devilry.item.custom.Knife;
 import com.nano.devilry.item.custom.Pestle;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -48,6 +49,8 @@ public class ModItems
 
     public static final RegistryObject<Item> MORTAR = ITEMS.register("mortar",
             () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
+
+    public static final RegistryObject<Item> FLINT_KNIFE  = ITEMS.register("flint_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(32)));
 
     public static final RegistryObject<Item> PESTLE  = ITEMS.register("pestle", ()-> new Pestle(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(131)));
 

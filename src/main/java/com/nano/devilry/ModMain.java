@@ -1,10 +1,10 @@
 package com.nano.devilry;
 
-import com.mojang.blaze3d.platform.ScreenManager;
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.blockentity.ModBlockEntities;
 import com.nano.devilry.container.ModContainers;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
+import com.nano.devilry.entity.ModEntityTypes;
 import com.nano.devilry.events.ModSoundEvents;
 import com.nano.devilry.item.ModItems;
 import com.nano.devilry.screen.MortarScreen;
@@ -40,8 +40,11 @@ public class ModMain
         ModBlocks.register(eventbus);
         ModBlockEntities.register(eventbus);
         ModContainers.register(eventbus);
+
         ModRecipeTypes.register(eventbus);
         ModSoundEvents.register(eventbus);
+
+        ModEntityTypes.register(eventbus);
 
         eventbus.addListener(this::setup);
         eventbus.addListener(this::doClientStuff);
