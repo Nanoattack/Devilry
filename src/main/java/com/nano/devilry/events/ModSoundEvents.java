@@ -15,6 +15,12 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> ENCHANTED_FOREST =
             registerSoundEvent("enchanted_forest");
 
+    public static final RegistryObject<SoundEvent> KNIFE_SLASH =
+            registerSoundEvent("knife_slash");
+
+    public static final RegistryObject<SoundEvent> OWL_FLAP =
+            registerSoundEvent("owl_flap");
+
     public static final RegistryObject<SoundEvent> OWL_AMBIENT =
             registerSoundEvent("owl_ambient");
 

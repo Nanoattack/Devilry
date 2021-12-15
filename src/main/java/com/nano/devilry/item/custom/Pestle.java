@@ -50,10 +50,10 @@ public class Pestle extends Item
                 } else if (blockIsValidForAmethyst(clickedBlock)) {
                     destroyBlockGiveAmethyst(player, context.getLevel(), context.getClickedPos());
                 }else {
-                    context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.PLAYERS, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                    context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 }
             }else {
-                context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.PLAYERS, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
             }
         }
     }
