@@ -1,10 +1,24 @@
 {
+  "knife_slash": {
+    "subtitle": "devilry.knife_slash",
+    "sounds": [
+      "devilry:knife_slash",
+      "devilry:knife_slash_2"
+    ]
+  },
   "owl_ambient": {
     "subtitle": "devilry.owl_ambient",
     "sounds": [
       "devilry:owl_ambient_1",
       "devilry:owl_ambient_2",
-      "devilry:owl_ambient_3"
+      "devilry:owl_ambient_3",
+      "devilry:owl_ambient_4"
+    ]
+  },
+  "owl_flap": {
+    "subtitle": "devilry.owl_flap",
+    "sounds": [
+      "devilry:owl_flap"
     ]
   },
   "owl_hurt": {

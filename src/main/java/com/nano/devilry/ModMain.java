@@ -13,12 +13,16 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.example.registry.EntityRegistry;
+import software.bernie.geckolib3.GeckoLib;
 
 import static net.minecraft.client.renderer.ItemBlockRenderTypes.setRenderLayer;
 
@@ -46,6 +50,8 @@ public class ModMain
 
         ModEntityTypes.register(eventbus);
 
+        GeckoLib.initialize();
+
         eventbus.addListener(this::setup);
         eventbus.addListener(this::doClientStuff);
 
@@ -68,5 +74,6 @@ public class ModMain
         setRenderLayer(ModBlocks.MORTAR.get(), RenderType.cutout());
 
         MenuScreens.register(ModContainers.MORTAR_CONTAINER.get(), MortarScreen::new);
+
     }
 }
