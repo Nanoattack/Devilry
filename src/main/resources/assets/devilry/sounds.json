@@ -1,4 +1,10 @@
 {
+  "cloth_rip": {
+    "subtitle": "devilry.cloth_rip",
+    "sounds": [
+      "devilry:cloth_rip"
+    ]
+  },
   "knife_slash": {
     "subtitle": "devilry.knife_slash",
     "sounds": [
