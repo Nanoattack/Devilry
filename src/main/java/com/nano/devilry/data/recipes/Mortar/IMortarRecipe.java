@@ -1,4 +1,4 @@
-package com.nano.devilry.data.recipes;
+package com.nano.devilry.data.recipes.Mortar;
 
 import com.nano.devilry.ModMain;
 import net.minecraft.core.Registry;

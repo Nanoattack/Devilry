@@ -57,6 +57,8 @@ public class ModItems
 
     public static final RegistryObject<Item> FLINT_KNIFE  = ITEMS.register("flint_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(32)));
 
+    public static final RegistryObject<Item> BRONZE_KNIFE  = ITEMS.register("bronze_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(418)));
+
     public static final RegistryObject<Item> PESTLE  = ITEMS.register("pestle", ()-> new Pestle(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(131)));
 
     public static final RegistryObject<Item> NETHERITE_PESTLE  = ITEMS.register("netherite_pestle", ()-> new Pestle(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(2031)));

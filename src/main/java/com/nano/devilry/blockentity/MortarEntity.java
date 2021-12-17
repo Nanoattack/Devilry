@@ -1,7 +1,7 @@
 package com.nano.devilry.blockentity;
 
 import com.nano.devilry.data.recipes.ModRecipeTypes;
-import com.nano.devilry.data.recipes.MortarRecipe;
+import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
 import com.nano.devilry.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

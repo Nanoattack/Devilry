@@ -1,15 +1,14 @@
-package com.nano.devilry.data.recipes;
+package com.nano.devilry.data.recipes.Mortar;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mojang.realmsclient.util.JsonUtils;
 import com.nano.devilry.block.ModBlocks;
+import com.nano.devilry.data.recipes.ModRecipeTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;

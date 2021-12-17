@@ -2,17 +2,15 @@ package com.nano.devilry.integration;
 
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
-import com.nano.devilry.data.recipes.MortarRecipe;
+import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
 import com.nano.devilry.item.ModItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -72,5 +70,6 @@ public class MortarRecipeCategory implements IRecipeCategory<MortarRecipe>
         recipeLayout.getItemStacks().init(6, true, 80,53);
         recipeLayout.getItemStacks().init(7, false, 48,45);
         recipeLayout.getItemStacks().set(ingredients);
+        recipeLayout.setShapeless();
     }
 }

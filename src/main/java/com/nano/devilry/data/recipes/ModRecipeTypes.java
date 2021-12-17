@@ -1,6 +1,7 @@
 package com.nano.devilry.data.recipes;
 
 import com.nano.devilry.ModMain;
+import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
