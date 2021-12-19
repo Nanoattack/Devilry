@@ -52,6 +52,12 @@ public class ModItems
 
     public static final RegistryObject<Item> BONE_ASH = ITEMS.register("bone_ash", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
+    public static final RegistryObject<Item> SALTPETRE = ITEMS.register("saltpetre", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
+    public static final RegistryObject<Item> BAT_GUANO = ITEMS.register("bat_guano", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
+    public static final RegistryObject<Item> CURED_FLESH = ITEMS.register("cured_flesh", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
     public static final RegistryObject<Item> MORTAR = ITEMS.register("mortar",
             () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
 
@@ -66,6 +72,9 @@ public class ModItems
     public static final RegistryObject<Item> ENCHANTED_FOREST_MUSIC_DISC  = ITEMS.register("enchanted_forest_music_disc",
             ()-> new RecordItem(1, () -> ModSoundEvents.ENCHANTED_FOREST.get(),
                     new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+
+    public static final RegistryObject<Item> SULPHUR_DUST = ITEMS.register("sulphur_dust", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
 
     public static void register(IEventBus eventBus)
     {

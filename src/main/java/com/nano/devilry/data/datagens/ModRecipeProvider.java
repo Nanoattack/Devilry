@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.IRecipeContainer;
 
 import java.util.function.Consumer;
@@ -47,11 +48,51 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Blocks.CALCITE))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(ModItems.FLINT_KNIFE.get())
+                .define('F', Items.FLINT)
+                .define('S', Items.STICK)
+                .pattern(" F ")
+                .pattern("S  ")
+                .unlockedBy("has_item", has(Items.FLINT))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.BRONZE_KNIFE.get())
+                .define('B', ModItems.BRONZE_INGOT.get())
+                .define('S', Items.STICK)
+                .pattern(" B ")
+                .pattern("S  ")
+                .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(Items.SOUL_TORCH, 12)
+                .define('s', ModItems.SULPHUR_DUST.get())
+                .define('S', Items.STICK)
+                .pattern("s  ")
+                .pattern("S  ")
+                .unlockedBy("has_item", has(ModItems.SULPHUR_DUST.get()))
+                .save(consumer, "soul_torch_from_sulphur");
+
+        ShapedRecipeBuilder.shaped(Items.SOUL_CAMPFIRE)
+                .define('s', ModItems.SULPHUR_DUST.get())
+                .define('S', Items.STICK)
+                .define('L', ItemTags.LOGS)
+                .pattern(" S ")
+                .pattern("SsS")
+                .pattern("LLL")
+                .unlockedBy("has_item", has(ModItems.SULPHUR_DUST.get()))
+                .save(consumer, "soul_campfire_from_sulphur");
+
         ShapelessRecipeBuilder.shapeless(Items.BLAZE_POWDER, 3)
                 .requires(Items.BLAZE_ROD)
                 .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.BLAZE_ROD))
                 .save(consumer, "blaze_powder_from_pestle");
+
+        ShapelessRecipeBuilder.shapeless(ModItems.CURED_FLESH.get())
+                .requires(Items.ROTTEN_FLESH)
+                .requires(ModItems.SALTPETRE.get())
+                .unlockedBy("has_item", has(ModItems.SALTPETRE.get()))
+                .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL, 4)
                 .requires(Items.BONE)

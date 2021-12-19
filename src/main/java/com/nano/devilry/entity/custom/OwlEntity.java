@@ -95,19 +95,19 @@ public class OwlEntity extends Parrot implements IAnimatable {
 
     @Override
     public SoundEvent getAmbientSound() {
-        this.playSound(ModSoundEvents.OWL_AMBIENT.get(), 0.2F, 1.0F);
+        this.playSound(ModSoundEvents.OWL_AMBIENT.get(), 0.2F, 0.8F + level.random.nextFloat() * 0.4F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        this.playSound(ModSoundEvents.OWL_HURT.get(), 1.0F, 1.7F);
+        this.playSound(ModSoundEvents.OWL_HURT.get(), 1.0F, 1.7F + level.random.nextFloat() * 0.4F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        this.playSound(ModSoundEvents.OWL_DEATH.get(), 0.7F, 2.0F);
+        this.playSound(ModSoundEvents.OWL_DEATH.get(), 0.7F, 2.0F + level.random.nextFloat() * 0.4F);
         return null;
     }
 
@@ -121,7 +121,7 @@ public class OwlEntity extends Parrot implements IAnimatable {
 
     protected void onFlap() {
         this.playSound(SoundEvents.PARROT_FLY, 0.05F, 1.0F);
-        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+        this.nextFlap = this.flyDist + this.flapSpeed / 3.0F;
     }
 
     @Override

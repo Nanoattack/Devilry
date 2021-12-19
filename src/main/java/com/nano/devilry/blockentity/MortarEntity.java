@@ -2,6 +2,7 @@ package com.nano.devilry.blockentity;
 
 import com.nano.devilry.data.recipes.ModRecipeTypes;
 import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
+import com.nano.devilry.events.ModSoundEvents;
 import com.nano.devilry.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -123,7 +125,9 @@ public class MortarEntity extends BlockEntity
                     case 6:
                         return true;
                     case 7: return stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get() ||
-                            stack.getItem() == ModItems.BRONZE_BLEND.get();
+                            stack.getItem() == ModItems.BRONZE_BLEND.get() ||
+                            stack.getItem() == Items.GUNPOWDER ||
+                            stack.getItem() == ModItems.SULPHUR_DUST.get();
                     default:
                         return false;
                 }
@@ -213,7 +217,7 @@ public class MortarEntity extends BlockEntity
 
         itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
 
-        level.playSound((Player) null, getBlockPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound((Player) null, getBlockPos(), ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
 
         this.resetProgress();
     }

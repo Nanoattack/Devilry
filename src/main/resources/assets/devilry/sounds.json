@@ -5,6 +5,12 @@
       "devilry:cloth_rip"
     ]
   },
+  "mortar_grind": {
+    "subtitle": "devilry.mortar_grind",
+    "sounds": [
+      "devilry:grind"
+    ]
+  },
   "knife_slash": {
     "subtitle": "devilry.knife_slash",
     "sounds": [
@@ -12,13 +18,12 @@
       "devilry:knife_slash_2"
     ]
   },
-  "owl_ambient": {
+  "owl_ambience": {
     "subtitle": "devilry.owl_ambient",
     "sounds": [
       "devilry:owl_ambient_1",
       "devilry:owl_ambient_2",
-      "devilry:owl_ambient_3",
-      "devilry:owl_ambient_4"
+      "devilry:owl_ambient_3"
     ]
   },
   "owl_flap": {

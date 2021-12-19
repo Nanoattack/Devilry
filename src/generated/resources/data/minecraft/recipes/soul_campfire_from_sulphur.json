@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SsS",
+    "LLL"
+  ],
+  "key": {
+    "s": {
+      "item": "devilry:sulphur_dust"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "minecraft:soul_campfire"
+  }
+}

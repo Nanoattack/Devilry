@@ -12,6 +12,21 @@ public class ModBlockLootTables extends BlockLoot
     @Override
     protected void addTables()
     {
+        //GENERAL
+
+        dropSelf(ModBlocks.LIMESTONE.get());
+        dropSelf(ModBlocks.POLISHED_LIMESTONE.get());
+        dropSelf(ModBlocks.LIMESTONE_STAIRS.get());
+        dropSelf(ModBlocks.POLISHED_LIMESTONE_STAIRS.get());
+        dropSelf(ModBlocks.LIMESTONE_SLAB.get());
+        dropSelf(ModBlocks.POLISHED_LIMESTONE_SLAB.get());
+        dropSelf(ModBlocks.CALCITE_SLAB.get());
+        dropSelf(ModBlocks.CALCITE_STAIRS.get());
+        dropSelf(ModBlocks.TUFF_SLAB.get());
+        dropSelf(ModBlocks.TUFF_STAIRS.get());
+        dropSelf(ModBlocks.DRIPSTONE_SLAB.get());
+        dropSelf(ModBlocks.DRIPSTONE_STAIRS.get());
+
         //TIN
         dropSelf(ModBlocks.TIN_BLOCK.get());
 

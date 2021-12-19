@@ -27,6 +27,12 @@ public class DevilryTags
         public static final Tags.IOptionalNamedTag<Item> PESTLE_IN_MORTAR =
                 createTag("pestle_in_mortar");
 
+        public static final Tags.IOptionalNamedTag<Item> MORTAR_SULPHUR =
+                createTag("mortar_sulphur");
+
+        public static final Tags.IOptionalNamedTag<Item> POTASSIUM_NITRATE =
+                createTag("potassium_nitrate");
+
         //INGOTS
         public static final Tags.IOptionalNamedTag<Item> INGOTS_TIN =
                 createForgeTag("ingots/tin");
