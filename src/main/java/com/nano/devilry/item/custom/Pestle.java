@@ -1,10 +1,12 @@
 package com.nano.devilry.item.custom;
 
 import com.nano.devilry.block.ModBlocks;
+import com.nano.devilry.events.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,31 +35,39 @@ public class Pestle extends Item
             Player player = Objects.requireNonNull(context.getPlayer());
             BlockState clickedBlock = level.getBlockState(context.getClickedPos());
 
-            rightClickOnCertainBlockState(clickedBlock, context, player, stack);
+            rightClickOnCertainBlockState(clickedBlock, context, player, stack, level);
         }
 
         return super.onItemUseFirst(stack, context);
     }
 
-    private void rightClickOnCertainBlockState(BlockState clickedBlock, UseOnContext context, Player player, ItemStack stack) {
+    private void rightClickOnCertainBlockState(BlockState clickedBlock, UseOnContext context, Player player, ItemStack stack, Level level) {
         if (player.isCrouching()) {
             stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(context.getHand()));
-            if (random.nextFloat() < 0.33f) {
-                if (blockIsValidForFlint(clickedBlock)) {
-                    destroyBlockGiveFlint(player, context.getLevel(), context.getClickedPos());
-                } else if (blockIsValidForGlowStone(clickedBlock)) {
-                    destroyBlockGiveGlowstone(player, context.getLevel(), context.getClickedPos());
-                } else if (blockIsValidForAmethyst(clickedBlock)) {
-                    destroyBlockGiveAmethyst(player, context.getLevel(), context.getClickedPos());
-                }else {
-                    context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+            if (blockIsValid(clickedBlock)) {
+                if (random.nextFloat() < 0.33f) {
+                    if (blockIsValidForFlint(clickedBlock)) {
+                        destroyBlockGiveFlint(player, context.getLevel(), context.getClickedPos());
+                    } else if (blockIsValidForGlowStone(clickedBlock)) {
+                        destroyBlockGiveGlowstone(player, context.getLevel(), context.getClickedPos());
+                    } else if (blockIsValidForAmethyst(clickedBlock)) {
+                        destroyBlockGiveAmethyst(player, context.getLevel(), context.getClickedPos());
+                    } else {
+                        context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.CALCITE_BREAK, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                    }
+                } else {
+                    context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.CALCITE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 }
-            }else {
+            } else {
                 context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
             }
         }
     }
 
+    private boolean blockIsValid(BlockState clickedBlock)
+    {
+        return blockIsValidForFlint(clickedBlock) || blockIsValidForAmethyst(clickedBlock) || blockIsValidForGlowStone(clickedBlock);
+    }
     private boolean blockIsValidForFlint(BlockState clickedBlock) {
         return clickedBlock.getBlock() == Blocks.GRAVEL
                 ||clickedBlock.getBlock() == Blocks.SAND
@@ -74,7 +84,7 @@ public class Pestle extends Item
     private void destroyBlockGiveFlint(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.FLINT));
-        level.playSound((Player) null, blockPos, SoundEvents.GRINDSTONE_USE, SoundSource.PLAYERS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
@@ -85,7 +95,7 @@ public class Pestle extends Item
     private void destroyBlockGiveGlowstone(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.GLOWSTONE_DUST, 4));
-        level.playSound((Player) null, blockPos, SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
@@ -97,7 +107,7 @@ public class Pestle extends Item
     private void destroyBlockGiveAmethyst(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.AMETHYST_SHARD, 4));
-        level.playSound((Player) null, blockPos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 

@@ -1,0 +1,29 @@
+{
+  "type": "devilry:grinding",
+  "ingredients": [
+    {
+      "tag": "devilry:pestle_in_mortar"
+    },
+    {
+      "tag": "devilry:potassium_nitrate"
+    },
+    {
+      "tag": "devilry:potassium_nitrate"
+    },
+    {
+      "item": "devilry:sulphur_dust"
+    },
+    {
+      "item": "devilry:sulphur_dust"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "minecraft:charcoal"
+    }
+  ],
+  "output": {
+    "item": "minecraft:gunpowder"
+  }
+}

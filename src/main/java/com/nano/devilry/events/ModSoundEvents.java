@@ -21,11 +21,14 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> CLOTH_RIP =
             registerSoundEvent("cloth_rip");
 
+    public static final RegistryObject<SoundEvent> MORTAR_GRIND =
+            registerSoundEvent("mortar_grind");
+
     public static final RegistryObject<SoundEvent> OWL_FLAP =
             registerSoundEvent("owl_flap");
 
     public static final RegistryObject<SoundEvent> OWL_AMBIENT =
-            registerSoundEvent("owl_ambient");
+            registerSoundEvent("owl_ambience");
 
     public static final RegistryObject<SoundEvent> OWL_HURT =
             registerSoundEvent("owl_hurt");

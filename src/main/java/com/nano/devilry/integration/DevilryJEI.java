@@ -1,7 +1,6 @@
 package com.nano.devilry.integration;
 
 import com.nano.devilry.ModMain;
-import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.container.MortarContainer;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
 import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
@@ -9,14 +8,9 @@ import com.nano.devilry.item.ModItems;
 import com.nano.devilry.screen.MortarScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
-import mezz.jei.api.helpers.IJeiHelpers;
-import mezz.jei.api.helpers.IStackHelper;
-import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 

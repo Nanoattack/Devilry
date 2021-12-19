@@ -32,6 +32,7 @@ public class Knife extends Item {
         if (!level.isClientSide) {
 
             SliceCraft(level, player, stack);
+
         }
 
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());

@@ -1,0 +1,29 @@
+{
+  "type": "devilry:grinding",
+  "ingredients": [
+    {
+      "tag": "devilry:pestle_in_mortar"
+    },
+    {
+      "tag": "devilry:mortar_sulphur"
+    },
+    {
+      "tag": "devilry:mortar_sulphur"
+    },
+    {
+      "tag": "devilry:mortar_sulphur"
+    },
+    {
+      "tag": "devilry:mortar_sulphur"
+    },
+    {
+      "tag": "minecraft:soul_fire_base_blocks"
+    },
+    {
+      "tag": "minecraft:soul_fire_base_blocks"
+    }
+  ],
+  "output": {
+    "item": "devilry:sulphur_dust"
+  }
+}

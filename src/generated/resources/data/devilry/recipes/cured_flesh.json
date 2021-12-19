@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "devilry:saltpetre"
+    }
+  ],
+  "result": {
+    "item": "devilry:cured_flesh"
+  }
+}
