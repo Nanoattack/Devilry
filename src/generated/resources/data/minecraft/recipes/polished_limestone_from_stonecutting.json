@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "devilry:limestone"
+  },
+  "result": "devilry:polished_limestone",
+  "count": 1
+}
