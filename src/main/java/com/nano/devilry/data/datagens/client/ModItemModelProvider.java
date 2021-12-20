@@ -21,8 +21,14 @@ public class ModItemModelProvider extends ItemModelProvider
     withExistingParent("raw_tin_block", modLoc("block/raw_tin_block"));
     withExistingParent("bronze_block", modLoc("block/bronze_block"));
     withExistingParent("limestone", modLoc("block/limestone"));
+    withExistingParent("festering_limestone", modLoc("block/festering_limestone"));
+    withExistingParent("saltpetre_cluster", modLoc("block/saltpetre_cluster"));
+    withExistingParent("large_saltpetre_bud", modLoc("block/large_saltpetre_bud"));
+    withExistingParent("medium_saltpetre_bud", modLoc("block/medium_saltpetre_bud"));
+    withExistingParent("small_saltpetre_bud", modLoc("block/small_saltpetre_bud"));
     withExistingParent("polished_limestone", modLoc("block/polished_limestone"));
     withExistingParent("limestone_stairs", modLoc("block/limestone_stairs"));
+    withExistingParent("limestone_wall", modLoc("block/limestone_wall_inventory"));
     withExistingParent("polished_limestone_stairs", modLoc("block/polished_limestone_stairs"));
     withExistingParent("limestone_slab", modLoc("block/limestone_slab"));
     withExistingParent("polished_limestone_slab", modLoc("block/polished_limestone_slab"));

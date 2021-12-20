@@ -9,6 +9,24 @@
     "devilry:bronze_bars",
     "devilry:bronze_chain",
     "devilry:bronze_lantern",
-    "devilry:mortar"
+    "devilry:mortar",
+    "devilry:limestone",
+    "devilry:limestone_wall",
+    "devilry:polished_limestone",
+    "devilry:limestone_stairs",
+    "devilry:polished_limestone_stairs",
+    "devilry:limestone_slab",
+    "devilry:polished_limestone_slab",
+    "devilry:festering_limestone",
+    "devilry:calcite_stairs",
+    "devilry:calcite_slab",
+    "devilry:tuff_stairs",
+    "devilry:tuff_slab",
+    "devilry:dripstone:stairs",
+    "devilry:dripstone_slab",
+    "devilry:saltpetre_cluster",
+    "devilry:large_saltpetre_bud",
+    "devilry:medium_saltpetre_bud",
+    "devilry:small_saltpetre_bud"
   ]
 }

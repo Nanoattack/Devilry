@@ -23,6 +23,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         simpleBlock(ModBlocks.DEEPSLATE_TIN_ORE.get());
         simpleBlock(ModBlocks.BRONZE_BLOCK.get());
         simpleBlock(ModBlocks.LIMESTONE.get());
+        simpleBlock(ModBlocks.FESTERING_LIMESTONE.get());
         simpleBlock(ModBlocks.POLISHED_LIMESTONE.get());
         ResourceLocation limestone = modLoc("block/limestone");
         ResourceLocation polished_limestone = modLoc("block/polished_limestone");
@@ -39,6 +40,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         slabBlock(ModBlocks.CALCITE_SLAB.get(), calcite, calcite);
         slabBlock(ModBlocks.TUFF_SLAB.get(), tuff, tuff);
         slabBlock(ModBlocks.DRIPSTONE_SLAB.get(), dripstone, dripstone);
+        wallBlock(ModBlocks.LIMESTONE_WALL.get(), "limestone", limestone);
 
     }
 }

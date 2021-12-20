@@ -70,6 +70,11 @@ public class ModMain
         setRenderLayer(ModBlocks.BRONZE_LANTERN.get(), RenderType.cutout());
         setRenderLayer(ModBlocks.MORTAR.get(), RenderType.cutout());
 
+        setRenderLayer(ModBlocks.SALTPETRE_CLUSTER.get(), RenderType.cutout());
+        setRenderLayer(ModBlocks.LARGE_SALTPETRE_BUD.get(), RenderType.cutout());
+        setRenderLayer(ModBlocks.MEDIUM_SALTPETRE_BUD.get(), RenderType.cutout());
+        setRenderLayer(ModBlocks.SMALL_SALPETRE_BUD.get(), RenderType.cutout());
+
         MenuScreens.register(ModContainers.MORTAR_CONTAINER.get(), MortarScreen::new);
 
     }

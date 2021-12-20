@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "devilry:block/medium_saltpetre_bud"
+  }
+}

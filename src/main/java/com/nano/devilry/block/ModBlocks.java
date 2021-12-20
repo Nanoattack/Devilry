@@ -1,7 +1,9 @@
 package com.nano.devilry.block;
 
 import com.nano.devilry.ModMain;
+import com.nano.devilry.block.custom.FesteringSaltPetreBlock;
 import com.nano.devilry.block.custom.MortarBlock;
+import com.nano.devilry.block.custom.SaltPetreClusterBlock;
 import com.nano.devilry.item.ModItemGroups;
 import com.nano.devilry.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -16,6 +18,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
+import static net.minecraft.world.level.block.Blocks.AMETHYST_CLUSTER;
+
 public class ModBlocks
 {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModMain.MOD_ID);
@@ -24,6 +28,27 @@ public class ModBlocks
     public static final RegistryObject<Block> MORTAR = BLOCKS.register("mortar",
             ()-> new MortarBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops().noOcclusion()));
 
+    //BUDDING BLOCKS
+    public static final RegistryObject<Block> FESTERING_LIMESTONE = registerBlock("festering_limestone",
+            ()-> new FesteringSaltPetreBlock(BlockBehaviour.Properties.of(Material.STONE).randomTicks()
+                    .strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+
+    public static final RegistryObject<Block> SALTPETRE_CLUSTER = registerBlock("saltpetre_cluster", ()->
+            new SaltPetreClusterBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST)
+                    .noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).requiresCorrectToolForDrops()
+                    .lightLevel((p_152632_) -> {return  5;})));
+
+    public static final RegistryObject<Block> LARGE_SALTPETRE_BUD = registerBlock("large_saltpetre_bud",
+            ()-> new SaltPetreClusterBlock(5, 3, BlockBehaviour.Properties.copy(AMETHYST_CLUSTER).sound(SoundType.LARGE_AMETHYST_BUD).requiresCorrectToolForDrops()
+                    .lightLevel((p_152629_) -> {return 4;})));
+
+    public static final RegistryObject<Block> MEDIUM_SALTPETRE_BUD = registerBlock("medium_saltpetre_bud",
+            ()-> new SaltPetreClusterBlock(4, 3, BlockBehaviour.Properties.copy(AMETHYST_CLUSTER).sound(SoundType.MEDIUM_AMETHYST_BUD).requiresCorrectToolForDrops()
+                    .lightLevel((p_152617_) -> {return 2;})));
+
+    public static final RegistryObject<Block> SMALL_SALPETRE_BUD = registerBlock("small_saltpetre_bud",
+            ()-> new SaltPetreClusterBlock(3, 4, BlockBehaviour.Properties.copy(AMETHYST_CLUSTER).sound(SoundType.SMALL_AMETHYST_BUD).requiresCorrectToolForDrops()
+                    .lightLevel((p_187409_) -> {return 1;})));
     //STONES
 
     public static final RegistryObject<Block> LIMESTONE = registerBlock("limestone",
@@ -32,40 +57,43 @@ public class ModBlocks
     public static final RegistryObject<Block> POLISHED_LIMESTONE = registerBlock("polished_limestone",
             ()-> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
+    public static final RegistryObject<WallBlock> LIMESTONE_WALL = registerBlock("limestone_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+
     public static final RegistryObject<StairBlock> LIMESTONE_STAIRS = registerBlock("limestone_stairs",
             () -> new StairBlock(()-> LIMESTONE.get().defaultBlockState(),
-                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF)));
+                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<StairBlock> POLISHED_LIMESTONE_STAIRS = registerBlock("polished_limestone_stairs",
             () -> new StairBlock(()-> POLISHED_LIMESTONE.get().defaultBlockState(),
-                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF)));
+                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> LIMESTONE_SLAB = registerBlock("limestone_slab",
-            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> POLISHED_LIMESTONE_SLAB = registerBlock("polished_limestone_slab",
-            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<StairBlock> CALCITE_STAIRS = registerBlock("calcite_stairs",
             () -> new StairBlock(()-> Blocks.CALCITE.defaultBlockState(),
-                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.CALCITE)));
+                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.CALCITE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> CALCITE_SLAB = registerBlock("calcite_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
 
     public static final RegistryObject<StairBlock> TUFF_STAIRS = registerBlock("tuff_stairs",
             () -> new StairBlock(()-> Blocks.TUFF.defaultBlockState(),
-                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF)));
+                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> TUFF_SLAB = registerBlock("tuff_slab",
-            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<StairBlock> DRIPSTONE_STAIRS = registerBlock("dripstone_stairs",
             () -> new StairBlock(()-> Blocks.DRIPSTONE_BLOCK.defaultBlockState(),
-                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.DRIPSTONE_BLOCK)));
+                    BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> DRIPSTONE_SLAB = registerBlock("dripstone_slab",
-            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops()));
 
     //TIN
     public static final RegistryObject<Block> TIN_BLOCK = registerBlock("tin_block",
