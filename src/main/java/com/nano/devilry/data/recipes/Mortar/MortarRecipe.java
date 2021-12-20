@@ -24,62 +24,64 @@ import java.util.List;
 public class MortarRecipe implements IMortarRecipe
 
 {
+    private int amount;
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
     protected static final List<Boolean> itemMatchesSlot = new ArrayList<>();
 
-    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, Integer amount) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.amount = amount;
 
         for (int i = 0; i < 6; i++) {
             itemMatchesSlot.add(false);
         }
     }
-        @Override
+    @Override
     public boolean matches(SimpleContainer inv, Level plevel) {
 
-            for(int i = 0; i < 6; i++)
-                itemMatchesSlot.set(i+1, false);
+        for(int i = 0; i < 6; i++)
+            itemMatchesSlot.set(i+1, false);
 
-            // the flag is to break out early in case nothing matches for that slot
-            boolean flag = false;
+        // the flag is to break out early in case nothing matches for that slot
+        boolean flag = false;
 
-            // cycle through each recipe slot
-            for(int j = 0; j < 6; j++) {
-                //cycle through each slot for each recipe slot
-                for (int i = 0; i < 6; i++) {
-                    //if the pestle is present
-                    if(recipeItems.get(0).test(inv.getItem(0))) {
-                        //if the recipe matches a slot
-                        if (recipeItems.get(j + 1).test(inv.getItem(i + 1))) {
-                            // if the slot is not taken up
-                            if (!itemMatchesSlot.get(i + 1)) {
-                                //mark the slot as taken up
-                                itemMatchesSlot.set(i + 1, true);
-                                flag = true;
-                                break;
-                            }
+        // cycle through each recipe slot
+        for(int j = 0; j < 6; j++) {
+            //cycle through each slot for each recipe slot
+            for (int i = 0; i < 6; i++) {
+                //if the pestle is present
+                if(recipeItems.get(0).test(inv.getItem(0))) {
+                    //if the recipe matches a slot
+                    if (recipeItems.get(j + 1).test(inv.getItem(i + 1))) {
+                        // if the slot is not taken up
+                        if (!itemMatchesSlot.get(i + 1)) {
+                            //mark the slot as taken up
+                            itemMatchesSlot.set(i + 1, true);
+                            flag = true;
+                            break;
                         }
-                    } else
-                        return false;
-                }
-                //this is where it breaks out early to stop the craft
-                if(!flag)
-                    break;
-                //reset the flag for the next iteration
-                flag = false;
-            }
-            // checks if a slot is not taken up, if its not taken up then itll not craft
-            for(int i = 0; i < 6; i++) {
-                if (!itemMatchesSlot.get(i+1))
+                    }
+                } else
                     return false;
             }
-            //if it reaches here that means it has completed the shapeless craft and should craft it
-            return true;
+            //this is where it breaks out early to stop the craft
+            if(!flag)
+                break;
+            //reset the flag for the next iteration
+            flag = false;
         }
+        // checks if a slot is not taken up, if its not taken up then itll not craft
+        for(int i = 0; i < 6; i++) {
+            if (!itemMatchesSlot.get(i+1))
+                return false;
+        }
+        //if it reaches here that means it has completed the shapeless craft and should craft it
+        return true;
+    }
 
     @Override
     public ItemStack assemble(SimpleContainer p_44001_) {
@@ -101,6 +103,10 @@ public class MortarRecipe implements IMortarRecipe
         return output.copy();
     }
 
+    public Integer getAmount() {
+        return amount;
+    }
+
     public ItemStack getIcon() {
         return new ItemStack(ModBlocks.MORTAR.get());
     }
@@ -112,7 +118,7 @@ public class MortarRecipe implements IMortarRecipe
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-       return ModRecipeTypes.MORTAR_SERIALIZER.get();
+        return ModRecipeTypes.MORTAR_SERIALIZER.get();
     }
 
     public static class MortarRecipeType implements RecipeType<MortarRecipe> {
@@ -125,10 +131,11 @@ public class MortarRecipe implements IMortarRecipe
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
             implements RecipeSerializer<MortarRecipe> {
-        
+
         @Override
         public MortarRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
+            Integer amount = GsonHelper.getAsInt(json, "amount");
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(8, Ingredient.EMPTY);
@@ -138,7 +145,7 @@ public class MortarRecipe implements IMortarRecipe
             }
 
             return new MortarRecipe(recipeId, output,
-                    inputs);
+                    inputs, amount);
         }
         @Nullable
         @Override
@@ -151,7 +158,7 @@ public class MortarRecipe implements IMortarRecipe
 
             ItemStack output = pBuffer.readItem();
             return new MortarRecipe(pRecipeId, output,
-                    inputs);
+                    inputs, null);
         }
 
         @Override
@@ -161,6 +168,7 @@ public class MortarRecipe implements IMortarRecipe
                 ing.toNetwork(pBuffer);
             }
             pBuffer.writeItemStack(pRecipe.getResultItem(), false);
+            pBuffer.writeInt(pRecipe.amount);
         }
     }
 }
