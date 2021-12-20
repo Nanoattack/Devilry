@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "T  ",
+    "TT ",
+    "TTT"
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:tuff"
+    }
+  },
+  "result": {
+    "item": "devilry:tuff_stairs",
+    "count": 4
+  }
+}

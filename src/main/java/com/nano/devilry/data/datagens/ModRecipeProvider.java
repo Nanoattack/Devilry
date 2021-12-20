@@ -12,6 +12,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.IRecipeContainer;
@@ -112,6 +113,138 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.HONEYCOMB))
                 .save(consumer, "honey_bottle_from_pestle");
+        //STONE
+
+        ShapedRecipeBuilder.shaped(ModBlocks.POLISHED_LIMESTONE.get())
+                .define('L', ModBlocks.LIMESTONE.get())
+                .pattern("LL")
+                .pattern("LL")
+                .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.POLISHED_LIMESTONE_STAIRS.get(), 4)
+                .define('L', ModBlocks.POLISHED_LIMESTONE.get())
+                .pattern("L  ")
+                .pattern("LL ")
+                .pattern("LLL")
+                .unlockedBy("has_item", has(ModBlocks.POLISHED_LIMESTONE.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.POLISHED_LIMESTONE_SLAB.get(), 6)
+                .define('L', ModBlocks.POLISHED_LIMESTONE.get())
+                .pattern("LLL")
+                .unlockedBy("has_item", has(ModBlocks.POLISHED_LIMESTONE.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.LIMESTONE_STAIRS.get(), 4)
+                .define('L', ModBlocks.LIMESTONE.get())
+                .pattern("L  ")
+                .pattern("LL ")
+                .pattern("LLL")
+                .unlockedBy("has_item", has(ModBlocks.POLISHED_LIMESTONE.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.LIMESTONE_SLAB.get(), 6)
+                .define('L', ModBlocks.LIMESTONE.get())
+                .pattern("LLL")
+                .unlockedBy("has_item", has(ModBlocks.POLISHED_LIMESTONE.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.CALCITE_STAIRS.get(), 4)
+                .define('C', Blocks.CALCITE)
+                .pattern("C  ")
+                .pattern("CC ")
+                .pattern("CCC")
+                .unlockedBy("has_item", has(Blocks.CALCITE))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.CALCITE_SLAB.get(), 6)
+                .define('C', Blocks.CALCITE)
+                .pattern("CCC")
+                .unlockedBy("has_item", has(Blocks.CALCITE))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.TUFF_STAIRS.get(), 4)
+                .define('T', Blocks.TUFF)
+                .pattern("T  ")
+                .pattern("TT ")
+                .pattern("TTT")
+                .unlockedBy("has_item", has(Blocks.TUFF))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.TUFF_SLAB.get(), 6)
+                .define('T', Blocks.TUFF)
+                .pattern("TTT")
+                .unlockedBy("has_item", has(Blocks.TUFF))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.DRIPSTONE_STAIRS.get(), 4)
+                .define('D', Blocks.DRIPSTONE_BLOCK)
+                .pattern("D  ")
+                .pattern("DD ")
+                .pattern("DDD")
+                .unlockedBy("has_item", has(Blocks.DRIPSTONE_BLOCK))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModBlocks.DRIPSTONE_SLAB.get(), 6)
+                .define('D', Blocks.DRIPSTONE_BLOCK)
+                .pattern("DDD")
+                .unlockedBy("has_item", has(Blocks.DRIPSTONE_BLOCK))
+                .save(consumer);
+
+        //STONECUTTING
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), ModBlocks.POLISHED_LIMESTONE.get())
+                .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
+                .save(consumer, "polished_limestone_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), ModBlocks.LIMESTONE_SLAB.get(), 2)
+                .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
+                .save(consumer, "limestone_slab_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), ModBlocks.LIMESTONE_STAIRS.get())
+                .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
+                .save(consumer, "limestone_slairs_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.POLISHED_LIMESTONE.get()), ModBlocks.POLISHED_LIMESTONE_STAIRS.get())
+                .unlockedBy("has_item", has(ModBlocks.POLISHED_LIMESTONE.get()))
+                .save(consumer, "polished_limestone_stairs_from_polished");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), ModBlocks.POLISHED_LIMESTONE_STAIRS.get())
+                .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
+                .save(consumer, "polished_limestone_stairs_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.POLISHED_LIMESTONE.get()), ModBlocks.POLISHED_LIMESTONE_SLAB.get(), 2)
+                .unlockedBy("has_item", has(ModBlocks.POLISHED_LIMESTONE.get()))
+                .save(consumer, "polished_limestone_slab_from_polished");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), ModBlocks.POLISHED_LIMESTONE_SLAB.get(), 2)
+                .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
+                .save(consumer, "polished_limestone_slab_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(Blocks.CALCITE), ModBlocks.CALCITE_SLAB.get(), 2)
+                .unlockedBy("has_item", has(Blocks.CALCITE))
+                .save(consumer, "calcite_slab_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(Blocks.CALCITE), ModBlocks.CALCITE_STAIRS.get())
+                .unlockedBy("has_item", has(Blocks.CALCITE))
+                .save(consumer, "calcite_stairs_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(Blocks.TUFF), ModBlocks.TUFF_SLAB.get(), 2)
+                .unlockedBy("has_item", has(Blocks.TUFF))
+                .save(consumer, "tuff_slab_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(Blocks.TUFF), ModBlocks.TUFF_STAIRS.get())
+                .unlockedBy("has_item", has(Blocks.TUFF))
+                .save(consumer, "tuff_stairs_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(Blocks.DRIPSTONE_BLOCK), ModBlocks.DRIPSTONE_SLAB.get(), 2)
+                .unlockedBy("has_item", has(Blocks.DRIPSTONE_BLOCK))
+                .save(consumer, "dripstone_slab_from_stonecutting");
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(Blocks.DRIPSTONE_BLOCK), ModBlocks.DRIPSTONE_STAIRS.get())
+                .unlockedBy("has_item", has(Blocks.DRIPSTONE_BLOCK))
+                .save(consumer, "dripstone_stairs_from_stonecutting");
 
         //TIN
         ShapelessRecipeBuilder.shapeless(ModBlocks.TIN_BLOCK.get())
