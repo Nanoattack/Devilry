@@ -25,5 +25,6 @@
   ],
   "output": {
     "item": "devilry:alchemical_essence"
-  }
+  },
+  "amount": 1
 }

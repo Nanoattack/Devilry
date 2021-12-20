@@ -24,6 +24,8 @@
     }
   ],
   "output": {
-    "item": "devilry:sulphur_dust"
-  }
+    "item": "devilry:sulphur_dust",
+    "count": 3
+  },
+  "amount": 3
 }

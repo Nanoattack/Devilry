@@ -24,6 +24,8 @@
     }
   ],
   "output": {
-    "item": "devilry:bronze_blend"
-  }
+    "item": "devilry:bronze_blend",
+    "count": 2
+  },
+  "amount": 2
 }
