@@ -35,11 +35,7 @@ public class WittlingRecipe implements IWittlingRecipe
         this.output = output;
         this.recipeItems = recipeItems;
         this.amount = amount;
-
-        for (int i = 0; i < 6; i++) {
-            itemMatchesSlot.add(false);
-        }
-    }
+            }
     @Override
     public boolean matches(SimpleContainer inv, Level plevel) {
         if(recipeItems.get(0).test(inv.getItem(0) )||
