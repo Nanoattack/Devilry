@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "devilry:block/stolas_effigy",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "devilry:block/stolas_effigy"
+    },
+    "facing=south": {
+      "model": "devilry:block/stolas_effigy",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "devilry:block/stolas_effigy",
+      "y": 270
+    }
+  }
+}

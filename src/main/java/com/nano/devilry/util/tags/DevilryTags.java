@@ -27,6 +27,9 @@ public class DevilryTags
         public static final Tags.IOptionalNamedTag<Item> PESTLE_IN_MORTAR =
                 createTag("pestle_in_mortar");
 
+        public static final Tags.IOptionalNamedTag<Item> KNIFE_IN_WITTLING =
+                createTag("knife_in_wittling");
+
         public static final Tags.IOptionalNamedTag<Item> MORTAR_SULPHUR =
                 createTag("mortar_sulphur");
 

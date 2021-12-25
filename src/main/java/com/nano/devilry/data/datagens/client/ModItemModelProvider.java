@@ -34,10 +34,15 @@ public class ModItemModelProvider extends ItemModelProvider
     withExistingParent("polished_limestone_slab", modLoc("block/polished_limestone_slab"));
     withExistingParent("calcite_stairs", modLoc("block/calcite_stairs"));
     withExistingParent("calcite_slab", modLoc("block/calcite_slab"));
+    withExistingParent("calcite_wall", modLoc("block/calcite_wall_inventory"));
     withExistingParent("tuff_stairs", modLoc("block/tuff_stairs"));
     withExistingParent("tuff_slab", modLoc("block/tuff_slab"));
+    withExistingParent("tuff_wall", modLoc("block/tuff_wall_inventory"));
     withExistingParent("dripstone_stairs", modLoc("block/dripstone_stairs"));
     withExistingParent("dripstone_slab", modLoc("block/dripstone_slab"));
+    withExistingParent("dripstone_wall", modLoc("block/dripstone_wall_inventory"));
+    withExistingParent("stolas_effigy", modLoc("block/stolas_effigy"));
+    withExistingParent("wittling_table", modLoc("block/wittling_table"));
 
     ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
     // General
@@ -64,6 +69,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "bat_guano");
     builder(itemGenerated, "cured_flesh");
     builder(itemGenerated, "enchanted_forest_music_disc");
+    builder(itemGenerated, "owl_feather");
 }
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
         return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);

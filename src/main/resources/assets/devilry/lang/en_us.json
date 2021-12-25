@@ -24,14 +24,22 @@
   "block.devilry.limestone_slab": "Limestone Slab",
   "block.devilry.polished_limestone_slab": "Polished Limestone Slab",
   "block.devilry.calcite_stairs": "Calcite Stairs",
+  "block.devilry.calcite_wall": "Calcite Wall",
   "block.devilry.tuff_stairs": "Tuff Stairs",
+  "block.devilry.tuff_wall": "Tuff Wall",
   "block.devilry.dripstone_stairs": "Dripstone Stairs",
+  "block.devilry.dripstone_wall": "Dripstone Wall",
   "block.devilry.tuff_slab": "Tuff Slab",
   "block.devilry.calcite_slab": "Calcite Slab",
   "block.devilry.dripstone_slab": "Dripstone Slab",
+  "block.devilry.stolas_effigy": "Stolas Effigy",
+
+  "block.devilry.wittling_table": "Wittling Table",
+  "screen.devilry.wittlingtable": "Wittling",
 
   "item.devilry.copper_nugget": "Copper Nugget",
   "item.devilry.owl_spawn_egg": "Owl Spawn Egg",
+  "item.devilry.owl_feather": "Owl Feather",
   "entity.devilry.owl": "Owl",
   "item.devilry.enchanted_forest_music_disc": "Music Disc",
   "item.devilry.enchanted_forest_music_disc.desc": "NanoAttack - Enchanted Forest",
@@ -54,6 +62,6 @@
   "item.devilry.bronze_knife": "Bronze Knife",
 
   "itemGroup.devilrymaterials": "Devilry - Materials",
-  "itemGroup.devilryblocks" : "Devilry - Decoration Blocks",
+  "itemGroup.devilryblocks" : "Devilry - Blocks",
   "itemGroup.devilrymisc" : "Devilry - Miscellaneous"
 }

@@ -5,9 +5,11 @@ import com.nano.devilry.blockentity.ModBlockEntities;
 import com.nano.devilry.container.ModContainers;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
 import com.nano.devilry.entity.ModEntityTypes;
+import com.nano.devilry.events.LootInjector;
 import com.nano.devilry.events.ModSoundEvents;
 import com.nano.devilry.item.ModItems;
 import com.nano.devilry.screen.MortarScreen;
+import com.nano.devilry.screen.WittlingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Blocks;
@@ -49,6 +51,8 @@ public class ModMain
 
         GeckoLib.initialize();
 
+        MinecraftForge.EVENT_BUS.register(new LootInjector());
+
         eventbus.addListener(this::setup);
         eventbus.addListener(this::doClientStuff);
 
@@ -69,6 +73,7 @@ public class ModMain
         setRenderLayer(ModBlocks.BRONZE_CHAIN.get(), RenderType.cutout());
         setRenderLayer(ModBlocks.BRONZE_LANTERN.get(), RenderType.cutout());
         setRenderLayer(ModBlocks.MORTAR.get(), RenderType.cutout());
+        setRenderLayer(ModBlocks.STOLAS_EFFIGY.get(), RenderType.translucent());
 
         setRenderLayer(ModBlocks.SALTPETRE_CLUSTER.get(), RenderType.cutout());
         setRenderLayer(ModBlocks.LARGE_SALTPETRE_BUD.get(), RenderType.cutout());
@@ -76,6 +81,7 @@ public class ModMain
         setRenderLayer(ModBlocks.SMALL_SALPETRE_BUD.get(), RenderType.cutout());
 
         MenuScreens.register(ModContainers.MORTAR_CONTAINER.get(), MortarScreen::new);
+        MenuScreens.register(ModContainers.WITTLING_CONTAINER.get(), WittlingScreen::new);
 
     }
 }

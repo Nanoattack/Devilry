@@ -24,6 +24,14 @@ public class ModContainers
                 return new MortarContainer(windowId, world, pos, inv, inv.player);
             })));
 
+    public static final RegistryObject<MenuType<WittlingContainer>> WITTLING_CONTAINER
+            = CONTAINERS.register("wittling_container",
+            ()-> IForgeMenuType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                Level world = inv.player.getCommandSenderWorld();
+                return new WittlingContainer(windowId, world, pos, inv, inv.player);
+            })));
+
     public static void register(IEventBus eventBus)
     {
         CONTAINERS.register(eventBus);

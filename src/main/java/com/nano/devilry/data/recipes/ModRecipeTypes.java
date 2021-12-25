@@ -2,6 +2,7 @@ package com.nano.devilry.data.recipes;
 
 import com.nano.devilry.ModMain;
 import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
+import com.nano.devilry.data.recipes.Wittling.WittlingRecipe;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -20,6 +21,12 @@ public class ModRecipeTypes
 
     public static RecipeType<MortarRecipe> MORTAR_RECIPE
             = new MortarRecipe.MortarRecipeType();
+
+    public static final RegistryObject<WittlingRecipe.Serializer> WITTLING_SERIALIZER
+            = RECIPE_SERIALIZER.register("wittling", WittlingRecipe.Serializer::new);
+
+    public static RecipeType<WittlingRecipe> WITTLING_RECIPE
+            = new WittlingRecipe.WittlingRecipeType();
 
     public static void register(IEventBus eventBus)
     {
