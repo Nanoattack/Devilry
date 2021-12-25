@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "devilry:block/wittling_table_front",
+    "north": "devilry:block/wittling_table_front",
+    "south": "devilry:block/wittling_table_side",
+    "west": "devilry:block/wittling_table_side",
+    "east": "devilry:block/wittling_table_front",
+    "up": "devilry:block/wittling_table_top",
+    "down": "minecraft:block/jungle_planks"
+  }
+}

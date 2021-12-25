@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TTT",
+    "TTT"
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:tuff"
+    }
+  },
+  "result": {
+    "item": "devilry:tuff_wall",
+    "count": 6
+  }
+}

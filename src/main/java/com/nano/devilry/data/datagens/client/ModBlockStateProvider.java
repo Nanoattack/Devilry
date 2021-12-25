@@ -5,6 +5,7 @@ import com.nano.devilry.block.ModBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlockStateProvider extends BlockStateProvider
@@ -41,7 +42,9 @@ public class ModBlockStateProvider extends BlockStateProvider
         slabBlock(ModBlocks.TUFF_SLAB.get(), tuff, tuff);
         slabBlock(ModBlocks.DRIPSTONE_SLAB.get(), dripstone, dripstone);
         wallBlock(ModBlocks.LIMESTONE_WALL.get(), "limestone", limestone);
-
+        wallBlock(ModBlocks.CALCITE_WALL.get(), "calcite", calcite);
+        wallBlock(ModBlocks.TUFF_WALL.get(), "tuff", tuff);
+        wallBlock(ModBlocks.DRIPSTONE_WALL.get(), "dripstone", dripstone);
     }
 }
 

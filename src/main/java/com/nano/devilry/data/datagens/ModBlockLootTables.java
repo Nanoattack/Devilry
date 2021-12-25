@@ -23,7 +23,9 @@ public class ModBlockLootTables extends BlockLoot
     {
         //GENERAL
 
+        dropSelf(ModBlocks.STOLAS_EFFIGY.get());
         dropSelf(ModBlocks.MORTAR.get());
+        dropSelf(ModBlocks.WITTLING_TABLE.get());
         dropSelf(ModBlocks.LIMESTONE.get());
         this.add(ModBlocks.FESTERING_LIMESTONE.get(), noDrop());
         dropSelf(ModBlocks.POLISHED_LIMESTONE.get());
@@ -38,12 +40,15 @@ public class ModBlockLootTables extends BlockLoot
         dropSelf(ModBlocks.TUFF_STAIRS.get());
         dropSelf(ModBlocks.DRIPSTONE_SLAB.get());
         dropSelf(ModBlocks.DRIPSTONE_STAIRS.get());
+        dropSelf(ModBlocks.CALCITE_WALL.get());
+        dropSelf(ModBlocks.DRIPSTONE_WALL.get());
+        dropSelf(ModBlocks.TUFF_WALL.get());
 
         //SALTPETRE
 
 
         this.add(ModBlocks.SALTPETRE_CLUSTER.get(), (p_176063_) -> {
-            return createSilkTouchDispatchTable(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(applyExplosionDecay(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
+            return createSilkTouchDispatchTable(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(applyExplosionDecay(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
         });
         this.dropWhenSilkTouch(ModBlocks.SMALL_SALPETRE_BUD.get());
         this.dropWhenSilkTouch(ModBlocks.MEDIUM_SALTPETRE_BUD.get());

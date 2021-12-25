@@ -1,9 +1,7 @@
 package com.nano.devilry.block;
 
 import com.nano.devilry.ModMain;
-import com.nano.devilry.block.custom.FesteringSaltPetreBlock;
-import com.nano.devilry.block.custom.MortarBlock;
-import com.nano.devilry.block.custom.SaltPetreClusterBlock;
+import com.nano.devilry.block.custom.*;
 import com.nano.devilry.item.ModItemGroups;
 import com.nano.devilry.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -27,6 +25,12 @@ public class ModBlocks
 
     public static final RegistryObject<Block> MORTAR = BLOCKS.register("mortar",
             ()-> new MortarBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops().noOcclusion()));
+
+    public static final RegistryObject<Block> WITTLING_TABLE = registerBlock("wittling_table",
+            ()-> new WittlingTableBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_WOOD).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STOLAS_EFFIGY = registerBlock("stolas_effigy",
+            ()-> new EffigyBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
     //BUDDING BLOCKS
     public static final RegistryObject<Block> FESTERING_LIMESTONE = registerBlock("festering_limestone",
@@ -81,6 +85,9 @@ public class ModBlocks
     public static final RegistryObject<SlabBlock> CALCITE_SLAB = registerBlock("calcite_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
 
+    public static final RegistryObject<WallBlock> CALCITE_WALL = registerBlock("calcite_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
+
     public static final RegistryObject<StairBlock> TUFF_STAIRS = registerBlock("tuff_stairs",
             () -> new StairBlock(()-> Blocks.TUFF.defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF).requiresCorrectToolForDrops()));
@@ -88,12 +95,18 @@ public class ModBlocks
     public static final RegistryObject<SlabBlock> TUFF_SLAB = registerBlock("tuff_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<WallBlock> TUFF_WALL = registerBlock("tuff_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+
     public static final RegistryObject<StairBlock> DRIPSTONE_STAIRS = registerBlock("dripstone_stairs",
             () -> new StairBlock(()-> Blocks.DRIPSTONE_BLOCK.defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> DRIPSTONE_SLAB = registerBlock("dripstone_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<WallBlock> DRIPSTONE_WALL = registerBlock("dripstone_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK)));
 
     //TIN
     public static final RegistryObject<Block> TIN_BLOCK = registerBlock("tin_block",
@@ -132,7 +145,7 @@ public class ModBlocks
     private static<T extends Block> void registerBlockItem(String name, RegistryObject<T> block)
     {
         ModItems.ITEMS.register(name, ()-> new BlockItem(block.get()
-                                    , new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+                                    , new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
     }
 
     public static void register(IEventBus eventBus)

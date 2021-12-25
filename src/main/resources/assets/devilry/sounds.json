@@ -5,6 +5,12 @@
       "devilry:cloth_rip"
     ]
   },
+  "fester": {
+    "subtitle": "devilry.fester",
+    "sounds": [
+      "devilry:fester"
+    ]
+  },
   "mortar_grind": {
     "subtitle": "devilry.mortar_grind",
     "sounds": [

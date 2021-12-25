@@ -24,6 +24,9 @@ public class ModSoundEvents {
     public static final RegistryObject<SoundEvent> MORTAR_GRIND =
             registerSoundEvent("mortar_grind");
 
+    public static final RegistryObject<SoundEvent> FESTER =
+            registerSoundEvent("fester");
+
     public static final RegistryObject<SoundEvent> OWL_FLAP =
             registerSoundEvent("owl_flap");
 

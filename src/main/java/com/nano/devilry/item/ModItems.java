@@ -4,6 +4,7 @@ import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.entity.ModEntityTypes;
 import com.nano.devilry.events.ModSoundEvents;
+import com.nano.devilry.item.custom.Guano;
 import com.nano.devilry.item.custom.Knife;
 import com.nano.devilry.item.custom.ModSpawnEgg;
 import com.nano.devilry.item.custom.Pestle;
@@ -45,6 +46,8 @@ public class ModItems
 
     //GENERAL
 
+    public static final RegistryObject<Item> OWL_FEATHER = ITEMS.register("owl_feather", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
     public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", ()-> new ModSpawnEgg(ModEntityTypes.OWL, 0xf5e9ce, 0x6a4402,
             new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP)));
 
@@ -54,7 +57,7 @@ public class ModItems
 
     public static final RegistryObject<Item> SALTPETRE = ITEMS.register("saltpetre", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
-    public static final RegistryObject<Item> BAT_GUANO = ITEMS.register("bat_guano", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+    public static final RegistryObject<Item> BAT_GUANO = ITEMS.register("bat_guano", ()-> new Guano(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
     public static final RegistryObject<Item> CURED_FLESH = ITEMS.register("cured_flesh", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 

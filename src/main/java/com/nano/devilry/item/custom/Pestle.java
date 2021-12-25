@@ -2,6 +2,7 @@ package com.nano.devilry.item.custom;
 
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.events.ModSoundEvents;
+import com.nano.devilry.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -52,6 +53,8 @@ public class Pestle extends Item
                         destroyBlockGiveGlowstone(player, context.getLevel(), context.getClickedPos());
                     } else if (blockIsValidForAmethyst(clickedBlock)) {
                         destroyBlockGiveAmethyst(player, context.getLevel(), context.getClickedPos());
+                    } else if (blockIsValidForSaltPetre(clickedBlock)) {
+                        destroyBlockGiveSaltPetre(player, context.getLevel(), context.getClickedPos());
                     } else {
                         context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.CALCITE_BREAK, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                     }
@@ -66,7 +69,7 @@ public class Pestle extends Item
 
     private boolean blockIsValid(BlockState clickedBlock)
     {
-        return blockIsValidForFlint(clickedBlock) || blockIsValidForAmethyst(clickedBlock) || blockIsValidForGlowStone(clickedBlock);
+        return blockIsValidForFlint(clickedBlock) || blockIsValidForAmethyst(clickedBlock) || blockIsValidForGlowStone(clickedBlock) || blockIsValidForSaltPetre(clickedBlock);
     }
     private boolean blockIsValidForFlint(BlockState clickedBlock) {
         return clickedBlock.getBlock() == Blocks.GRAVEL
@@ -101,12 +104,23 @@ public class Pestle extends Item
 
     private boolean blockIsValidForAmethyst(BlockState clickedBlock) {
         return clickedBlock.getBlock() == Blocks.AMETHYST_BLOCK
-                |clickedBlock.getBlock() == Blocks.BUDDING_AMETHYST;
+                ||clickedBlock.getBlock() == Blocks.BUDDING_AMETHYST;
     }
 
     private void destroyBlockGiveAmethyst(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.AMETHYST_SHARD, 4));
+        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.destroyBlock(blockPos, false);
+    }
+
+    private boolean blockIsValidForSaltPetre(BlockState clickedBlock) {
+        return clickedBlock.getBlock() == ModBlocks.SALTPETRE_CLUSTER.get();
+    }
+
+    private void destroyBlockGiveSaltPetre(Player player, Level level, BlockPos blockPos)
+    {
+        player.addItem(new ItemStack(ModItems.SALTPETRE.get(), 4));
         level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }

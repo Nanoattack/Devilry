@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "devilry:limestone_wall"
+    "devilry:limestone_wall",
+    "devilry:calcite_wall",
+    "devilry:tuff_wall",
+    "devilry:dripstone_wall"
   ]
 }
