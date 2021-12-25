@@ -38,23 +38,23 @@ public class WittlingRecipe implements IWittlingRecipe
             }
     @Override
     public boolean matches(SimpleContainer inv, Level plevel) {
-        if(recipeItems.get(0).test(inv.getItem(0) )||
+        if (recipeItems.get(0).test(inv.getItem(0)) ||
                 recipeItems.get(0).test(inv.getItem(1)) ||
-                    recipeItems.get(0).test(inv.getItem(2)) ||
-                          recipeItems.get(0).test(inv.getItem(3)) ||
-                             recipeItems.get(0).test(inv.getItem(4)) ||
-                                  recipeItems.get(0).test(inv.getItem(5)) ||
-                                       recipeItems.get(0).test(inv.getItem(6)) ||
-                                           recipeItems.get(0).test(inv.getItem(7)) ||
-                                                 recipeItems.get(0).test(inv.getItem(8)) ||
-                                                      recipeItems.get(0).test(inv.getItem(9))
-        )
-
+                recipeItems.get(0).test(inv.getItem(2)) ||
+                recipeItems.get(0).test(inv.getItem(3)) ||
+                recipeItems.get(0).test(inv.getItem(4)) ||
+                recipeItems.get(0).test(inv.getItem(5)) ||
+                recipeItems.get(0).test(inv.getItem(6)) ||
+                recipeItems.get(0).test(inv.getItem(7)) ||
+                recipeItems.get(0).test(inv.getItem(8)) ||
+                recipeItems.get(0).test(inv.getItem(9))
+        ) {
             return true;
-
-        return false;
+        }
+        else {
+            return false;
+        }
     }
-
     @Override
     public ItemStack assemble(SimpleContainer p_44001_) {
         return output;
@@ -110,7 +110,7 @@ public class WittlingRecipe implements IWittlingRecipe
             Integer amount = GsonHelper.getAsInt(json, "amount");
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(8, Ingredient.EMPTY);
+            NonNullList<Ingredient> inputs = NonNullList.withSize(10, Ingredient.EMPTY);
 
             for (int i = 0; i < Math.min(inputs.size(), ingredients.size()); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));

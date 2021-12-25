@@ -32,5 +32,6 @@ public class ModRecipeTypes
     {
         RECIPE_SERIALIZER.register(eventBus);
         Registry.register(Registry.RECIPE_TYPE, MortarRecipe.TYPE_ID, MORTAR_RECIPE);
+        Registry.register(Registry.RECIPE_TYPE, WittlingRecipe.TYPE_ID, WITTLING_RECIPE);
     }
 }
