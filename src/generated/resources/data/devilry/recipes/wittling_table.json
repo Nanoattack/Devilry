@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TT",
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "T": {
+      "item": "devilry:tin_ingot"
+    }
+  },
+  "result": {
+    "item": "devilry:wittling_table"
+  }
+}

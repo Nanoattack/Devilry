@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "devilry:item/stolas_effigy"
+    "layer0": "devilry:item/enchiridion"
   }
 }

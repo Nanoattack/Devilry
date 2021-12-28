@@ -64,6 +64,9 @@ public class ModItems
     public static final RegistryObject<Item> MORTAR = ITEMS.register("mortar",
             () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
 
+    public static final RegistryObject<Item> STOLAS_EFFIGY = ITEMS.register("stolas_effigy",
+            () -> new BlockItem(ModBlocks.STOLAS_EFFIGY.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP).stacksTo(1)));
+
     public static final RegistryObject<Item> FLINT_KNIFE  = ITEMS.register("flint_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(32)));
 
     public static final RegistryObject<Item> BRONZE_KNIFE  = ITEMS.register("bronze_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(418)));

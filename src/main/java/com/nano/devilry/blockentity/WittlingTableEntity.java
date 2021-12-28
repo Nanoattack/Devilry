@@ -46,7 +46,8 @@ public class WittlingTableEntity extends BlockEntity
         super(ModBlockEntities.WITTLING_ENTITY.get(), pos, state);
         wittlingData = new SimpleContainerData(2) {
             @Override
-            public int get(int index) {
+            public int get(int index)
+            {
                 switch (index) {
                     case 0: return WittlingTableEntity.this.progress;
                     case 1: return WittlingTableEntity.this.max_progress;
@@ -160,24 +161,12 @@ public class WittlingTableEntity extends BlockEntity
         return match.isPresent();
     }
 
-    public void tick() {
-        if (!level.isClientSide) {
-            if (hasRecipe(this)) {
-                this.progress++;
-                if (this.progress > this.max_progress) {
-                    craft();
-                }
-            } else {
-                this.resetProgress();
-            }
-        }
-    }
-
     private void resetProgress() {
         this.progress = 0;
     }
 
-    public void craft() {
+    public void craft()
+        {
         SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inv.setItem(i, itemHandler.getStackInSlot(i));
@@ -191,7 +180,7 @@ public class WittlingTableEntity extends BlockEntity
                 ItemStack output = iRecipe.getResultItem();
                 Integer amount = iRecipe.getAmount();
 
-                if (itemHandler.getStackInSlot(10).getCount() + amount <= itemHandler.getStackInSlot(10).getMaxStackSize()) {
+                if (hasSpace(amount)) {
 
                     craftTheItem(output, amount);
 
@@ -200,6 +189,47 @@ public class WittlingTableEntity extends BlockEntity
                 setChanged();
                   }
             });
+    }
+
+    public void tick() {
+
+        SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inv.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Optional<WittlingRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.WITTLING_RECIPE, inv, level);
+
+        recipe.ifPresent(iRecipe -> {
+            ItemStack output = iRecipe.getResultItem();
+            Integer amount = iRecipe.getAmount();
+
+            if (!level.isClientSide) {
+                if (hasRecipe(this)
+                        && (hasSpace(amount))
+                            && (sameOutput(output))) {
+                    this.progress++;
+                    if (this.progress > this.max_progress) {
+                        craft();
+                    }
+                } else {
+                    this.resetProgress();
+                }
+            }
+        });
+        if (recipe.isEmpty()) {
+            resetProgress();
+        }
+    }
+
+    public boolean hasSpace(Integer amount)
+    {
+        if (itemHandler.getStackInSlot(10).getCount() + amount <= itemHandler.getStackInSlot(10).getMaxStackSize())
+        {
+            return true;
+        }
+        return false;
     }
 
     private void checkDurability()
@@ -213,7 +243,7 @@ public class WittlingTableEntity extends BlockEntity
 
     private void craftTheItem(ItemStack output, Integer amount) {
 
-        if (itemHandler.insertItem(10, output, true) != output ) {
+        if (sameOutput(output)) {
 
             itemHandler.extractItem(1, 1, false);
             itemHandler.extractItem(2, 1, false);
@@ -232,6 +262,14 @@ public class WittlingTableEntity extends BlockEntity
             this.resetProgress();
         }
         output.setCount(itemHandler.insertItem(10, output, false).getCount() + amount);
+    }
+
+    public boolean sameOutput(ItemStack output)
+    {
+        if (itemHandler.insertItem(10, output, true) != output) {
+            return true;
+        }
+        return false;
     }
 
     @Nonnull

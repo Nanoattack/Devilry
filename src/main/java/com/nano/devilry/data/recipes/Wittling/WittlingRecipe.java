@@ -38,23 +38,23 @@ public class WittlingRecipe implements IWittlingRecipe
             }
     @Override
     public boolean matches(SimpleContainer inv, Level plevel) {
-        if (recipeItems.get(0).test(inv.getItem(0)) ||
-                recipeItems.get(0).test(inv.getItem(1)) ||
-                recipeItems.get(0).test(inv.getItem(2)) ||
-                recipeItems.get(0).test(inv.getItem(3)) ||
-                recipeItems.get(0).test(inv.getItem(4)) ||
-                recipeItems.get(0).test(inv.getItem(5)) ||
-                recipeItems.get(0).test(inv.getItem(6)) ||
-                recipeItems.get(0).test(inv.getItem(7)) ||
-                recipeItems.get(0).test(inv.getItem(8)) ||
-                recipeItems.get(0).test(inv.getItem(9))
-        ) {
+        if(recipeItems.get(0).test(inv.getItem(0)) &&
+           recipeItems.get(1).test(inv.getItem(1)) &&
+           recipeItems.get(2).test(inv.getItem(2)) &&
+           recipeItems.get(3).test(inv.getItem(3)) &&
+           recipeItems.get(4).test(inv.getItem(4)) &&
+           recipeItems.get(5).test(inv.getItem(5)) &&
+           recipeItems.get(6).test(inv.getItem(6)) &&
+           recipeItems.get(7).test(inv.getItem(7)) &&
+           recipeItems.get(8).test(inv.getItem(8)) &&
+           recipeItems.get(9).test(inv.getItem(9)))
+        {
             return true;
         }
-        else {
+
             return false;
         }
-    }
+
     @Override
     public ItemStack assemble(SimpleContainer p_44001_) {
         return output;

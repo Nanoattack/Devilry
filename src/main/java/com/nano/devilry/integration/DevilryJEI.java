@@ -45,7 +45,7 @@ public class DevilryJEI implements IModPlugin {
                 MortarRecipeCategory.UID);
         registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.WITTLING_RECIPE).stream()
                         .filter(r -> r instanceof WittlingRecipe).collect(Collectors.toList()),
-                MortarRecipeCategory.UID);
+                WittlingRecipeCategory.UID);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class DevilryJEI implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(MortarScreen.class, 81, 28, 14, 15, MortarRecipeCategory.UID);
-        registration.addRecipeClickArea(WittlingScreen.class, 109, 37, 130, 51,WittlingRecipeCategory.UID);
+        registration.addRecipeClickArea(WittlingScreen.class, 109, 36, 22, 15,WittlingRecipeCategory.UID);
     }
 
  /*   @Override

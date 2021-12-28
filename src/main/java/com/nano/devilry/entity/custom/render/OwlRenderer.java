@@ -11,6 +11,6 @@ public class OwlRenderer extends GeoEntityRenderer<OwlEntity>
     public OwlRenderer(EntityRendererProvider.Context renderManager)
     {
         super(renderManager, new OwlModel());
-        this.shadowRadius = 0.4F; //change 0.7 to the desired shadow size.
+        this.shadowRadius = 0.4F; //change to the desired shadow size.
     }
 }

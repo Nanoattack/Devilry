@@ -29,7 +29,7 @@ public class ModBlocks
     public static final RegistryObject<Block> WITTLING_TABLE = registerBlock("wittling_table",
             ()-> new WittlingTableBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_WOOD).requiresCorrectToolForDrops()));
 
-    public static final RegistryObject<Block> STOLAS_EFFIGY = registerBlock("stolas_effigy",
+    public static final RegistryObject<Block> STOLAS_EFFIGY = BLOCKS.register("stolas_effigy",
             ()-> new EffigyBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
     //BUDDING BLOCKS

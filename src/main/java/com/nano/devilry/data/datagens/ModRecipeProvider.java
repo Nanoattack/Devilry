@@ -40,6 +40,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Blocks.POLISHED_DEEPSLATE))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(ModBlocks.WITTLING_TABLE.get())
+                .define('P', ItemTags.PLANKS)
+                .define('T', DevilryTags.Items.INGOTS_TIN)
+                .pattern("TT")
+                .pattern("PP")
+                .pattern("PP")
+                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
+                .save(consumer);
+
         ShapedRecipeBuilder.shaped(ModItems.PESTLE.get())
                 .define('C', Items.CALCITE)
                 .define('T', DevilryTags.Items.INGOTS_TIN)
@@ -58,7 +67,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.BRONZE_KNIFE.get())
-                .define('B', ModItems.BRONZE_INGOT.get())
+                .define('B', DevilryTags.Items.INGOTS_BRONZE)
                 .define('S', Items.STICK)
                 .pattern(" B ")
                 .pattern("S  ")

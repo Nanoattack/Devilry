@@ -1,0 +1,9 @@
+{
+  "name": "Enchiridion",
+  "landing_text": "A general guide to the world around you",
+  "model": "devilry:enchiridion",
+  "version": 1,
+  "use_blocky_font": true,
+  "subtitle": "Tome of Knowledge",
+  "creative_tab": "devilrymisc"
+}
