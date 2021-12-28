@@ -57,13 +57,15 @@ public class WittlingContainer extends AbstractContainerMenu
     }
 
     public boolean isCrafting() {
+
         return containerData.get(0) > 0;
+
     }
 
     public int getScaledProgress() {
         int progress = this.containerData.get(0);
         int maxProgress = this.containerData.get(1);  // Max Progress
-        int progressArrowSize = 17; // This is the width in pixels of your arrow
+        int progressArrowSize = 22; // This is the width in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }

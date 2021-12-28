@@ -1,5 +1,6 @@
 package com.nano.devilry.blockentity;
 
+import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
 import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
 import com.nano.devilry.events.ModSoundEvents;
@@ -45,7 +46,8 @@ public class MortarEntity extends BlockEntity
         super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
         mortarData = new SimpleContainerData(2) {
             @Override
-            public int get(int index) {
+            public int get(int index)
+            {
                 switch (index) {
                     case 0: return MortarEntity.this.progress;
                     case 1: return MortarEntity.this.max_progress;
@@ -124,10 +126,10 @@ public class MortarEntity extends BlockEntity
                     case 5:
                     case 6:
                         return true;
-                    case 7: return stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get() ||
-                            stack.getItem() == ModItems.BRONZE_BLEND.get() ||
-                            stack.getItem() == Items.GUNPOWDER ||
-                            stack.getItem() == ModItems.SULPHUR_DUST.get();
+                    case 7: return stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get()||
+                                    stack.getItem() == ModItems.SULPHUR_DUST.get()||
+                                    stack.getItem() == ModItems.BRONZE_BLEND.get()||
+                                    stack.getItem() == Items.GUNPOWDER;
                     default:
                         return false;
                 }
@@ -159,49 +161,78 @@ public class MortarEntity extends BlockEntity
         return match.isPresent();
     }
 
-    public void tick() {
-        if (!level.isClientSide) {
-            if (hasRecipe(this)) {
-                this.progress++;
-                if (this.progress > this.max_progress) {
-                    craft();
-                }
-            } else {
-                this.resetProgress();
-            }
-        }
-    }
-
     private void resetProgress() {
         this.progress = 0;
     }
 
-    public void craft() {
+    public void craft()
+    {
         SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inv.setItem(i, itemHandler.getStackInSlot(i));
         }
 
-            Optional<MortarRecipe> recipe = level.getRecipeManager()
-                    .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
+        Optional<MortarRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
 
-            recipe.ifPresent(iRecipe -> {
+        recipe.ifPresent(iRecipe -> {
 
-                ItemStack output = iRecipe.getResultItem();
-                Integer amount = iRecipe.getAmount();
+            ItemStack output = iRecipe.getResultItem();
+            Integer amount = iRecipe.getAmount();
 
-                if (itemHandler.getStackInSlot(7).getCount() + amount <= itemHandler.getStackInSlot(7).getMaxStackSize()) {
+            if (hasSpace(amount)) {
 
-                    craftTheItem(output, amount);
+                craftTheItem(output, amount);
 
-                    checkPestleDurability();
+                checkDurability();
 
                 setChanged();
-                  }
-            });
+            }
+        });
     }
 
-    private void checkPestleDurability()
+    public void tick() {
+
+        SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inv.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Optional<MortarRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
+
+        recipe.ifPresent(iRecipe -> {
+            Integer amount = iRecipe.getAmount();
+            ItemStack output = iRecipe.getResultItem();
+
+            if (!level.isClientSide) {
+                if (hasRecipe(this)
+                        && (hasSpace(amount))
+                            &&(sameOutput(output))) {
+                    this.progress++;
+                    if (this.progress > this.max_progress) {
+                        craft();
+                    }
+                } else {
+                    this.resetProgress();
+                }
+            }
+        });
+        if (recipe.isEmpty()) {
+            resetProgress();
+        }
+    }
+
+    public boolean hasSpace(Integer amount)
+    {
+        if (itemHandler.getStackInSlot(7).getCount() + amount <= itemHandler.getStackInSlot(7).getMaxStackSize())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void checkDurability()
     {
         if (itemHandler.getStackInSlot(0).getDamageValue() > itemHandler.getStackInSlot(0).getMaxDamage() - 1)
         {
@@ -212,7 +243,7 @@ public class MortarEntity extends BlockEntity
 
     private void craftTheItem(ItemStack output, Integer amount) {
 
-        if (itemHandler.insertItem(7, output, true) != output ) {
+        if (sameOutput(output)) {
 
             itemHandler.extractItem(1, 1, false);
             itemHandler.extractItem(2, 1, false);
@@ -220,6 +251,7 @@ public class MortarEntity extends BlockEntity
             itemHandler.extractItem(4, 1, false);
             itemHandler.extractItem(5, 1, false);
             itemHandler.extractItem(6, 1, false);
+            itemHandler.extractItem(7, 1, false);
 
             itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
 
@@ -228,6 +260,14 @@ public class MortarEntity extends BlockEntity
             this.resetProgress();
         }
         output.setCount(itemHandler.insertItem(7, output, false).getCount() + amount);
+    }
+
+    public boolean sameOutput(ItemStack output)
+    {
+        if (itemHandler.insertItem(7, output, true) != output) {
+            return true;
+        }
+        return false;
     }
 
     @Nonnull

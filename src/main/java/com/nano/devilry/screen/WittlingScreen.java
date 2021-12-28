@@ -38,7 +38,7 @@ public class WittlingScreen extends AbstractContainerScreen<WittlingContainer>
 
         if(menu.isCrafting()) {
             int k = this.menu.getScaledProgress();
-            this.blit(pPoseStack, i + 81, j + 32 + 12 - k, 178, 16 - k, 14, k + 1);
+            this.blit(pPoseStack, i + 108, j + 35, 176, 14, k + 1, 16);
         //    this.font.draw(pPoseStack, " " + menu.getScaledProgress(), 25f, 25f, 500000);
         }
     }

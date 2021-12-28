@@ -45,6 +45,8 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
@@ -67,6 +69,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
@@ -89,6 +93,8 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
@@ -131,10 +137,13 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
-
-        maven {
+    maven {
             url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
-    }
+
+    maven {
+        url = 'https://maven.blamejared.com' }
+
+}
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     // flatDir {
@@ -146,12 +155,16 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.1-39.0.5'
+    minecraft 'net.minecraftforge:forge:1.18.1-39.0.9'
 
     // compile against the JEI API but do not include it at runtime
     compileOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40:api")
     // at runtime, use the full JEI jar
     runtimeOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40")
+
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.1-63:api")
+
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.1-63")
 
     implementation fg.deobf('software.bernie.geckolib:geckolib-1.18-forge:3.0.3')
 

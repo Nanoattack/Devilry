@@ -25,7 +25,7 @@ public class WittlingRecipeCategory implements IRecipeCategory<WittlingRecipe>
     private final IDrawable icon;
 
     public WittlingRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 114, 86);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 152, 54);
         this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.WITTLING_TABLE.get()));
     }
 
@@ -62,18 +62,17 @@ public class WittlingRecipeCategory implements IRecipeCategory<WittlingRecipe>
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, WittlingRecipe recipe, IIngredients ingredients) {
-        recipeLayout.getItemStacks().init(0, true, 13,32);
-        recipeLayout.getItemStacks().init(1, true, 45,14);
-        recipeLayout.getItemStacks().init(2, true, 63,14);
-        recipeLayout.getItemStacks().init(3, true, 81,14);
-        recipeLayout.getItemStacks().init(4, true, 45,32);
-        recipeLayout.getItemStacks().init(5, true, 63,32);
-        recipeLayout.getItemStacks().init(6, true, 81,32);
-        recipeLayout.getItemStacks().init(7, true, 45,50);
-        recipeLayout.getItemStacks().init(8, true, 63,50);
-        recipeLayout.getItemStacks().init(9, true, 81,50);
-        recipeLayout.getItemStacks().init(10, false, 139,32);
+        recipeLayout.getItemStacks().init(0, true, 4,18);
+        recipeLayout.getItemStacks().init(1, true, 36,0);
+        recipeLayout.getItemStacks().init(2, true, 54,0);
+        recipeLayout.getItemStacks().init(3, true, 72,0);
+        recipeLayout.getItemStacks().init(4, true, 36,18);
+        recipeLayout.getItemStacks().init(5, true, 54,18);
+        recipeLayout.getItemStacks().init(6, true, 72,18);
+        recipeLayout.getItemStacks().init(7, true, 36,36);
+        recipeLayout.getItemStacks().init(8, true, 54,36);
+        recipeLayout.getItemStacks().init(9, true, 72,36);
+        recipeLayout.getItemStacks().init(10, false, 130,18);
         recipeLayout.getItemStacks().set(ingredients);
-        recipeLayout.setShapeless();
     }
 }
