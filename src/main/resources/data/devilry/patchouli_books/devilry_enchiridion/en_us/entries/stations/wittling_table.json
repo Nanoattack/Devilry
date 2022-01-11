@@ -1,0 +1,15 @@
+{
+  "name": "Whittling Table",
+  "icon": "devilry:wittling_table",
+  "category": "devilry:stations",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The whittling table is used to carve and whittle blocks and items.$(br)$(br)In order to whittle, a knife must be placed in the left-most slot, removing 1 durability from it for each successful craft."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "devilry:wittling_table"
+    }
+  ]
+}

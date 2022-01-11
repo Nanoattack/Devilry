@@ -1,0 +1,16 @@
+{
+  "name": "Sulphur",
+  "icon": "devilry:sulphur_dust",
+  "category": "devilry:materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "By grinding down volcanic rock (basalt) and soul sediment(sand or soil) in a mortar, a pale yellow substance can be created."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:soul_torch_from_sulphur",
+      "recipe2": "minecraft:soul_campfire_from_sulphur"
+    }
+  ]
+}

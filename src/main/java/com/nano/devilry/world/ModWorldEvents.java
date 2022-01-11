@@ -1,6 +1,7 @@
 package com.nano.devilry.world;
 
 import com.nano.devilry.ModMain;
+import com.nano.devilry.world.gen.ModEntityGeneration;
 import com.nano.devilry.world.gen.ModPlacements;
 import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.world.level.biome.Biome;
@@ -14,6 +15,8 @@ public class ModWorldEvents
 {
         @SubscribeEvent
         public static void biomeLoadingEvent(final BiomeLoadingEvent event) {
+
+          ModEntityGeneration.doSpawning(event);
 //        ModOreGeneration.generateOres(event);
 //        ModStructureGeneration.generateStructures(event);
 //        ModTreeGeneration.generateTrees(event);

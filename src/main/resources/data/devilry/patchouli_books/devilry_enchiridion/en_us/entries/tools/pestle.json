@@ -1,0 +1,30 @@
+{
+  "name": "Pestle",
+  "icon": "devilry:pestle",
+  "category": "devilry:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The pestle is used to grind blocks in world and as an ingredient in mortar crafting recipes.$(br)$(br)To grind blocks in world, shift+right-click a block with the pestle in your main-hand"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "devilry:pestle"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:pestle",
+      "text": "Gravel can be grinded into Flint$(br)$(br)Amethyst Blocks into 4 Amethyst Shards$(br)$(br)Glowstone into 4 Glowstone Dust$(br)$(br)Saltpetre Clusters into 4 Saltpetre Dust"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:mortar",
+      "text": "The Mortar requires the pestle for its recipes and takes off 1 durability for each successful craft."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:netherite_pestle",
+      "text": "The pestle can be upgraded with netherite in a smithing table, increasing it's durability."
+    }
+  ]
+}

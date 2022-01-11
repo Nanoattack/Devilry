@@ -1,0 +1,16 @@
+{
+  "name": "Tin",
+  "icon": "devilry:tin_ingot",
+  "category": "devilry:minerals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Found commonly in the world, tin is a weak and flexible metal often used in alloys.$(br)$(br)Tin can also be used as a crafting ingredient for the whittling table and pestle."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:raw_tin",
+      "text": "When tin ore is mined, only 1 raw tin will be dropped to balance out it's already large abundance."
+    }
+  ]
+}

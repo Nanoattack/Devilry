@@ -1,0 +1,26 @@
+{
+  "name": "Knife",
+  "icon": "devilry:flint_knife",
+  "category": "devilry:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The knife is used to slice items in world and as an ingredient in whittling crafting recipes.$(br)$(br)To slice items in world, right-click with the item you want to slice in your off-hand"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "devilry:flint_knife",
+      "recipe2": "devilry:bronze_knife"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:flint_knife",
+      "text": "Wool can be cut into 1-4 String"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:wittling_table",
+      "text": "The Whittling Table requires the knife for its recipes and takes off 1 durability for each successful craft."
+    }
+  ]
+}

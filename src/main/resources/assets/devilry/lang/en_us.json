@@ -33,9 +33,10 @@
   "block.devilry.calcite_slab": "Calcite Slab",
   "block.devilry.dripstone_slab": "Dripstone Slab",
   "block.devilry.stolas_effigy": "Stolas Effigy",
+  "block.devilry.demon_altar": "Demon Altar",
 
-  "block.devilry.wittling_table": "Wittling Table",
-  "screen.devilry.wittlingtable": "Wittling",
+  "block.devilry.wittling_table": "Whittling Table",
+  "screen.devilry.wittlingtable": "Whittling",
 
   "item.devilry.copper_nugget": "Copper Nugget",
   "item.devilry.owl_spawn_egg": "Owl Spawn Egg",

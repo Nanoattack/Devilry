@@ -1,0 +1,17 @@
+{
+  "name": "Owl",
+  "icon": "devilry:owl_feather",
+  "category": "devilry:wildlife",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The owl is a nocturnal bird which hunts small mammals and insects like rabbits and silverfish.$(br)$(br)They can be tamed with raw rabbit and when slain, they drop owl feathers."
+    },
+    {
+      "type": "patchouli:image",
+      "images": [ "devilry:textures/gui/entries/owl.png"],
+      "title": "Owl",
+      "border": true
+    }
+  ]
+}

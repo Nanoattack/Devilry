@@ -1,0 +1,15 @@
+{
+  "name": "Bone Ash",
+  "icon": "devilry:bone_ash",
+  "category": "devilry:materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Bonemeal can be further refined down by torching it in a campfire."
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "devilry:bone_ash_campfire_cooking"
+    }
+  ]
+}
