@@ -1,0 +1,16 @@
+{
+  "name": "Saltpetre",
+  "icon": "devilry:saltpetre",
+  "category": "devilry:minerals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Saltpetre is a form of KNO3 (Potassium Nitrate), it is often used as a reagent in crafting or spells."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:saltpetre_cluster",
+      "text": "Saltpetre Clusters emerge from Festering Limestone over time.$(br)$(br)While it is possible to break them with a pickaxe, it is suggested to grind them with a pestle to maximise the saltpetre gained."
+    }
+  ]
+}

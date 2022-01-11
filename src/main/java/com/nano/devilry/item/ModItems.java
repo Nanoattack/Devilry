@@ -6,8 +6,8 @@ import com.nano.devilry.entity.ModEntityTypes;
 import com.nano.devilry.events.ModSoundEvents;
 import com.nano.devilry.item.custom.Guano;
 import com.nano.devilry.item.custom.Knife;
-import com.nano.devilry.item.custom.ModSpawnEgg;
 import com.nano.devilry.item.custom.Pestle;
+import com.nano.devilry.item.custom.SupplierSpawnEggItem;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -48,7 +48,7 @@ public class ModItems
 
     public static final RegistryObject<Item> OWL_FEATHER = ITEMS.register("owl_feather", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
-    public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", ()-> new ModSpawnEgg(ModEntityTypes.OWL, 0xf5e9ce, 0x6a4402,
+    public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", ()-> new SupplierSpawnEggItem(ModEntityTypes.OWL::get, 0xf5e9ce, 0x6a4402,
             new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP)));
 
     public static final RegistryObject<Item> ALCHEMICAL_ESSENCE  = ITEMS.register("alchemical_essence", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP).stacksTo(16)));
@@ -63,6 +63,9 @@ public class ModItems
 
     public static final RegistryObject<Item> MORTAR = ITEMS.register("mortar",
             () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
+
+    public static final RegistryObject<Item> DEMON_ALTAR = ITEMS.register("demon_altar",
+            () -> new BlockItem(ModBlocks.DEMON_ALTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
 
     public static final RegistryObject<Item> STOLAS_EFFIGY = ITEMS.register("stolas_effigy",
             () -> new BlockItem(ModBlocks.STOLAS_EFFIGY.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP).stacksTo(1)));

@@ -49,7 +49,6 @@ public class MortarBlock extends BaseEntityBlock
         super(builder);
     }
 
-
     public static final VoxelShape SHAPE_N = Stream.of(
             Block.box(10.5, 1, 5.5, 11.5, 3, 10.5),
             Block.box(4.5, 1, 5.5, 5.5, 3, 10.5),

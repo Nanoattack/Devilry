@@ -1,0 +1,24 @@
+{
+  "name": "Bronze",
+  "icon": "devilry:bronze_ingot",
+  "category": "devilry:minerals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Bronze can be made by smelting Bronze Blend in a blasting furnace.$(br)$(br)It can be crafted into a variety of decorative blocks, tools, as well as upgrade golden armour into Corinthian Bronze."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:bronze_blend",
+      "text": "Bronze Blend can be made by grinding 5 copper and 1 tin in a mortar.$(br)$(br)It can only be smelted in a Blasting Furnace."
+    },
+    {
+    "type": "patchouli:crafting",
+    "recipe": "devilry:bronze_chain",
+    "recipe2": "devilry:bronze_bars"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "devilry:bronze_lantern"}
+  ]
+}

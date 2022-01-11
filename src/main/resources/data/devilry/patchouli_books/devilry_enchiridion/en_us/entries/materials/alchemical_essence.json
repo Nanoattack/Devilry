@@ -1,0 +1,11 @@
+{
+  "name": "Alchemist's Essence",
+  "icon": "devilry:alchemical_essence",
+  "category": "devilry:materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Thought to be the rough components for a philosopher's stone, the Alchemist's Essence is known to be one of the most potent reagents in both magic and alchemy."
+    }
+  ]
+}

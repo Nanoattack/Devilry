@@ -32,6 +32,9 @@ public class ModBlocks
     public static final RegistryObject<Block> STOLAS_EFFIGY = BLOCKS.register("stolas_effigy",
             ()-> new EffigyBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
+    public static final RegistryObject<Block> DEMON_ALTAR = BLOCKS.register("demon_altar",
+            ()-> new AltarBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE).requiresCorrectToolForDrops().noOcclusion()));
+
     //BUDDING BLOCKS
     public static final RegistryObject<Block> FESTERING_LIMESTONE = registerBlock("festering_limestone",
             ()-> new FesteringSaltPetreBlock(BlockBehaviour.Properties.of(Material.STONE).randomTicks()

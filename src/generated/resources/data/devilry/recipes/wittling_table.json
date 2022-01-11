@@ -10,7 +10,7 @@
       "tag": "minecraft:planks"
     },
     "T": {
-      "item": "devilry:tin_ingot"
+      "tag": "forge:ingots/tin"
     }
   },
   "result": {

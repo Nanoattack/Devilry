@@ -43,6 +43,7 @@ public class ModBlockLootTables extends BlockLoot
         dropSelf(ModBlocks.CALCITE_WALL.get());
         dropSelf(ModBlocks.DRIPSTONE_WALL.get());
         dropSelf(ModBlocks.TUFF_WALL.get());
+        dropSelf(ModBlocks.DEMON_ALTAR.get());
 
         //SALTPETRE
 

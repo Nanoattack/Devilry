@@ -1,0 +1,29 @@
+{
+  "name": "Limestone",
+  "icon": "devilry:limestone",
+  "category": "devilry:minerals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Found in patches underground, limestone is a new decorative stone type.$(br)$(br)It can be polished and turned into other building blocks similar to granite, andesite or diorite. "
+    },
+    {
+      "type": "patchouli:image",
+      "images": [ "devilry:textures/gui/entries/limestone.png","devilry:textures/gui/entries/limestone_decorative.png" ],
+      "title": "Limestone",
+      "border": true
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "devilry:festering_limestone",
+      "text": "When bat guano is introduced to a limestone block, eventually, it starts to dry and crystallise, cracking the block.$(br)$(br)Over time, saltpetre crystals erupt from the cracks."
+    },
+    {
+      "type": "patchouli:image",
+      "images": [ "devilry:textures/gui/entries/limestone_geode.png" ],
+      "title": "Limestone Geode",
+      "border": true,
+      "text": "Festering Limestone can also be found in Limestone Geodes"
+    }
+  ]
+}

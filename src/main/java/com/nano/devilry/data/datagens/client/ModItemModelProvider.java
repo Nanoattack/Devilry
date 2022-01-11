@@ -71,6 +71,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "enchanted_forest_music_disc");
     builder(itemGenerated, "owl_feather");
     builder(itemGenerated, "stolas_effigy");
+    builder(itemGenerated, "demon_altar");
 }
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
         return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);

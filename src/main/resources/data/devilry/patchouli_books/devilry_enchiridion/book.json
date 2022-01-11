@@ -5,5 +5,6 @@
   "version": 1,
   "use_blocky_font": true,
   "subtitle": "Tome of Knowledge",
-  "creative_tab": "devilrymisc"
+  "creative_tab": "devilrymisc",
+  "show_progress ": false
 }

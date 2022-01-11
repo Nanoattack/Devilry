@@ -1,0 +1,11 @@
+{
+  "name": "Bat Guano",
+  "icon": "devilry:bat_guano",
+  "category": "devilry:materials",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Occasionally dropped by giant bats, smearing it on Limestone will cause it to fester."
+    }
+  ]
+}

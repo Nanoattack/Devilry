@@ -1,0 +1,15 @@
+{
+  "name": "Mortar",
+  "icon": "devilry:mortar",
+  "category": "devilry:stations",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The mortar is used to grind blocks and items into finer components.$(br)$(br)In order to grind, a pestle must be placed in the top slot, removing 1 durability from it for each successful craft."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "devilry:mortar"
+    }
+  ]
+}

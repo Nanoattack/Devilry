@@ -4,7 +4,7 @@ import com.nano.devilry.ModMain;
 import com.nano.devilry.entity.ModEntityTypes;
 import com.nano.devilry.entity.custom.OwlEntity;
 import com.nano.devilry.entity.custom.render.OwlRenderer;
-import com.nano.devilry.item.custom.ModSpawnEgg;
+import com.nano.devilry.item.custom.SupplierSpawnEggItem;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -22,7 +22,7 @@ public class ModEventBusEvents {
 
     @SubscribeEvent
     public static void onRegisterEntities(RegistryEvent.Register<EntityType<?>> event) {
-        ModSpawnEgg.getMobs();
+        SupplierSpawnEggItem.updateEggMap();
     }
 
     @SubscribeEvent
