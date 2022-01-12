@@ -67,6 +67,9 @@ public class ModItems
     public static final RegistryObject<Item> DEMON_ALTAR = ITEMS.register("demon_altar",
             () -> new BlockItem(ModBlocks.DEMON_ALTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
 
+    public static final RegistryObject<Item> DEMON_ALTAR_SIDE_TEST = ITEMS.register("demon_altar_side_test",
+            () -> new BlockItem(ModBlocks.DEMON_ALTAR_SIDE.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
+
     public static final RegistryObject<Item> STOLAS_EFFIGY = ITEMS.register("stolas_effigy",
             () -> new BlockItem(ModBlocks.STOLAS_EFFIGY.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP).stacksTo(1)));
 

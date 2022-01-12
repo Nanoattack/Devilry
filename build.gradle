@@ -19,7 +19,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0'
+version = '0.1'
 group = 'com.nano.devilry' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'devilry'
 
@@ -200,12 +200,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "devilry",
-                "Specification-Vendor"    : "devilrysareus",
+                "Specification-Title"     : "Devilry",
+                "Specification-Vendor"    : "Nano",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "devilrysareus",
+                "Implementation-Vendor"   : "Nano",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs": "devilry.mixins.json"
         ])

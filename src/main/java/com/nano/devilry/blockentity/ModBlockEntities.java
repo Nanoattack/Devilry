@@ -21,6 +21,10 @@ public class ModBlockEntities
             = BLOCK_ENTITIES.register("wittling_entity", ()-> BlockEntityType.Builder.of(
             WittlingTableEntity::new, ModBlocks.WITTLING_TABLE.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<AltarEntity>> ALTAR_ENTITY
+            = BLOCK_ENTITIES.register("altar_entity", ()-> BlockEntityType.Builder.of(
+            AltarEntity::new, ModBlocks.DEMON_ALTAR.get()).build(null));
+
 
     public static void register(IEventBus eventBus)
     {

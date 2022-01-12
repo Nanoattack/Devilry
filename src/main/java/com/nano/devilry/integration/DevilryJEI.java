@@ -4,10 +4,12 @@ import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.container.MortarContainer;
 import com.nano.devilry.container.WittlingContainer;
+import com.nano.devilry.data.recipes.Altar.AltarRecipe;
 import com.nano.devilry.data.recipes.ModRecipeTypes;
 import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
 import com.nano.devilry.data.recipes.Wittling.WittlingRecipe;
 import com.nano.devilry.item.ModItems;
+import com.nano.devilry.screen.AltarScreen;
 import com.nano.devilry.screen.MortarScreen;
 import com.nano.devilry.screen.WittlingScreen;
 import mezz.jei.api.IModPlugin;
@@ -35,6 +37,9 @@ public class DevilryJEI implements IModPlugin {
 
         registration.addRecipeCategories(
                 new WittlingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+
+        registration.addRecipeCategories(
+                new AltarRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -43,9 +48,14 @@ public class DevilryJEI implements IModPlugin {
         registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.MORTAR_RECIPE).stream()
                         .filter(r -> r instanceof MortarRecipe).collect(Collectors.toList()),
                 MortarRecipeCategory.UID);
+
         registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.WITTLING_RECIPE).stream()
                         .filter(r -> r instanceof WittlingRecipe).collect(Collectors.toList()),
                 WittlingRecipeCategory.UID);
+
+        registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.ALTAR_RECIPE).stream()
+                        .filter(r -> r instanceof AltarRecipe).collect(Collectors.toList()),
+                AltarRecipeCategory.UID);
     }
 
     @Override
@@ -57,12 +67,16 @@ public class DevilryJEI implements IModPlugin {
 
         ItemStack wittlingStack = new ItemStack(ModBlocks.WITTLING_TABLE.get(), 1);
         registration.addRecipeCatalyst(wittlingStack, WittlingRecipeCategory.UID);
+
+        ItemStack altarStack = new ItemStack(ModItems.DEMON_ALTAR.get(), 1);
+        registration.addRecipeCatalyst(altarStack, AltarRecipeCategory.UID);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(MortarScreen.class, 81, 28, 14, 15, MortarRecipeCategory.UID);
         registration.addRecipeClickArea(WittlingScreen.class, 109, 36, 22, 15,WittlingRecipeCategory.UID);
+        registration.addRecipeClickArea(AltarScreen.class, 81, 28, 14, 15, AltarRecipeCategory.UID);
     }
 
  /*   @Override
