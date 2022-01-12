@@ -1,6 +1,7 @@
 package com.nano.devilry.data.recipes;
 
 import com.nano.devilry.ModMain;
+import com.nano.devilry.data.recipes.Altar.AltarRecipe;
 import com.nano.devilry.data.recipes.Mortar.MortarRecipe;
 import com.nano.devilry.data.recipes.Wittling.WittlingRecipe;
 import net.minecraft.core.Registry;
@@ -28,10 +29,17 @@ public class ModRecipeTypes
     public static RecipeType<WittlingRecipe> WITTLING_RECIPE
             = new WittlingRecipe.WittlingRecipeType();
 
+    public static final RegistryObject<AltarRecipe.Serializer> ALTAR_SERIALIZER
+            = RECIPE_SERIALIZER.register("summoning", AltarRecipe.Serializer::new);
+
+    public static RecipeType<AltarRecipe> ALTAR_RECIPE
+            = new AltarRecipe.AltarRecipeType();
+
     public static void register(IEventBus eventBus)
     {
         RECIPE_SERIALIZER.register(eventBus);
         Registry.register(Registry.RECIPE_TYPE, MortarRecipe.TYPE_ID, MORTAR_RECIPE);
         Registry.register(Registry.RECIPE_TYPE, WittlingRecipe.TYPE_ID, WITTLING_RECIPE);
+        Registry.register(Registry.RECIPE_TYPE, AltarRecipe.TYPE_ID, ALTAR_RECIPE);
     }
 }
