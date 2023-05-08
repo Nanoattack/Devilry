@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.world.gen;
+package io.github.nano.devilry.world.gen;
 
 import io.github.nano.devilry.devilry.entity.ModEntityTypes;
 import net.minecraft.world.entity.MobCategory;
@@ -6,6 +6,8 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+//fixme
+//todo
 
 public class ModEntityGeneration {
     @SubscribeEvent

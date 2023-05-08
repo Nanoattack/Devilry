@@ -1,19 +1,21 @@
-package io.github.nano.devilry.devilry.data.datagens;
+package io.github.nano.devilry.data.datagens;
 
-import io.github.nano.devilry.devilry.block.ModBlocks;
-import io.github.nano.devilry.devilry.util.tags.DevilryTags;
+import io.github.nano.devilry.block.ModBlocks;
 import io.github.nano.devilry.devilry.ModMain;
-import io.github.nano.devilry.devilry.item.ModItems;
+import io.github.nano.devilry.item.ModItems;
+import io.github.nano.devilry.util.tags.DevilryTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
+//fixme
+//todo
 
 public class ModRecipeProvider extends RecipeProvider {
     public ModRecipeProvider(DataGenerator generatorIn) {
@@ -21,14 +23,14 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         // GENERAL RECIPES
-
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(Items.BONE_MEAL), ModItems.BONE_ASH.get(), 0.35f, 200)
+        //todo fix the tags
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(Items.BONE_MEAL), RecipeCategory.MISC, ModItems.BONE_ASH.get(), 0.35f, 200)
                 .unlockedBy("has_item", has(Items.BONE_MEAL))
                 .save(consumer, modId("bone_ash_campfire_cooking"));
 
-        ShapedRecipeBuilder.shaped(ModItems.MORTAR.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.MORTAR.get())
                 .define('D', Items.POLISHED_DEEPSLATE)
                 .define('S', Items.POLISHED_DEEPSLATE_SLAB)
                 .pattern("D D")
@@ -36,25 +38,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Blocks.POLISHED_DEEPSLATE))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModBlocks.WITTLING_TABLE.get())
-                .define('P', ItemTags.PLANKS)
-                .define('T', DevilryTags.Items.INGOTS_TIN)
-                .pattern("TT")
-                .pattern("PP")
-                .pattern("PP")
-                .unlockedBy("has_item", has(ModItems.TIN_INGOT.get()))
-                .save(consumer);
-
-        ShapedRecipeBuilder.shaped(ModItems.PESTLE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PESTLE.get())
                 .define('C', Items.CALCITE)
-                .define('T', DevilryTags.Items.INGOTS_TIN)
+                .define('T', ItemTags.create(new ResourceLocation("forge:ingots/tin")))
                 .pattern("  T")
                 .pattern(" C ")
                 .pattern("C  ")
                 .unlockedBy("has_item", has(Blocks.CALCITE))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModItems.FLINT_KNIFE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.FLINT_KNIFE.get())
                 .define('F', Items.FLINT)
                 .define('S', Items.STICK)
                 .pattern(" F ")
@@ -62,15 +55,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Items.FLINT))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModItems.BRONZE_KNIFE.get())
-                .define('B', DevilryTags.Items.INGOTS_BRONZE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BRONZE_KNIFE.get())
+                .define('B', ItemTags.create(new ResourceLocation("forge:ingots/bronze")))
                 .define('S', Items.STICK)
                 .pattern(" B ")
                 .pattern("S  ")
                 .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(Items.SOUL_TORCH, 12)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SOUL_TORCH, 12)
                 .define('s', ModItems.SULPHUR_DUST.get())
                 .define('S', Items.STICK)
                 .pattern("s  ")
@@ -78,7 +71,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModItems.SULPHUR_DUST.get()))
                 .save(consumer, "soul_torch_from_sulphur");
 
-        ShapedRecipeBuilder.shaped(Items.SOUL_CAMPFIRE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SOUL_CAMPFIRE)
                 .define('s', ModItems.SULPHUR_DUST.get())
                 .define('S', Items.STICK)
                 .define('L', ItemTags.LOGS)
@@ -88,7 +81,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModItems.SULPHUR_DUST.get()))
                 .save(consumer, "soul_campfire_from_sulphur");
 
-        ShapelessRecipeBuilder.shapeless(Items.BLAZE_POWDER, 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BLAZE_POWDER, 3)
                 .requires(Items.BLAZE_ROD)
                 .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
                 .unlockedBy("has_item", has(Items.BLAZE_ROD))

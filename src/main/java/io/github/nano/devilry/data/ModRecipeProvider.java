@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data;
+package io.github.nano.devilry.data;
 
 import io.github.nano.devilry.devilry.ModMain;
 import io.github.nano.devilry.devilry.block.ModBlocks;
@@ -12,6 +12,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
+//fixme
+//todo
 
 public class ModRecipeProvider extends RecipeProvider {
     public ModRecipeProvider(DataGenerator generatorIn) {

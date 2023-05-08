@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.events;
+package io.github.nano.devilry.events;
 
 import io.github.nano.devilry.devilry.ModMain;
 import io.github.nano.devilry.devilry.item.ModItems;
@@ -11,6 +11,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
+//fixme
+//todo
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class ModEvents

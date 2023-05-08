@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.events;
+package io.github.nano.devilry.events;
 
 import io.github.nano.devilry.devilry.entity.ModEntityTypes;
 import io.github.nano.devilry.devilry.entity.custom.OwlEntity;
@@ -12,6 +12,8 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+//fixme
+//todo
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEventBusEvents {

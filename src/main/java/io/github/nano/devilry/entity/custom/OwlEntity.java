@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.entity.custom;
+package io.github.nano.devilry.entity.custom;
 
 import com.google.common.collect.Sets;
 import io.github.nano.devilry.devilry.events.ModSoundEvents;
@@ -40,6 +40,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.Set;
+//fixme
+//todo
 
 public class OwlEntity extends Parrot implements IAnimatable {
 

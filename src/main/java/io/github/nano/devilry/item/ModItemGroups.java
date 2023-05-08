@@ -1,8 +1,10 @@
-package io.github.nano.devilry.devilry.item;
+package io.github.nano.devilry.item;
 
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+//fixme
+//todo
 
 public class ModItemGroups
  //Can't have capitals in json denotation else data generators stop functioning

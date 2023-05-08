@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data;
+package io.github.nano.devilry.data;
 
 import io.github.nano.devilry.devilry.ModMain;
 import io.github.nano.devilry.devilry.data.client.ModBlockStateProvider;
@@ -8,6 +8,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+//fixme
+//todo
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {

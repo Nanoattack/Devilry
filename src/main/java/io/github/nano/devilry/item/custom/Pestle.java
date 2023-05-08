@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.item.custom;
+package io.github.nano.devilry.item.custom;
 
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import io.github.nano.devilry.devilry.events.ModSoundEvents;
@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Objects;
 import java.util.Random;
+//fixme
+//todo
 
 public class Pestle extends Item
 {

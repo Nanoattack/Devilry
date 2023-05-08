@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.block.custom;
+package io.github.nano.devilry.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,9 +18,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-
+//todo
+@SuppressWarnings("deprecation")
 public class SaltPetreClusterBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -33,32 +35,26 @@ public class SaltPetreClusterBlock extends Block implements SimpleWaterloggedBlo
 
     public SaltPetreClusterBlock(int int1, int int2, BlockBehaviour.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(FACING, Direction.UP));
-        this.upAabb = Block.box((double) int2, 0.0D, (double) int2, (double) (16 - int2), (double) int1, (double) (16 - int2));
-        this.downAabb = Block.box((double) int2, (double) (16 - int1), (double) int2, (double) (16 - int2), 16.0D, (double) (16 - int2));
-        this.northAabb = Block.box((double) int2, (double) int2, (double) (16 - int1), (double) (16 - int2), (double) (16 - int2), 16.0D);
-        this.southAabb = Block.box((double) int2, (double) int2, 0.0D, (double) (16 - int2), (double) (16 - int2), (double) int1);
-        this.eastAabb = Block.box(0.0D, (double) int2, (double) int2, (double) int1, (double) (16 - int2), (double) (16 - int2));
-        this.westAabb = Block.box((double) (16 - int1), (double) int2, (double) int2, 16.0D, (double) (16 - int2), (double) (16 - int2));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.FALSE).setValue(FACING, Direction.UP));
+        this.upAabb = Block.box(int2, 0.0D, int2, 16 - int2, int1, 16 - int2);
+        this.downAabb = Block.box(int2, 16 - int1, int2, 16 - int2, 16.0D, 16 - int2);
+        this.northAabb = Block.box(int2, int2, 16 - int1, 16 - int2, 16 - int2, 16.0D);
+        this.southAabb = Block.box(int2, int2, 0.0D, 16 - int2, 16 - int2, int1);
+        this.eastAabb = Block.box(0.0D, int2, int2, int1, 16 - int2, 16 - int2);
+        this.westAabb = Block.box(16 - int1, int2, int2, 16.0D, 16 - int2, 16 - int2);
     }
 
-    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos blockPos, CollisionContext context) {
+    @Override
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos blockPos, @NotNull CollisionContext context) {
         Direction direction = state.getValue(FACING);
-        switch (direction) {
-            case NORTH:
-                return this.northAabb;
-            case SOUTH:
-                return this.southAabb;
-            case EAST:
-                return this.eastAabb;
-            case WEST:
-                return this.westAabb;
-            case DOWN:
-                return this.downAabb;
-            case UP:
-            default:
-                return this.upAabb;
-        }
+        return switch (direction) {
+            case NORTH -> this.northAabb;
+            case SOUTH -> this.southAabb;
+            case EAST -> this.eastAabb;
+            case WEST -> this.westAabb;
+            case DOWN -> this.downAabb;
+            case UP -> this.upAabb;
+        };
     }
 
     public boolean canSurvive(BlockState state, LevelReader levelReader, BlockPos blockPos) {
@@ -67,7 +63,7 @@ public class SaltPetreClusterBlock extends Block implements SimpleWaterloggedBlo
         return levelReader.getBlockState(blockpos).isFaceSturdy(levelReader, blockpos, direction);
     }
 
-    public BlockState updateShape(BlockState state, Direction direction, BlockState blockState, LevelAccessor accessor, BlockPos pos, BlockPos blockPos) {
+    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState blockState, @NotNull LevelAccessor accessor, @NotNull BlockPos pos, @NotNull BlockPos blockPos) {
         if (state.getValue(WATERLOGGED)) {
             accessor.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(accessor));
         }
@@ -79,17 +75,17 @@ public class SaltPetreClusterBlock extends Block implements SimpleWaterloggedBlo
     public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
         LevelAccessor levelaccessor = placeContext.getLevel();
         BlockPos blockpos = placeContext.getClickedPos();
-        return this.defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(levelaccessor.getFluidState(blockpos).getType() == Fluids.WATER)).setValue(FACING, placeContext.getClickedFace());
+        return this.defaultBlockState().setValue(WATERLOGGED, levelaccessor.getFluidState(blockpos).getType() == Fluids.WATER).setValue(FACING, placeContext.getClickedFace());
     }
-    public BlockState rotate(BlockState blockState, Rotation rotation) {
+    public @NotNull BlockState rotate(BlockState blockState, Rotation rotation) {
         return blockState.setValue(FACING, rotation.rotate(blockState.getValue(FACING)));
     }
 
-    public BlockState mirror(BlockState blockState, Mirror mirror) {
+    public @NotNull BlockState mirror(BlockState blockState, Mirror mirror) {
         return blockState.rotate(mirror.getRotation(blockState.getValue(FACING)));
     }
 
-    public FluidState getFluidState(BlockState blockState) {
+    public @NotNull FluidState getFluidState(BlockState blockState) {
         return blockState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(blockState);
     }
 
@@ -97,7 +93,7 @@ public class SaltPetreClusterBlock extends Block implements SimpleWaterloggedBlo
         stateBuilder.add(WATERLOGGED, FACING);
     }
 
-    public PushReaction getPistonPushReaction(BlockState state) {
+    public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState state) {
         return PushReaction.DESTROY;
     }
 }

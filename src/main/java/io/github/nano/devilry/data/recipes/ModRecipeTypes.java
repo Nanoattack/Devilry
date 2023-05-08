@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data.recipes;
+package io.github.nano.devilry.data.recipes;
 
 import io.github.nano.devilry.devilry.ModMain;
 import io.github.nano.devilry.devilry.data.recipes.Altar.AltarRecipe;
@@ -11,6 +11,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+//fixme
+//todo
 
 public class ModRecipeTypes
 {

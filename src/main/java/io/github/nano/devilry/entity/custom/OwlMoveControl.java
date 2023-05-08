@@ -1,9 +1,11 @@
-package io.github.nano.devilry.devilry.entity.custom;
+package io.github.nano.devilry.entity.custom;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+//fixme
+//todo
 
 public class OwlMoveControl extends FlyingMoveControl
 {

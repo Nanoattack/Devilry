@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.events;
+package io.github.nano.devilry.events;
 
 import io.github.nano.devilry.devilry.ModMain;
 import net.minecraft.resources.ResourceLocation;
@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 
 //TY Pale Imitations/Brad (Dev of Schools of Magic Mod) for the code!
+//fixme
+//todo
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public final class LootInjector {

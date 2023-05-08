@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.world.gen;
+package io.github.nano.devilry.world.gen;
 
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import net.minecraft.core.Registry;
@@ -16,6 +16,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.GeodeConfigurat
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 import java.util.List;
+//fixme
+//todo
 
 public class ModConfiguredFeatures {
 

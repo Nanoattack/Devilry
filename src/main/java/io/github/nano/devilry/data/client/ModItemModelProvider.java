@@ -1,18 +1,23 @@
-package io.github.nano.devilry.devilry.data.client;
+package io.github.nano.devilry.data.client;
 
-import io.github.nano.devilry.devilry.ModMain;
-import net.minecraft.data.DataGenerator;
+import io.github.nano.devilry.ModMain;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+//todo
 
+@SuppressWarnings({"UnusedReturnValue", "unused", "SpellCheckingInspection"})
 public class ModItemModelProvider extends ItemModelProvider
 {
-    public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, ModMain.MOD_ID, existingFileHelper);
+
+    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, ModMain.MOD_ID, existingFileHelper);
     }
-@Override
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
     protected void registerModels() {
 
     withExistingParent("tin_block", modLoc("block/tin_block"));
@@ -23,7 +28,7 @@ public class ModItemModelProvider extends ItemModelProvider
 
     ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
     // General
-
+        //todo look into duplicates
     builder(itemGenerated, "tin_ingot");
     builder(itemGenerated, "raw_tin");
     builder(itemGenerated, "tin_nugget");

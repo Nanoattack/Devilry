@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.world.gen;
+package io.github.nano.devilry.world.gen;
 
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import net.minecraft.data.worldgen.features.FeatureUtils;
@@ -10,6 +10,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
+//fixme
+//todo
 
 public class ModOreFeatures
 {

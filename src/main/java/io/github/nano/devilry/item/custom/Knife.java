@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.item.custom;
+package io.github.nano.devilry.item.custom;
 
 import io.github.nano.devilry.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.devilry.item.ModItems;
@@ -11,6 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
+//fixme
+//todo
 
 public class Knife extends Item {
 

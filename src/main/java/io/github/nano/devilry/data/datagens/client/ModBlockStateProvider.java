@@ -1,19 +1,23 @@
-package io.github.nano.devilry.devilry.data.datagens.client;
+package io.github.nano.devilry.data.datagens.client;
 
-import io.github.nano.devilry.devilry.block.ModBlocks;
-import io.github.nano.devilry.devilry.ModMain;
-import net.minecraft.data.DataGenerator;
+import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.block.ModBlocks;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+//todo
 
+@SuppressWarnings("unused")
 public class ModBlockStateProvider extends BlockStateProvider
 {
-    public ModBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper)
-    {
-        super(gen, ModMain.MOD_ID, exFileHelper);
+
+
+    public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+        super(output, ModMain.MOD_ID, exFileHelper);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Override
     protected void registerStatesAndModels()
     {

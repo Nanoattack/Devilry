@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.events;
+package io.github.nano.devilry.events;
 
 import io.github.nano.devilry.devilry.ModMain;
 import net.minecraft.resources.ResourceLocation;
@@ -7,6 +7,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+//fixme
+//todo
 
 public class ModSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =

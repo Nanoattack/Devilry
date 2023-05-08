@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.screen;
+package io.github.nano.devilry.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+//fixme
+//todo
 
 public class AltarScreen extends AbstractContainerScreen<AltarContainer>
 {

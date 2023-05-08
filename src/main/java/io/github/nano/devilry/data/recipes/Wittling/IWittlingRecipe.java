@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data.recipes.Wittling;
+package io.github.nano.devilry.data.recipes.Wittling;
 
 import io.github.nano.devilry.devilry.ModMain;
 import net.minecraft.core.Registry;
@@ -6,6 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+//fixme
+//todo
 
 public interface IWittlingRecipe extends Recipe<SimpleContainer>
 {

@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry;
+package io.github.nano.devilry;
 
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import io.github.nano.devilry.devilry.blockentity.ModBlockEntities;
@@ -29,6 +29,9 @@ import software.bernie.geckolib3.GeckoLib;
 import static net.minecraft.client.renderer.ItemBlockRenderTypes.setRenderLayer;
 
 // The value here should match an entry in the META-INF/mods.toml file
+//fixme //todo
+
+
 @Mod(ModMain.MOD_ID)
 public class ModMain
 {

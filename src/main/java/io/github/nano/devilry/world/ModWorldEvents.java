@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.world;
+package io.github.nano.devilry.world;
 
 import io.github.nano.devilry.devilry.world.gen.ModEntityGeneration;
 import io.github.nano.devilry.devilry.world.gen.ModPlacements;
@@ -8,6 +8,8 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+//fixme
+//todo
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class ModWorldEvents

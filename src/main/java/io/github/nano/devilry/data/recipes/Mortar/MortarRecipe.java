@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data.recipes.Mortar;
+package io.github.nano.devilry.data.recipes.Mortar;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -20,6 +20,8 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+//fixme
+//todo
 
 public class MortarRecipe implements IMortarRecipe
 

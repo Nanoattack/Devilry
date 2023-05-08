@@ -1,41 +1,25 @@
-package io.github.nano.devilry.devilry.data.datagens;
+package io.github.nano.devilry.data.datagens;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 //TY Pale Imitations/Brad (Dev of Schools of Magic Mod) for the code!
+//fixme
+//todo
 
-public class ModLootTableProvider extends LootTableProvider
+public class ModLootTableProvider extends LootTableProvider{
 
-{
-
-    private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> loot_tables
-            = ImmutableList.of(Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK));
-
-    public ModLootTableProvider(DataGenerator dataGeneratorIn)
-    {
-        super(dataGeneratorIn);
+    public ModLootTableProvider(PackOutput packOutput) {
+        super(packOutput, BuiltInLootTables.all(), List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK)));
     }
 
     @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
-        return this.loot_tables;
+    public @NotNull List<SubProviderEntry> getTables() {
+        return super.getTables();
     }
-
-    @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker)
-    { }
 }

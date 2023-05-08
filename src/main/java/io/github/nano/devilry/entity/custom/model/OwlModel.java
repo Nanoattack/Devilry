@@ -1,9 +1,11 @@
-package io.github.nano.devilry.devilry.entity.custom.model;
+package io.github.nano.devilry.entity.custom.model;
 
 import io.github.nano.devilry.devilry.entity.custom.OwlEntity;
 import io.github.nano.devilry.devilry.ModMain;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
+//fixme
+//todo
 
 public class OwlModel extends AnimatedGeoModel<OwlEntity>
 {

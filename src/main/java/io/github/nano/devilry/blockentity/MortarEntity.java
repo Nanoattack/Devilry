@@ -1,9 +1,9 @@
-package io.github.nano.devilry.devilry.blockentity;
+package io.github.nano.devilry.blockentity;
 
-import io.github.nano.devilry.devilry.events.ModSoundEvents;
-import io.github.nano.devilry.devilry.data.recipes.ModRecipeTypes;
-import io.github.nano.devilry.devilry.data.recipes.Mortar.MortarRecipe;
-import io.github.nano.devilry.devilry.item.ModItems;
+import io.github.nano.devilry.data.recipes.ModRecipeTypes;
+import io.github.nano.devilry.data.recipes.MortarRecipe;
+import io.github.nano.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +14,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
@@ -23,15 +22,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.Random;
+//todo
 
 public class MortarEntity extends BlockEntity
 {
@@ -47,11 +47,11 @@ public class MortarEntity extends BlockEntity
             @Override
             public int get(int index)
             {
-                switch (index) {
-                    case 0: return MortarEntity.this.progress;
-                    case 1: return MortarEntity.this.max_progress;
-                    default: return 0;
-                }
+                return switch (index) {
+                    case 0 -> MortarEntity.this.progress;
+                    case 1 -> MortarEntity.this.max_progress;
+                    default -> 0;
+                };
             }
 
             @Override
@@ -65,27 +65,22 @@ public class MortarEntity extends BlockEntity
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.put("inv", itemHandler.serializeNBT());
-        return tag;
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
+    public void saveAdditional(@NotNull CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.put("inv", itemHandler.serializeNBT());
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
+    public void load(@NotNull CompoundTag compoundTag) {
         super.load(compoundTag);
         itemHandler.deserializeNBT(compoundTag.getCompound("inv"));
     }
 
+    //todo look at this
     @Override
-    public CompoundTag getUpdateTag()
+    public @NotNull CompoundTag getUpdateTag()
     {
-        return this.save(new CompoundTag());
+        return super.getUpdateTag();
     }
 
     @Nullable
@@ -115,23 +110,16 @@ public class MortarEntity extends BlockEntity
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                switch (slot) {
-                    case 0: return stack.getItem() == ModItems.PESTLE.get()||
+                return switch (slot) {
+                    case 0 -> stack.getItem() == ModItems.PESTLE.get() ||
                             stack.getItem() == ModItems.NETHERITE_PESTLE.get();
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                        return true;
-                    case 7: return stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get()||
-                                    stack.getItem() == ModItems.SULPHUR_DUST.get()||
-                                    stack.getItem() == ModItems.BRONZE_BLEND.get()||
-                                    stack.getItem() == Items.GUNPOWDER;
-                    default:
-                        return false;
-                }
+                    case 1, 2, 3, 4, 5, 6 -> true;
+                    case 7 -> stack.getItem() == ModItems.ALCHEMICAL_ESSENCE.get() ||
+                            stack.getItem() == ModItems.SULPHUR_DUST.get() ||
+                            stack.getItem() == ModItems.BRONZE_BLEND.get() ||
+                            stack.getItem() == Items.GUNPOWDER;
+                    default -> false;
+                };
             }
 
             @Override
@@ -151,6 +139,7 @@ public class MortarEntity extends BlockEntity
     }
     private boolean hasRecipe(MortarEntity entity) {
         Level world = entity.level;
+        if (world == null) return false;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
@@ -166,6 +155,10 @@ public class MortarEntity extends BlockEntity
 
     public void craft()
     {
+        //todo look at duplicate code
+        //noinspection DuplicatedCode
+        if (level == null) return;
+
         SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
             inv.setItem(i, itemHandler.getStackInSlot(i));
@@ -177,7 +170,8 @@ public class MortarEntity extends BlockEntity
         recipe.ifPresent(iRecipe -> {
 
             ItemStack output = iRecipe.getResultItem();
-            Integer amount = iRecipe.getAmount();
+            //fixme
+            Integer amount = null;
 
             if (hasSpace(amount)) {
 
@@ -191,6 +185,9 @@ public class MortarEntity extends BlockEntity
     }
 
     public void tick() {
+        //todo look at duplicate code
+        //noinspection DuplicatedCode
+        if (level == null) return;
 
         SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
@@ -199,9 +196,10 @@ public class MortarEntity extends BlockEntity
 
         Optional<MortarRecipe> recipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
-
+        //fixme
         recipe.ifPresent(iRecipe -> {
-            Integer amount = iRecipe.getAmount();
+            //fixme
+            Integer amount = null;
             ItemStack output = iRecipe.getResultItem();
 
             if (!level.isClientSide) {
@@ -224,25 +222,21 @@ public class MortarEntity extends BlockEntity
 
     public boolean hasSpace(Integer amount)
     {
-        if (itemHandler.getStackInSlot(7).getCount() + amount <= itemHandler.getStackInSlot(7).getMaxStackSize())
-        {
-            return true;
-        }
-        return false;
+        return itemHandler.getStackInSlot(7).getCount() + amount <= itemHandler.getStackInSlot(7).getMaxStackSize();
     }
 
     private void checkDurability()
     {
-        if (itemHandler.getStackInSlot(0).getDamageValue() > itemHandler.getStackInSlot(0).getMaxDamage() - 1)
+        if (level != null && itemHandler.getStackInSlot(0).getDamageValue() > itemHandler.getStackInSlot(0).getMaxDamage() - 1)
         {
             itemHandler.extractItem(0,1,false);
-            level.playSound((Player) null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            level.playSound(null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         }
     }
 
     private void craftTheItem(ItemStack output, Integer amount) {
 
-        if (sameOutput(output)) {
+        if (sameOutput(output) && level != null) {
 
             itemHandler.extractItem(1, 1, false);
             itemHandler.extractItem(2, 1, false);
@@ -252,9 +246,9 @@ public class MortarEntity extends BlockEntity
             itemHandler.extractItem(6, 1, false);
             itemHandler.extractItem(7, 1, false);
 
-            itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
+            itemHandler.getStackInSlot(0).hurt(1, level.getRandom(), null);
 
-            level.playSound((Player) null, getBlockPos(), ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            level.playSound(null, getBlockPos(), ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
 
             this.resetProgress();
         }
@@ -263,20 +257,17 @@ public class MortarEntity extends BlockEntity
 
     public boolean sameOutput(ItemStack output)
     {
-        if (itemHandler.insertItem(7, output, true) != output) {
-            return true;
-        }
-        return false;
+        return itemHandler.insertItem(7, output, true) != output;
     }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        //fixme
+        if(cap == ForgeCapabilities.ITEM_HANDLER)
         {
             return handler.cast();
         }
-
         return super.getCapability(cap, side);
     }
 

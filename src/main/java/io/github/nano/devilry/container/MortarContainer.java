@@ -1,7 +1,7 @@
-package io.github.nano.devilry.devilry.container;
+package io.github.nano.devilry.container;
 
-import io.github.nano.devilry.devilry.block.ModBlocks;
-import io.github.nano.devilry.devilry.screen.slot.ResultSlotItemHandler;
+import io.github.nano.devilry.block.ModBlocks;
+import io.github.nano.devilry.screen.slot.ResultSlotItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -9,10 +9,14 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+//todo
 
 public class MortarContainer extends AbstractContainerMenu
 {
@@ -35,10 +39,11 @@ public class MortarContainer extends AbstractContainerMenu
         this.playerInventory = new InvWrapper(inventory);
         containerData = data;
 
-        layoutPlayerInventorySlots(8, 86);
+        layoutPlayerInventorySlots(86);
 
+        //todo look at this
         if(blockEntity != null) {
-            blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 80,10));
                 addSlot(new SlotItemHandler(h, 1, 48,10));
                 addSlot(new SlotItemHandler(h, 2, 35,32));
@@ -57,17 +62,9 @@ public class MortarContainer extends AbstractContainerMenu
         return containerData.get(0) > 0;
     }
 
-    public int getScaledProgress() {
-        int progress = this.containerData.get(0);
-        int maxProgress = this.containerData.get(1);  // Max Progress
-        int progressArrowSize = 17; // This is the width in pixels of your arrow
-
-        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
-    }
-
     @Override
-    public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(),
+    public boolean stillValid(@NotNull Player pPlayer) {
+        return stillValid(ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()),
                 blockEntity.getBlockPos()), playerEntity, ModBlocks.MORTAR.get());
     }
 
@@ -83,7 +80,9 @@ public class MortarContainer extends AbstractContainerMenu
         return index;
     }
 
-    private int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy)
+    //todo make this more abstract
+    @SuppressWarnings("SameParameterValue")
+    private void addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy)
     {
         for (int j = 0; j < verAmount; j++)
         {
@@ -91,24 +90,25 @@ public class MortarContainer extends AbstractContainerMenu
             y += dy;
         }
 
-        return index;
     }
-
-    private void layoutPlayerInventorySlots(int leftCol, int topRow)
+    //todo maybe make more abstract
+    @SuppressWarnings({"ReassignedVariable", "SameParameterValue"})
+    private void layoutPlayerInventorySlots(int topRow)
     {
-        addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
+        addSlotBox(playerInventory, 9, 8, topRow, 9, 18, 3, 18);
 
         topRow += 58;
-        addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+        addSlotRange(playerInventory, 0, 8, topRow, 9, 18);
     }
 
-    // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
+    // CREDIT GOES TO: Diesieben07 | https://github.com/diesieben07/SevenCommons
     // must assign a slot number to each of the slots used by the GUI.
-    // For this container, we can see both the tile inventory's slots as well as the player inventory slots and the hotbar.
+    // For this container, we can see both the tile inventory's slots and the player inventory slots and the hot bar.
     // Each time we add a Slot to the container, it automatically increases the slotIndex, which means
-    //  0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
+    //  0 - 8 = hot bar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
     //  9 - 35 = player inventory slots (which map to the InventoryPlayer slot numbers 9 - 35)
     //  36 - 44 = TileInventory slots, which map to our TileEntity slot numbers 0 - 8)
+    @SuppressWarnings("SpellCheckingInspection")
     private static final int HOTBAR_SLOT_COUNT = 9;
     private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
     private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
@@ -121,10 +121,10 @@ public class MortarContainer extends AbstractContainerMenu
     private static final int TE_INVENTORY_SLOT_COUNT = 8;  // must match TileEntityInventoryBasic.NUMBER_OF_SLOTS
 
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index)
+    public @NotNull ItemStack quickMoveStack(@NotNull Player playerIn, int index)
     {
         Slot sourceSlot = slots.get(index);
-        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;  //EMPTY_ITEM
+        if (!sourceSlot.hasItem()) return ItemStack.EMPTY;  //EMPTY_ITEM
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 

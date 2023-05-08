@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.block.custom;
+package io.github.nano.devilry.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,13 +10,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.stream.Stream;
+//todo
 
 public class AltarSideBlock extends HorizontalDirectionalBlock {
 
@@ -24,44 +22,25 @@ public class AltarSideBlock extends HorizontalDirectionalBlock {
         super(p_54120_);
     }
 
-    @Nullable
-    public static Direction getAltarOrientation(BlockGetter pLevel, BlockPos pPos) {
-        BlockState blockstate = pLevel.getBlockState(pPos);
-        return blockstate.getBlock() instanceof AltarSideBlock ? blockstate.getValue(FACING).getOpposite() : null;
-    }
-
     private static final Property<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public static final VoxelShape SHAPE_N = Stream.of(
-            Block.box(0, 0, 3, 16, 16, 15)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+    public static final VoxelShape SHAPE_N = java.util.Optional.of(Block.box(0, 0, 3, 16, 16, 15)).get();
 
-    public static final VoxelShape SHAPE_W = Stream.of(
-            Block.box(3, 0, 0, 15, 16, 16)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+    public static final VoxelShape SHAPE_W = java.util.Optional.of(Block.box(3, 0, 0, 15, 16, 16)).get();
 
-    public static final VoxelShape SHAPE_S = Stream.of(
-            Block.box(0, 0, 1, 16, 16, 13)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+    public static final VoxelShape SHAPE_S = java.util.Optional.of(Block.box(0, 0, 1, 16, 16, 13)).get();
 
-    public static final VoxelShape SHAPE_E = Stream.of(
-            Block.box(1, 0, 0, 13, 16, 16)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+    public static final VoxelShape SHAPE_E = java.util.Optional.of(Block.box(1, 0, 0, 13, 16, 16)).get();
 
+    @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        switch (pState.getValue(FACING)) {
-            case NORTH:
-                return SHAPE_N;
-            case EAST:
-                return SHAPE_E;
-            case WEST:
-                return SHAPE_W;
-            case SOUTH:
-                return SHAPE_S;
-            default:
-                return SHAPE_N;
-        }
+    public @NotNull VoxelShape getShape(BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
+        return switch (pState.getValue(FACING)) {
+            case EAST -> SHAPE_E;
+            case WEST -> SHAPE_W;
+            case SOUTH -> SHAPE_S;
+            default -> SHAPE_N;
+        };
     }
 
     @Override

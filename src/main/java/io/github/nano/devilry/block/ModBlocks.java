@@ -1,11 +1,8 @@
-package io.github.nano.devilry.devilry.block;
+package io.github.nano.devilry.block;
 
-import io.github.nano.devilry.devilry.block.custom.*;
-import io.github.nano.devilry.devilry.ModMain;
-import com.nano.devilry.block.custom.*;
-import io.nano.devilry.block.custom.*;
-import io.github.nano.devilry.devilry.item.ModItemGroups;
-import io.github.nano.devilry.devilry.item.ModItems;
+import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.block.custom.*;
+import io.github.nano.devilry.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -19,7 +16,8 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 import static net.minecraft.world.level.block.Blocks.AMETHYST_CLUSTER;
-
+//todo
+@SuppressWarnings({"unused", "SpellCheckingInspection"})
 public class ModBlocks
 {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModMain.MOD_ID);
@@ -27,15 +25,6 @@ public class ModBlocks
 
     public static final RegistryObject<Block> MORTAR = BLOCKS.register("mortar",
             ()-> new MortarBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).requiresCorrectToolForDrops().noOcclusion()));
-
-    public static final RegistryObject<Block> WITTLING_TABLE = registerBlock("wittling_table",
-            ()-> new WittlingTableBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_WOOD).requiresCorrectToolForDrops()));
-
-    public static final RegistryObject<Block> STOLAS_EFFIGY = BLOCKS.register("stolas_effigy",
-            ()-> new EffigyBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_WOOD).requiresCorrectToolForDrops().noOcclusion()));
-
-    public static final RegistryObject<Block> DEMON_ALTAR = BLOCKS.register("demon_altar",
-            ()-> new AltarBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE).requiresCorrectToolForDrops().noOcclusion()));
 
     public static final RegistryObject<Block> DEMON_ALTAR_SIDE = BLOCKS.register("demon_altar_side",
             ()-> new AltarSideBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE).requiresCorrectToolForDrops().noOcclusion()));
@@ -48,19 +37,19 @@ public class ModBlocks
     public static final RegistryObject<Block> SALTPETRE_CLUSTER = registerBlock("saltpetre_cluster", ()->
             new SaltPetreClusterBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST)
                     .noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).requiresCorrectToolForDrops()
-                    .lightLevel((p_152632_) -> {return  5;})));
+                    .lightLevel((p_152632_) -> 5)));
 
     public static final RegistryObject<Block> LARGE_SALTPETRE_BUD = registerBlock("large_saltpetre_bud",
             ()-> new SaltPetreClusterBlock(5, 3, BlockBehaviour.Properties.copy(AMETHYST_CLUSTER).sound(SoundType.LARGE_AMETHYST_BUD).requiresCorrectToolForDrops()
-                    .lightLevel((p_152629_) -> {return 4;})));
+                    .lightLevel((p_152629_) -> 4)));
 
     public static final RegistryObject<Block> MEDIUM_SALTPETRE_BUD = registerBlock("medium_saltpetre_bud",
             ()-> new SaltPetreClusterBlock(4, 3, BlockBehaviour.Properties.copy(AMETHYST_CLUSTER).sound(SoundType.MEDIUM_AMETHYST_BUD).requiresCorrectToolForDrops()
-                    .lightLevel((p_152617_) -> {return 2;})));
+                    .lightLevel((p_152617_) -> 2)));
 
     public static final RegistryObject<Block> SMALL_SALPETRE_BUD = registerBlock("small_saltpetre_bud",
             ()-> new SaltPetreClusterBlock(3, 4, BlockBehaviour.Properties.copy(AMETHYST_CLUSTER).sound(SoundType.SMALL_AMETHYST_BUD).requiresCorrectToolForDrops()
-                    .lightLevel((p_187409_) -> {return 1;})));
+                    .lightLevel((p_187409_) -> 1)));
     //STONES
 
     public static final RegistryObject<Block> LIMESTONE = registerBlock("limestone",
@@ -87,7 +76,7 @@ public class ModBlocks
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<StairBlock> CALCITE_STAIRS = registerBlock("calcite_stairs",
-            () -> new StairBlock(()-> Blocks.CALCITE.defaultBlockState(),
+            () -> new StairBlock(Blocks.CALCITE::defaultBlockState,
                     BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.CALCITE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> CALCITE_SLAB = registerBlock("calcite_slab",
@@ -97,7 +86,7 @@ public class ModBlocks
             ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
 
     public static final RegistryObject<StairBlock> TUFF_STAIRS = registerBlock("tuff_stairs",
-            () -> new StairBlock(()-> Blocks.TUFF.defaultBlockState(),
+            () -> new StairBlock(Blocks.TUFF::defaultBlockState,
                     BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> TUFF_SLAB = registerBlock("tuff_slab",
@@ -107,7 +96,7 @@ public class ModBlocks
             ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
     public static final RegistryObject<StairBlock> DRIPSTONE_STAIRS = registerBlock("dripstone_stairs",
-            () -> new StairBlock(()-> Blocks.DRIPSTONE_BLOCK.defaultBlockState(),
+            () -> new StairBlock(Blocks.DRIPSTONE_BLOCK::defaultBlockState,
                     BlockBehaviour.Properties.copy(Blocks.GRANITE_STAIRS).sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<SlabBlock> DRIPSTONE_SLAB = registerBlock("dripstone_slab",
@@ -153,7 +142,7 @@ public class ModBlocks
     private static<T extends Block> void registerBlockItem(String name, RegistryObject<T> block)
     {
         ModItems.ITEMS.register(name, ()-> new BlockItem(block.get()
-                                    , new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
+                                    , new Item.Properties()));
     }
 
     public static void register(IEventBus eventBus)

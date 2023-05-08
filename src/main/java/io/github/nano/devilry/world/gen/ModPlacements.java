@@ -1,10 +1,12 @@
-package io.github.nano.devilry.devilry.world.gen;
+package io.github.nano.devilry.world.gen;
 
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
+//fixme
+//todo
 
 public class ModPlacements
 {

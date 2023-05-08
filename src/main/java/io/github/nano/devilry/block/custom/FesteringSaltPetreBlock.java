@@ -1,6 +1,6 @@
-package io.github.nano.devilry.devilry.block.custom;
+package io.github.nano.devilry.block.custom;
 
-import io.github.nano.devilry.devilry.block.ModBlocks;
+import io.github.nano.devilry.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -10,21 +10,26 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
+//todo
 
+@SuppressWarnings("deprecation")
 public class FesteringSaltPetreBlock extends Block {
     public static final int GROWTH_CHANCE = 5;
     private static final Direction[] DIRECTIONS = Direction.values();
 
     public FesteringSaltPetreBlock(Properties properties) {super(properties);}
 
-    public PushReaction getPistonPushReaction(BlockState p_152733_) {
+    public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState p_152733_) {
         return PushReaction.DESTROY;
     }
 
+    //todo
+    @SuppressWarnings("unused")
     public void randomTick(BlockState state, ServerLevel level, BlockPos blockPos, Random random) {
-        if (random.nextInt(5) == 0) {
+        if (random.nextInt(GROWTH_CHANCE) == 0) {
             Direction direction = DIRECTIONS[random.nextInt(DIRECTIONS.length)];
             BlockPos blockpos = blockPos.relative(direction);
             BlockState blockstate = level.getBlockState(blockpos);
@@ -40,8 +45,8 @@ public class FesteringSaltPetreBlock extends Block {
             }
 
             if (block != null) {
-                BlockState blockstate1 = block.defaultBlockState().setValue(AmethystClusterBlock.FACING, direction).setValue(AmethystClusterBlock.WATERLOGGED, Boolean.valueOf(blockstate.getFluidState().getType() == Fluids.WATER));
-                level.setBlockAndUpdate(blockpos, blockstate1);
+                BlockState blockState = block.defaultBlockState().setValue(AmethystClusterBlock.FACING, direction).setValue(AmethystClusterBlock.WATERLOGGED, blockstate.getFluidState().getType() == Fluids.WATER);
+                level.setBlockAndUpdate(blockpos, blockState);
             }
 
         }

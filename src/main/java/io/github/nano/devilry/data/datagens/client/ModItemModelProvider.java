@@ -1,18 +1,22 @@
-package io.github.nano.devilry.devilry.data.datagens.client;
+package io.github.nano.devilry.data.datagens.client;
 
-import io.github.nano.devilry.devilry.ModMain;
-import net.minecraft.data.DataGenerator;
+import io.github.nano.devilry.ModMain;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+//todo
 
+@SuppressWarnings({"SpellCheckingInspection", "unused"})
 public class ModItemModelProvider extends ItemModelProvider
 {
-    public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, ModMain.MOD_ID, existingFileHelper);
+
+    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, ModMain.MOD_ID, existingFileHelper);
     }
-@Override
+
+    @Override
     protected void registerModels() {
 
     withExistingParent("tin_block", modLoc("block/tin_block"));
@@ -52,7 +56,9 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "tin_nugget");
     builder(itemGenerated, "bronze_ingot");
     builder(itemGenerated, "bronze_nugget");
-    builder(itemGenerated, "bronze_blend");
+    //todo look into this
+        //noinspection DuplicatedCode
+        builder(itemGenerated, "bronze_blend");
     builder(itemGenerated, "copper_nugget");
     builder(itemGenerated, "alchemical_essence");
     builder(itemGenerated, "bone_ash");
@@ -73,6 +79,8 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "stolas_effigy");
     builder(itemGenerated, "demon_altar");
 }
+    //todo look into this
+    @SuppressWarnings("UnusedReturnValue")
     private ItemModelBuilder builder(ModelFile itemGenerated, String name) {
         return getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);
     }

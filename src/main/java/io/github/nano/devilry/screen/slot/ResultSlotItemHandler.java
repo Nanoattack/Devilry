@@ -1,9 +1,11 @@
-package io.github.nano.devilry.devilry.screen.slot;
+package io.github.nano.devilry.screen.slot;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
+//fixme
+//todo
 
 public class ResultSlotItemHandler extends SlotItemHandler {
     public ResultSlotItemHandler(IItemHandler itemHandler, int index, int xPosition, int yPosition) {

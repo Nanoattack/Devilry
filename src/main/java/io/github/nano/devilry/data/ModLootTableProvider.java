@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data;
+package io.github.nano.devilry.data;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 //TY Pale Imitations/Brad (Dev of Schools of Magic Mod) for the code!
+//fixme
+//todo
 
 public class ModLootTableProvider extends LootTableProvider
 

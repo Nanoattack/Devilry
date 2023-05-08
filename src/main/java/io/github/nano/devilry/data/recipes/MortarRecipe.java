@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.data.recipes;
+package io.github.nano.devilry.data.recipes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -17,6 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+//fixme
+//todo
 
 public class MortarRecipe implements IMortarRecipe
 

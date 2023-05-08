@@ -1,10 +1,12 @@
-package io.github.nano.devilry.devilry.data;
+package io.github.nano.devilry.data;
 
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import io.github.nano.devilry.devilry.item.ModItems;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
+//fixme
+//todo
 
 public class ModBlockLootTables extends BlockLoot
 {

@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.item.custom;
+package io.github.nano.devilry.item.custom;
 
 import com.google.common.collect.ImmutableList;
 import com.nano.devilry.mixin.SpawnEggItemMixin;
@@ -16,7 +16,9 @@ import java.util.function.Supplier;
 
 /**
  * Author: MrCrayfish
- */
+ *///fixme
+//todo
+
 public class SupplierSpawnEggItem extends SpawnEggItem
 {
     private static final List<SupplierSpawnEggItem> EGGS = new ArrayList<>();

@@ -1,4 +1,4 @@
-package io.github.nano.devilry.devilry.util.tags;
+package io.github.nano.devilry.util.tags;
 
 import io.github.nano.devilry.devilry.ModMain;
 import net.minecraft.resources.ResourceLocation;
@@ -7,6 +7,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
+//fixme
+//todo
 
 public class DevilryTags
 {

@@ -1,6 +1,8 @@
-package io.github.nano.devilry.devilry.util;
+package io.github.nano.devilry.util;
 
 import net.minecraft.util.StringRepresentable;
+//fixme
+//todo
 
 public enum AltarPart implements StringRepresentable {
     MAIN("main"),
