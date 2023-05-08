@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "B",
-    "T",
-    "B"
+    "BBB",
+    "BTB",
+    "BBB"
   ],
   "key": {
     "B": {
-      "item": "devilry:bronze_ingot"
+      "item": "devilry:bronze_nugget"
     },
     "T": {
       "item": "minecraft:torch"

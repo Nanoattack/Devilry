@@ -1,17 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+    "b",
     "B",
-    "B",
-    "B"
+    "b"
   ],
   "key": {
     "B": {
-      "item": "devilry:bronze_ingot"
+      "tag": "forge:ingots/bronze"
+    },
+    "b": {
+      "item": "devilry:bronze_nugget"
     }
   },
   "result": {
-    "item": "devilry:bronze_chain",
-    "count": 3
+    "item": "devilry:bronze_chain"
   }
 }

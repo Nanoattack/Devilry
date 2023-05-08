@@ -29,16 +29,24 @@ displayName="Devilry Mod" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="devilry.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks for this example mod goes to Java" #optional
+credits="Thanks to KaupenJoe and his amazing community, as well as Joefoxe for constant help in implementation. Thanks also to; Pale Imitations, Random Matriarch, Saphie, Void, Elucent, Nitroncat, Nogard, Cybercat555 and anyone else who helped judge my work and give valuable feedback.I couldn't have done it without all of you." #optional
 # A text field displayed in the mod UI
-authors="Love, Cheese and small house plants" #optional
+authors="Nano" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This is a long form description of the mod. You can write whatever you want here
+Devilry is a demon invocation mod inspired by the many past and present magic mods that came before it.
 
-Have some lorem ipsum.
+Devilry's content is subdivided into 3 main sections;
+Demonic Pacts, Alchemy & The Infernal Descent.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis lacinia magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed sagittis luctus odio eu tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque volutpat ligula eget lacus auctor sagittis. In hac habitasse platea dictumst. Nunc gravida elit vitae sem vehicula efficitur. Donec mattis ipsum et arcu lobortis, eleifend sagittis sem rutrum. Cras pharetra quam eget posuere fermentum. Sed id tincidunt justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Demonic Pacts :
+Demons are creatures that one can summon through performing rituals. They are denizens of hell, so always keep your wits about you when conversing with one. A pact is gained once an initial request is completed for a demon. Pacts can be upgraded by completing subsequent quests, providing them with offerings, or otherwise. Upgraded pacts will result in new crafting recipe reagents, gifts or lore transcripts.
+
+Alchemy :
+The science of understanding, deconstructing and reconstructing matter. However, it is not an all-powerful art. It is impossible to create something out of nothing... or so... is assumed. While humanity itself seems to have a simple understanding of the alchemy in our world, access to demonic intervention has proven that there might be more than meets the eye. Perhaps it can be used to create powerful artefacts, reagents of unlimited potential or even... life itself? Just make sure the price isn't your very soul.
+
+Infernal Descent :
+It is not unheard of, for even a mortal being to venture the plains of hell. One such legend, describes a man named Dante and his traversing through the many layers. It would only be logical to assume, that if such a tale was true, that he would leave a journal of some sorts. The question, where would he leave itÉÉÉÉÉÉÉÉ..?
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.devilry]] #optional

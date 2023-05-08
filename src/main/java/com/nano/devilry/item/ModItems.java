@@ -2,9 +2,13 @@ package com.nano.devilry.item;
 
 import com.nano.devilry.ModMain;
 import com.nano.devilry.block.ModBlocks;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import com.nano.devilry.entity.ModEntityTypes;
+import com.nano.devilry.events.ModSoundEvents;
+import com.nano.devilry.item.custom.Guano;
+import com.nano.devilry.item.custom.Knife;
+import com.nano.devilry.item.custom.Pestle;
+import com.nano.devilry.item.custom.SupplierSpawnEggItem;
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,6 +31,8 @@ public class ModItems
     //BRONZE
     public static final RegistryObject<Item> BRONZE_INGOT = ITEMS.register("bronze_ingot", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
+    public static final RegistryObject<Item> BRONZE_NUGGET = ITEMS.register("bronze_nugget", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
     public static final RegistryObject<Item> BRONZE_BLEND = ITEMS.register("bronze_blend", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
     public static final RegistryObject<Item> BRONZE_BARS = ITEMS.register("bronze_bars",
@@ -40,14 +46,47 @@ public class ModItems
 
     //GENERAL
 
-    public static final RegistryObject<Item> ALCHEMICAL_ESSENCE  = ITEMS.register("alchemical_essence", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+    public static final RegistryObject<Item> OWL_FEATHER = ITEMS.register("owl_feather", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
+    public static final RegistryObject<Item> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", ()-> new SupplierSpawnEggItem(ModEntityTypes.OWL::get, 0xf5e9ce, 0x6a4402,
+            new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP)));
+
+    public static final RegistryObject<Item> ALCHEMICAL_ESSENCE  = ITEMS.register("alchemical_essence", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP).stacksTo(16)));
 
     public static final RegistryObject<Item> BONE_ASH = ITEMS.register("bone_ash", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
+    public static final RegistryObject<Item> SALTPETRE = ITEMS.register("saltpetre", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
+    public static final RegistryObject<Item> BAT_GUANO = ITEMS.register("bat_guano", ()-> new Guano(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
+    public static final RegistryObject<Item> CURED_FLESH = ITEMS.register("cured_flesh", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
 
     public static final RegistryObject<Item> MORTAR = ITEMS.register("mortar",
             () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
 
-    public static final RegistryObject<Item> PESTLE  = ITEMS.register("pestle", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+    public static final RegistryObject<Item> DEMON_ALTAR = ITEMS.register("demon_altar",
+            () -> new BlockItem(ModBlocks.DEMON_ALTAR.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
+
+    public static final RegistryObject<Item> DEMON_ALTAR_SIDE_TEST = ITEMS.register("demon_altar_side_test",
+            () -> new BlockItem(ModBlocks.DEMON_ALTAR_SIDE.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP)));
+
+    public static final RegistryObject<Item> STOLAS_EFFIGY = ITEMS.register("stolas_effigy",
+            () -> new BlockItem(ModBlocks.STOLAS_EFFIGY.get(), new Item.Properties().tab(ModItemGroups.MOD_BLOCK_GROUP).stacksTo(1)));
+
+    public static final RegistryObject<Item> FLINT_KNIFE  = ITEMS.register("flint_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(32)));
+
+    public static final RegistryObject<Item> BRONZE_KNIFE  = ITEMS.register("bronze_knife", ()-> new Knife(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(418)));
+
+    public static final RegistryObject<Item> PESTLE  = ITEMS.register("pestle", ()-> new Pestle(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(131)));
+
+    public static final RegistryObject<Item> NETHERITE_PESTLE  = ITEMS.register("netherite_pestle", ()-> new Pestle(new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).durability(2031)));
+
+    public static final RegistryObject<Item> ENCHANTED_FOREST_MUSIC_DISC  = ITEMS.register("enchanted_forest_music_disc",
+            ()-> new RecordItem(1, () -> ModSoundEvents.ENCHANTED_FOREST.get(),
+                    new Item.Properties().tab(ModItemGroups.MOD_MISC_GROUP).stacksTo(1).rarity(Rarity.RARE)));
+
+    public static final RegistryObject<Item> SULPHUR_DUST = ITEMS.register("sulphur_dust", ()-> new Item(new Item.Properties().tab(ModItemGroups.MOD_MATERIAL_GROUP)));
+
 
     public static void register(IEventBus eventBus)
     {

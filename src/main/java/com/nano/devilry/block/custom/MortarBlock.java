@@ -1,5 +1,6 @@
 package com.nano.devilry.block.custom;
 
+import com.nano.devilry.block.ModBlocks;
 import com.nano.devilry.blockentity.ModBlockEntities;
 import com.nano.devilry.blockentity.MortarEntity;
 import com.nano.devilry.container.MortarContainer;
@@ -7,20 +8,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,6 +35,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -45,7 +48,6 @@ public class MortarBlock extends BaseEntityBlock
     public MortarBlock(Properties builder) {
         super(builder);
     }
-
 
     public static final VoxelShape SHAPE_N = Stream.of(
             Block.box(10.5, 1, 5.5, 11.5, 3, 10.5),
@@ -92,7 +94,13 @@ public class MortarBlock extends BaseEntityBlock
                 return SHAPE_S;
             default:
                 return SHAPE_N;
+
         }
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState iBlockState) {
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -115,7 +123,44 @@ public class MortarBlock extends BaseEntityBlock
                 (world2, pos, state2, entity) -> ((MortarEntity)entity).tick() : null;
     }
 
+    // drop blocks in getInventory() of the tile entity
+    @Override
+    public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
+        MortarEntity te = (MortarEntity) worldIn.getBlockEntity(pos);
 
+        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(0)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(1)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(2)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(3)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(4)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(5)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(6)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(7)));
+        });
+        super.playerWillDestroy(worldIn, pos, state, player);
+    }
+
+    @Override
+    public void onBlockExploded(BlockState state, Level worldIn, BlockPos pos, Explosion explosion) {
+        if (worldIn instanceof ServerLevel) {
+        MortarEntity te = (MortarEntity) worldIn.getBlockEntity(pos);
+
+        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(0)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(1)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(2)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(3)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(4)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(5)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(6)));
+            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(7)));
+        });
+    }
+        super.onBlockExploded(state, worldIn, pos, explosion);
+    }
 
     @Nullable
     @Override
@@ -137,7 +182,7 @@ public class MortarBlock extends BaseEntityBlock
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new MortarContainer(windowId, level, pos, playerInventory, playerEntity);
+                        return new MortarContainer(windowId, level, pos, playerInventory, playerEntity, ((MortarEntity)blockEntity).mortarData);
                     }
                 };
                 NetworkHooks.openGui((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());
