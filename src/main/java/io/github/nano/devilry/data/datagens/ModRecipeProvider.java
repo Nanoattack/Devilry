@@ -105,7 +105,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Items.SUGAR_CANE))
                 .save(consumer, "sugar_from_pestle");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.HONEY_BOTTLE)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BREWING, Items.HONEY_BOTTLE)
                 .requires(Items.HONEYCOMB)
                 .requires(Items.GLASS_BOTTLE)
                 .requires(DevilryTags.Items.PESTLE_IN_MORTAR)
