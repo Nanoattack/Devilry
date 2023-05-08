@@ -211,7 +211,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Blocks.DRIPSTONE_BLOCK))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(ModBlocks.DRIPSTONE_WALL.get(), 6)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT.DRIPSTONE_WALL.get(), 6)
                 .define('D', Blocks.DRIPSTONE_BLOCK)
                 .pattern("DDD")
                 .pattern("DDD")
