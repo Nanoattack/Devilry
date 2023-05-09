@@ -1,17 +1,13 @@
 package io.github.nano.devilry.data.recipes;
 
-import io.github.nano.devilry.devilry.ModMain;
-import io.github.nano.devilry.devilry.data.recipes.Altar.AltarRecipe;
-import io.github.nano.devilry.devilry.data.recipes.Mortar.MortarRecipe;
-import io.github.nano.devilry.devilry.data.recipes.Wittling.WittlingRecipe;
-import net.minecraft.core.Registry;
+import io.github.nano.devilry.ModMain;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-//fixme
 //todo
 
 public class ModRecipeTypes
@@ -19,29 +15,25 @@ public class ModRecipeTypes
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ModMain.MOD_ID);
 
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPE =
+            DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ModMain.MOD_ID);
+
     public static final RegistryObject<MortarRecipe.Serializer> MORTAR_SERIALIZER
             = RECIPE_SERIALIZER.register("grinding", MortarRecipe.Serializer::new);
 
-    public static RecipeType<MortarRecipe> MORTAR_RECIPE
-            = new MortarRecipe.MortarRecipeType();
+    public static RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
+            RECIPE_TYPE.register( "grinding", () ->createType("grinding"));
 
-    public static final RegistryObject<WittlingRecipe.Serializer> WITTLING_SERIALIZER
-            = RECIPE_SERIALIZER.register("wittling", WittlingRecipe.Serializer::new);
+    private static <T extends Recipe<?>> RecipeType<T> createType(String identifier){
+        return new RecipeType<>() {
+            @Override
+            public String toString() {
+                return ModMain.MOD_ID + ":" + identifier;
+            }
+        };
+    }
 
-    public static RecipeType<WittlingRecipe> WITTLING_RECIPE
-            = new WittlingRecipe.WittlingRecipeType();
-
-    public static final RegistryObject<AltarRecipe.Serializer> ALTAR_SERIALIZER
-            = RECIPE_SERIALIZER.register("summoning", AltarRecipe.Serializer::new);
-
-    public static RecipeType<AltarRecipe> ALTAR_RECIPE
-            = new AltarRecipe.AltarRecipeType();
-
-    public static void register(IEventBus eventBus)
-    {
+    public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZER.register(eventBus);
-        Registry.register(Registry.RECIPE_TYPE, MortarRecipe.TYPE_ID, MORTAR_RECIPE);
-        Registry.register(Registry.RECIPE_TYPE, WittlingRecipe.TYPE_ID, WITTLING_RECIPE);
-        Registry.register(Registry.RECIPE_TYPE, AltarRecipe.TYPE_ID, ALTAR_RECIPE);
     }
 }

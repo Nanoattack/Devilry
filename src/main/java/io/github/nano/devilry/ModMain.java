@@ -1,5 +1,9 @@
 package io.github.nano.devilry;
 
+import io.github.nano.devilry.block.ModBlocks;
+import io.github.nano.devilry.blockentity.ModBlockEntities;
+import io.github.nano.devilry.container.ModContainers;
+import io.github.nano.devilry.data.recipes.ModRecipeTypes;
 import io.github.nano.devilry.devilry.block.ModBlocks;
 import io.github.nano.devilry.devilry.blockentity.ModBlockEntities;
 import io.github.nano.devilry.devilry.container.ModContainers;
@@ -7,9 +11,12 @@ import io.github.nano.devilry.devilry.data.recipes.ModRecipeTypes;
 import io.github.nano.devilry.devilry.entity.ModEntityTypes;
 import io.github.nano.devilry.devilry.events.LootInjector;
 import io.github.nano.devilry.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.devilry.item.ModItems;
 import io.github.nano.devilry.devilry.screen.MortarScreen;
 import io.github.nano.devilry.devilry.screen.WittlingScreen;
-import io.github.nano.devilry.devilry.item.ModItems;
+import io.github.nano.devilry.entity.ModEntityTypes;
+import io.github.nano.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.item.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -25,8 +32,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
-
-import static net.minecraft.client.renderer.ItemBlockRenderTypes.setRenderLayer;
 
 // The value here should match an entry in the META-INF/mods.toml file
 //fixme //todo
@@ -55,7 +60,6 @@ public class ModMain
 
         ModEntityTypes.register(eventbus);
 
-        GeckoLib.initialize();
 
         MinecraftForge.EVENT_BUS.register(new LootInjector());
 

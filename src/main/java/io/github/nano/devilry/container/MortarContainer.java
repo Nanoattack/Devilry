@@ -44,14 +44,14 @@ public class MortarContainer extends AbstractContainerMenu
         //todo look at this
         if(blockEntity != null) {
             blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 80,10));
-                addSlot(new SlotItemHandler(h, 1, 48,10));
-                addSlot(new SlotItemHandler(h, 2, 35,32));
-                addSlot(new SlotItemHandler(h, 3, 48,54));
-                addSlot(new SlotItemHandler(h, 4, 112,10));
-                addSlot(new SlotItemHandler(h, 5, 125,32));
-                addSlot(new SlotItemHandler(h, 6, 112,54));
-                addSlot(new ResultSlotItemHandler(h, 7, 80,46));
+                addSlot(new SlotItemHandler(h, 0, 80,10)); //pestle slot
+                addSlot(new SlotItemHandler(h, 1, 48,10)); //top left
+                addSlot(new SlotItemHandler(h, 2, 35,32)); //center left
+                addSlot(new SlotItemHandler(h, 3, 48,54)); //bottom left
+                addSlot(new SlotItemHandler(h, 4, 112,10)); //top right
+                addSlot(new SlotItemHandler(h, 5, 125,32)); //center right
+                addSlot(new SlotItemHandler(h, 6, 112,54)); //bottom center
+                addSlot(new ResultSlotItemHandler(h, 7, 80,46)); //result (center)
             });
         }
 

@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 //TY Pale Imitations/Brad (Dev of Schools of Magic Mod) for the code!
-//fixme
 //todo
 
 public class ModLootTableProvider extends LootTableProvider{

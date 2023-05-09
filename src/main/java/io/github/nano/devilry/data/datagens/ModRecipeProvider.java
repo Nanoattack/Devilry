@@ -1,10 +1,10 @@
 package io.github.nano.devilry.data.datagens;
 
+import io.github.nano.devilry.ModMain;
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.devilry.ModMain;
 import io.github.nano.devilry.item.ModItems;
 import io.github.nano.devilry.util.tags.DevilryTags;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -14,12 +14,14 @@ import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
-//fixme
 //todo
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ModRecipeProvider extends RecipeProvider {
-    public ModRecipeProvider(DataGenerator generatorIn) {
-        super(generatorIn);
+
+
+    public ModRecipeProvider(PackOutput pOutput) {
+        super(pOutput);
     }
 
     @Override
@@ -230,7 +232,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), RecipeCategory.BUILDING_BLOCKS, ModBlocks.LIMESTONE_STAIRS.get())
                 .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))
-                .save(consumer, "limestone_slairs_from_stonecutting");
+                .save(consumer, "limestone_stairs_from_stonecutting");
 
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), RecipeCategory.BUILDING_BLOCKS, ModBlocks.LIMESTONE_WALL.get())
                 .unlockedBy("has_item", has(ModBlocks.LIMESTONE.get()))

@@ -1,72 +1,73 @@
 package io.github.nano.devilry.data.recipes;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import io.github.nano.devilry.devilry.block.ModBlocks;
+import io.github.nano.devilry.block.ModBlocks;
+import io.github.nano.devilry.util.Utils;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 //fixme
 //todo
 
-public class MortarRecipe implements IMortarRecipe
+public class MortarRecipe implements Recipe<SimpleContainer>
 
 {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    private final boolean isShaped;
+    private final int durabilityCost;
 
-    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems)
-    {
+    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, boolean isShaped, int durabilityCost) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.isShaped = isShaped;
+        this.durabilityCost = durabilityCost;
     }
-        @Override
-    public boolean matches(SimpleContainer inv, Level plevel) {
-                if(recipeItems.get(0).test(inv.getItem(0)) &&
-                recipeItems.get(2).test(inv.getItem(2)) &&
-                recipeItems.get(3).test(inv.getItem(3)) &&
-                recipeItems.get(4).test(inv.getItem(4)) &&
-                recipeItems.get(5).test(inv.getItem(5)) &&
-                recipeItems.get(6).test(inv.getItem(6)) &&
-                recipeItems.get(7).test(inv.getItem(7)))
-        {
-            return true;
-        }
-        return false;
-
+    @Override
+    public boolean matches(@NotNull SimpleContainer inv, @NotNull Level level) {
+        return recipeItems.stream().allMatch(ingredient -> {
+            int slot = recipeItems.indexOf(ingredient) + 1;
+            for (int i = isShaped() ? slot : 1; i <= (isShaped() ? slot : 6); i++) {
+                if (ingredient.isEmpty() || ingredient.test(inv.getItem(i))) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer p_44001_) {
+    public @NotNull ItemStack assemble(@NotNull SimpleContainer inv, @NotNull RegistryAccess registries) {
         return output;
     }
 
     @Override
-    public boolean canCraftInDimensions(int p_194133_1_, int p_194133_2_) {
-        return false;
+    public boolean canCraftInDimensions(int width, int height) {
+        return width == 2 && height == 3;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return recipeItems;
-    }
-
-    @Override
-    public ItemStack getResultItem() {
+    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registries) {
         return output.copy();
+    }
+
+    @Override
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        return recipeItems;
     }
 
     public ItemStack getIcon() {
@@ -74,61 +75,82 @@ public class MortarRecipe implements IMortarRecipe
     }
 
     @Override
-    public ResourceLocation getId() {
+    public @NotNull ResourceLocation getId() {
         return id;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
        return ModRecipeTypes.MORTAR_SERIALIZER.get();
     }
 
-    public static class MortarRecipeType implements RecipeType<MortarRecipe> {
-        @Override
-        public String toString() {
-            return MortarRecipe.TYPE_ID.toString();
-        }
+    @Override
+    public @NotNull RecipeType<?> getType() {
+        return ModRecipeTypes.MORTAR_RECIPE.get();
     }
 
+    public boolean isShaped() {
+        return isShaped;
+    }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<MortarRecipe> {
+    public int getDurabilityCost() {
+        return durabilityCost;
+    }
+
+    public static class Serializer implements RecipeSerializer<MortarRecipe> {
         
         @Override
-        public MortarRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-
-            JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(8, Ingredient.EMPTY);
-
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
+        public @NotNull MortarRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
+            boolean isShaped = GsonHelper.getAsBoolean(json, "isShaped", false);
+            Ingredient topLeft, centerLeft, bottomLeft, topRight, centerRight, bottomRight;
+            if (isShaped) {
+                topLeft = Utils.useNonNullOrElse(Ingredient::fromJson, getJsonElement(json, "topLeft"), Ingredient.EMPTY);
+                centerLeft = Utils.useNonNullOrElse(Ingredient::fromJson, getJsonElement(json, "centerLeft"), Ingredient.EMPTY);
+                bottomLeft = Utils.useNonNullOrElse(Ingredient::fromJson, getJsonElement(json, "bottomLeft"), Ingredient.EMPTY);
+                topRight = Utils.useNonNullOrElse(Ingredient::fromJson, getJsonElement(json, "topRight"), Ingredient.EMPTY);
+                centerRight = Utils.useNonNullOrElse(Ingredient::fromJson, getJsonElement(json, "centerRight"), Ingredient.EMPTY);
+                bottomRight = Utils.useNonNullOrElse(Ingredient::fromJson, getJsonElement(json, "bottomRight"), Ingredient.EMPTY);
+            } else {
+                JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
+                topLeft = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(0), Ingredient.EMPTY);
+                centerLeft = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(1), Ingredient.EMPTY);
+                bottomLeft = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(2), Ingredient.EMPTY);
+                topRight = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(3), Ingredient.EMPTY);
+                centerRight = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(4), Ingredient.EMPTY);
+                bottomRight = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(5), Ingredient.EMPTY);
             }
-
-            return new MortarRecipe(recipeId, output,
-                    inputs);
+            NonNullList<Ingredient> inputs = NonNullList.of(Ingredient.EMPTY, topLeft, centerLeft, bottomLeft, topRight, centerRight, bottomRight);
+            int durabilityCost = GsonHelper.getAsInt(json, "durabilityCost", 1);
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
+            return new MortarRecipe(recipeId, output, inputs, isShaped, durabilityCost);
         }
+
+        private static JsonElement getJsonElement(JsonObject json, String name) {
+            return GsonHelper.isArrayNode(json, name) ? GsonHelper.getAsJsonArray(json, name, null) : GsonHelper.getAsJsonObject(json, name, null);
+        }
+
         @Nullable
         @Override
-        public MortarRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
+        public MortarRecipe fromNetwork(@NotNull ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+            boolean isShaped = pBuffer.readBoolean();
 
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
+            NonNullList<Ingredient> inputs = pBuffer.readCollection(NonNullList::createWithCapacity, buf ->
+                    Ingredient.of(buf.readCollection(NonNullList::createWithCapacity, FriendlyByteBuf::readItem).stream()));
+
+            int durabilityCost = pBuffer.readInt();
 
             ItemStack output = pBuffer.readItem();
-            return new MortarRecipe(pRecipeId, output,
-                    inputs);
+
+            return new MortarRecipe(pRecipeId, output, inputs, isShaped, durabilityCost);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, MortarRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.getIngredients().size());
-            for (Ingredient ing : pRecipe.getIngredients()) {
-                ing.toNetwork(pBuffer);
-            }
-            pBuffer.writeItemStack(pRecipe.getResultItem(), false);
+            pBuffer.writeBoolean(pRecipe.isShaped());
+            pBuffer.writeCollection(pRecipe.getIngredients(), (buf, ingredient) ->
+                    buf.writeCollection(Arrays.asList(ingredient.getItems()), FriendlyByteBuf::writeItem));
+            pBuffer.writeInt(pRecipe.getDurabilityCost());
+            pBuffer.writeItem(pRecipe.output);
         }
     }
 }

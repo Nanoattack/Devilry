@@ -145,7 +145,7 @@ public class MortarEntity extends BlockEntity
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
         Optional<MortarRecipe> match = world.getRecipeManager()
-                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inventory, world);
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inventory, world);
         return match.isPresent();
     }
 
@@ -165,11 +165,11 @@ public class MortarEntity extends BlockEntity
         }
 
         Optional<MortarRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inv, level);
 
         recipe.ifPresent(iRecipe -> {
 
-            ItemStack output = iRecipe.getResultItem();
+            ItemStack output = iRecipe.getResultItem(level.registryAccess());
             //fixme
             Integer amount = null;
 
@@ -195,12 +195,12 @@ public class MortarEntity extends BlockEntity
         }
 
         Optional<MortarRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE, inv, level);
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inv, level);
         //fixme
         recipe.ifPresent(iRecipe -> {
             //fixme
             Integer amount = null;
-            ItemStack output = iRecipe.getResultItem();
+            ItemStack output = iRecipe.getResultItem(level.registryAccess());
 
             if (!level.isClientSide) {
                 if (hasRecipe(this)
