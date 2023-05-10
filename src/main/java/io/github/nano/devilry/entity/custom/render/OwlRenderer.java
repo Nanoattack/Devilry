@@ -1,17 +1,25 @@
 package io.github.nano.devilry.entity.custom.render;
 
-import io.github.nano.devilry.devilry.entity.custom.OwlEntity;
-import io.github.nano.devilry.devilry.entity.custom.model.OwlModel;
+import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.entity.custom.OwlEntity;
+import io.github.nano.devilry.entity.custom.model.OwlModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
-//fixme
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 //todo
 
-public class OwlRenderer extends GeoEntityRenderer<OwlEntity>
+public class OwlRenderer extends LivingEntityRenderer<OwlEntity, OwlModel>
 {
-    public OwlRenderer(EntityRendererProvider.Context renderManager)
-    {
-        super(renderManager, new OwlModel());
-        this.shadowRadius = 0.4F; //change to the desired shadow size.
+    //todo variants
+    public static final ResourceLocation BARN_OWL = new ResourceLocation(ModMain.MOD_ID, "textures/entity/owl.png");
+
+    public OwlRenderer(EntityRendererProvider.Context pContext) {
+        super(pContext, new OwlModel(pContext.bakeLayer(OwlModel.LAYER_LOCATION)), 0.3f);
+    }
+
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull OwlEntity pEntity) {
+        return BARN_OWL;
     }
 }

@@ -1,7 +1,7 @@
 package io.github.nano.devilry.entity.custom;
 
 import com.google.common.collect.Sets;
-import io.github.nano.devilry.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.events.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -30,22 +30,19 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.Set;
 //fixme
 //todo
 
-public class OwlEntity extends Parrot implements IAnimatable {
+public class OwlEntity extends Parrot {
 
-    private AnimationFactory factory = new AnimationFactory(this);
+    public final AnimationState flyAnimationState = new AnimationState();
+    public final AnimationState walkAnimationState = new AnimationState();
+    public final AnimationState headTurnAnimationState = new AnimationState();
+    public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState flutterAnimationState = new AnimationState();
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.RABBIT);
     private static final int VARIANTS = 3;
     public float flapSpeed;
@@ -86,10 +83,6 @@ public class OwlEntity extends Parrot implements IAnimatable {
         this.goalSelector.addGoal(2, new OwlEntity.OwlWanderGoal(this, 1.0D));
     }
 
-    @Override
-    protected int getExperienceReward(Player player) {
-        return 1 + this.level.random.nextInt(4);
-    }
 
     @Override
     public SoundEvent getAmbientSound() {
@@ -139,15 +132,15 @@ public class OwlEntity extends Parrot implements IAnimatable {
             }
 
             if (!this.isSilent()) {
-                this.level.playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.level.playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
             if (!this.level.isClientSide) {
                 if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_29414_)) {
                     this.tame(p_29414_);
-                    this.level.broadcastEntityEvent(this, (byte)7);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte)6);
+                    this.level.broadcastEntityEvent(this, (byte) 6);
                 }
             }
 
@@ -161,29 +154,6 @@ public class OwlEntity extends Parrot implements IAnimatable {
         } else {
             return super.mobInteract(p_29414_, p_29415_);
         }
-    }
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving() && isFlying()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.devilry.owl_fly", true));
-        } else if (event.isMoving() && !isFlying()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.devilry.owl_walk", true));
-        }  else if (this.isOrderedToSit()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.devilry.owL_flutter", true));
-        }  else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.devilry.owl_idle", true));
-        }
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
     }
 
     static class OwlWanderGoal extends WaterAvoidingRandomFlyingGoal {
