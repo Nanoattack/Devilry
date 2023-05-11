@@ -1,4 +1,4 @@
-package io.github.nano.devilry.entity.custom;
+package io.github.nano.devilry.entity.ai;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;

@@ -1,8 +1,8 @@
-package io.github.nano.devilry.entity.custom.model;
+package io.github.nano.devilry.client.entity.model;
 
 import io.github.nano.devilry.ModMain;
-import io.github.nano.devilry.entity.custom.OwlEntity;
-import io.github.nano.devilry.entity.custom.animations.OwlAnimation;
+import io.github.nano.devilry.entity.OwlEntity;
+import io.github.nano.devilry.client.entity.animation.OwlAnimation;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

@@ -2,9 +2,9 @@ package io.github.nano.devilry.events;
 
 import io.github.nano.devilry.ModMain;
 import io.github.nano.devilry.entity.ModEntityTypes;
-import io.github.nano.devilry.entity.custom.OwlEntity;
-import io.github.nano.devilry.entity.custom.model.OwlModel;
-import io.github.nano.devilry.entity.custom.render.OwlRenderer;
+import io.github.nano.devilry.entity.OwlEntity;
+import io.github.nano.devilry.client.entity.model.OwlModel;
+import io.github.nano.devilry.client.entity.render.OwlRenderer;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

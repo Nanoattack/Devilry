@@ -29,13 +29,15 @@ public class MortarRecipe implements Recipe<SimpleContainer>
     private final NonNullList<Ingredient> recipeItems;
     private final boolean isShaped;
     private final int durabilityCost;
+    private final int neededCrushes;
 
-    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, boolean isShaped, int durabilityCost) {
+    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, boolean isShaped, int durabilityCost, int crushes) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
         this.isShaped = isShaped;
         this.durabilityCost = durabilityCost;
+        this.neededCrushes = crushes;
     }
     @Override
     public boolean matches(@NotNull SimpleContainer inv, @NotNull Level level) {
@@ -97,6 +99,10 @@ public class MortarRecipe implements Recipe<SimpleContainer>
         return durabilityCost;
     }
 
+    public int getNeededCrushes() {
+        return neededCrushes;
+    }
+
     public static class Serializer implements RecipeSerializer<MortarRecipe> {
         
         @Override
@@ -121,8 +127,9 @@ public class MortarRecipe implements Recipe<SimpleContainer>
             }
             NonNullList<Ingredient> inputs = NonNullList.of(Ingredient.EMPTY, topLeft, centerLeft, bottomLeft, topRight, centerRight, bottomRight);
             int durabilityCost = GsonHelper.getAsInt(json, "durabilityCost", 1);
+            int crushes = GsonHelper.getAsInt(json, "crushes", 4);
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            return new MortarRecipe(recipeId, output, inputs, isShaped, durabilityCost);
+            return new MortarRecipe(recipeId, output, inputs, isShaped, durabilityCost, crushes);
         }
 
         private static JsonElement getJsonElement(JsonObject json, String name) {
@@ -138,10 +145,11 @@ public class MortarRecipe implements Recipe<SimpleContainer>
                     Ingredient.of(buf.readCollection(NonNullList::createWithCapacity, FriendlyByteBuf::readItem).stream()));
 
             int durabilityCost = pBuffer.readInt();
+            int crushes = pBuffer.readInt();
 
             ItemStack output = pBuffer.readItem();
 
-            return new MortarRecipe(pRecipeId, output, inputs, isShaped, durabilityCost);
+            return new MortarRecipe(pRecipeId, output, inputs, isShaped, durabilityCost, crushes);
         }
 
         @Override
@@ -150,6 +158,7 @@ public class MortarRecipe implements Recipe<SimpleContainer>
             pBuffer.writeCollection(pRecipe.getIngredients(), (buf, ingredient) ->
                     buf.writeCollection(Arrays.asList(ingredient.getItems()), FriendlyByteBuf::writeItem));
             pBuffer.writeInt(pRecipe.getDurabilityCost());
+            pBuffer.writeInt(pRecipe.getNeededCrushes());
             pBuffer.writeItem(pRecipe.output);
         }
     }

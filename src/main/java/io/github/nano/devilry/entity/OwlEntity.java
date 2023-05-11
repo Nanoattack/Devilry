@@ -1,9 +1,17 @@
-package io.github.nano.devilry.entity.custom;
+package io.github.nano.devilry.entity;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
+import com.mojang.serialization.Dynamic;
+import io.github.nano.devilry.entity.ai.MemoryRegistry;
+import io.github.nano.devilry.entity.ai.OwlAi;
+import io.github.nano.devilry.entity.ai.OwlMoveControl;
 import io.github.nano.devilry.events.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -13,11 +21,15 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Parrot;
@@ -30,13 +42,18 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Set;
-//fixme
+//fixme sort of fixed
 //todo
 
 public class OwlEntity extends Parrot {
+
+    private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(OwlEntity.class, EntityDataSerializers.INT);
+    protected static final ImmutableList<SensorType<? extends Sensor<? super OwlEntity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.HURT_BY, SensorType.IS_IN_WATER);
+    protected static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(MemoryModuleType.LOOK_TARGET, MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryRegistry.FLY_TARGET.get(), MemoryModuleType.WALK_TARGET, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.PATH, MemoryModuleType.BREED_TARGET, MemoryModuleType.ATTACK_TARGET, MemoryModuleType.TEMPTING_PLAYER, MemoryModuleType.TEMPTATION_COOLDOWN_TICKS, MemoryModuleType.IS_TEMPTED, MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.NEAREST_ATTACKABLE, MemoryModuleType.IS_IN_WATER, MemoryModuleType.IS_PREGNANT, MemoryModuleType.IS_PANICKING);
 
     public final AnimationState flyAnimationState = new AnimationState();
     public final AnimationState walkAnimationState = new AnimationState();
@@ -44,15 +61,20 @@ public class OwlEntity extends Parrot {
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flutterAnimationState = new AnimationState();
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.RABBIT);
-    private static final int VARIANTS = 3;
     public float flapSpeed;
     private float nextFlap = 0.3F;
 
-    public OwlEntity(EntityType<? extends Parrot> type, Level levelIn) {
+    private final OwlAi ai = new OwlAi(this);
+
+    public OwlEntity(EntityType<OwlEntity> type, Level levelIn) {
         super(type, levelIn);
-    //    this.moveControl = new OwlMoveControl(this, 10, false);
+        this.moveControl = new OwlMoveControl(this, 10, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+    }
+
+    public OwlEntity(Level levelIn) {
+        this(ModEntityTypes.OWL.get(), levelIn);
     }
 
     public static AttributeSupplier.Builder setCustomAttributes() {
@@ -62,27 +84,25 @@ public class OwlEntity extends Parrot {
                 .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
-    public boolean isBaby() {
-        return false;
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(DATA_VARIANT_ID, 0);
     }
 
-    @Nullable
-    public AgeableMob getBreedOffspring(ServerLevel p_148993_, AgeableMob p_148994_) {
-        return null;
+    protected Brain.Provider<OwlEntity> brainProvider() {
+        return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
     }
 
     @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
-        this.goalSelector.addGoal(2, new OwlEntity.OwlWanderGoal(this, 1.0D));
+    protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
+        return ai.makeBrain((Brain<OwlEntity>) this.brainProvider().makeBrain(pDynamic));
     }
 
+    @Nullable
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob entity) {
+        return new OwlEntity(level);
+    }
 
     @Override
     public SoundEvent getAmbientSound() {

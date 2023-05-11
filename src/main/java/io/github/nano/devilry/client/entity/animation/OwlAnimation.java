@@ -1,4 +1,4 @@
-package io.github.nano.devilry.entity.custom.animations;
+package io.github.nano.devilry.client.entity.animation;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;

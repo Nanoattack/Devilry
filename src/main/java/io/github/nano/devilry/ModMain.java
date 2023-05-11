@@ -15,6 +15,7 @@ import io.github.nano.devilry.devilry.item.ModItems;
 import io.github.nano.devilry.devilry.screen.MortarScreen;
 import io.github.nano.devilry.devilry.screen.WittlingScreen;
 import io.github.nano.devilry.entity.ModEntityTypes;
+import io.github.nano.devilry.entity.ai.MemoryRegistry;
 import io.github.nano.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.item.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -54,6 +55,7 @@ public class ModMain
         ModBlocks.register(eventbus);
         ModBlockEntities.register(eventbus);
         ModContainers.register(eventbus);
+        MemoryRegistry.register(eventbus);
 
         ModRecipeTypes.register(eventbus);
         ModSoundEvents.register(eventbus);
