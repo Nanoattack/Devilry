@@ -1,11 +1,12 @@
 package io.github.nano.devilry.item.custom;
 
-import io.github.nano.devilry.devilry.block.ModBlocks;
-import io.github.nano.devilry.devilry.events.ModSoundEvents;
-import io.github.nano.devilry.devilry.item.ModItems;
+import io.github.nano.devilry.block.ModBlocks;
+import io.github.nano.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -17,16 +18,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Objects;
-import java.util.Random;
-//fixme
 //todo
 
+@SuppressWarnings("unused")
 public class Pestle extends Item
 {
     public Pestle(Properties p_41383_) {
         super(p_41383_);
     }
-    protected static final Random random = new Random();
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         Level level = context.getLevel();
@@ -46,23 +45,23 @@ public class Pestle extends Item
         if (player.isCrouching()) {
             stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(context.getHand()));
             if (blockIsValid(clickedBlock)) {
-                if (random.nextFloat() < 0.33f) {
+                if (level.random.nextFloat() < 0.33f) {
                     if (blockIsValidForFlint(clickedBlock)) {
                         destroyBlockGiveFlint(player, context.getLevel(), context.getClickedPos());
                     } else if (blockIsValidForGlowStone(clickedBlock)) {
-                        destroyBlockGiveGlowstone(player, context.getLevel(), context.getClickedPos());
+                        destroyBlockGiveGlowStone(player, context.getLevel(), context.getClickedPos());
                     } else if (blockIsValidForAmethyst(clickedBlock)) {
                         destroyBlockGiveAmethyst(player, context.getLevel(), context.getClickedPos());
                     } else if (blockIsValidForSaltPetre(clickedBlock)) {
                         destroyBlockGiveSaltPetre(player, context.getLevel(), context.getClickedPos());
                     } else {
-                        context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.CALCITE_BREAK, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                        context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.CALCITE_BREAK, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                     }
                 } else {
-                    context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.CALCITE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                    context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.CALCITE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 }
             } else {
-                context.getLevel().playSound((Player) null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
+                context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
             }
         }
     }
@@ -87,7 +86,7 @@ public class Pestle extends Item
     private void destroyBlockGiveFlint(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.FLINT));
-        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound(null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
@@ -95,10 +94,10 @@ public class Pestle extends Item
         return clickedBlock.getBlock() == Blocks.GLOWSTONE;
     }
 
-    private void destroyBlockGiveGlowstone(Player player, Level level, BlockPos blockPos)
+    private void destroyBlockGiveGlowStone(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.GLOWSTONE_DUST, 4));
-        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound(null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
@@ -110,7 +109,7 @@ public class Pestle extends Item
     private void destroyBlockGiveAmethyst(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(Items.AMETHYST_SHARD, 4));
-        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound(null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
@@ -121,22 +120,13 @@ public class Pestle extends Item
     private void destroyBlockGiveSaltPetre(Player player, Level level, BlockPos blockPos)
     {
         player.addItem(new ItemStack(ModItems.SALTPETRE.get(), 4));
-        level.playSound((Player) null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        level.playSound(null, blockPos, ModSoundEvents.MORTAR_GRIND.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         level.destroyBlock(blockPos, false);
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
-        ItemStack container = itemStack.copy();
-        if(container.hurt(1, random, null)) {
-            return ItemStack.EMPTY;
-        }else {
-            return container;
-        }
-    }
-
-    @Override
-    public boolean hasContainerItem(ItemStack stack) {
-        return true;
+    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+        ItemStack item = itemStack.copy();
+        return item.hurt(1, RandomSource.create(), null) ? null : item;
     }
 }

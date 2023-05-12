@@ -1,7 +1,7 @@
 package io.github.nano.devilry.item.custom;
 
-import io.github.nano.devilry.devilry.block.ModBlocks;
-import io.github.nano.devilry.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.block.ModBlocks;
+import io.github.nano.devilry.events.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Objects;
 
-//fixme
 //todo
 
+@SuppressWarnings("unused")
 public class Guano extends Item
 {
 
@@ -47,7 +47,7 @@ public class Guano extends Item
             BlockPos pos = context.getClickedPos();
             level.removeBlock(pos, false);
             level.setBlock(pos, ModBlocks.FESTERING_LIMESTONE.get().defaultBlockState(), 3);
-            level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.FESTER.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.FESTER.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         }
     }
 }

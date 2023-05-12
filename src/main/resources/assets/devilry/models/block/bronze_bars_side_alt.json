@@ -35,5 +35,6 @@
                 "up":    { "uv": [ 7, 9, 9, 16 ], "texture": "#edge" }
             }
         }
-    ]
+    ],
+    "render_type": "cutout"
 }

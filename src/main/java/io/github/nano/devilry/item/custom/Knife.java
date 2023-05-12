@@ -1,7 +1,7 @@
 package io.github.nano.devilry.item.custom;
 
-import io.github.nano.devilry.devilry.events.ModSoundEvents;
-import io.github.nano.devilry.devilry.item.ModItems;
+import io.github.nano.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.item.ModItems;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -10,22 +10,23 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 //fixme
 //todo
 
+@SuppressWarnings("unused")
 public class Knife extends Item {
 
     public int min = 1;
     public int max;
-    public int soundCase;
 
     public Knife(Properties properties) {
         super(properties);
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
 
@@ -56,16 +57,16 @@ public class Knife extends Item {
 
     private void SliceItem(Player player, ItemStack stack) {
         player.getOffhandItem().shrink(1);
-        CooldownSet(player);
+        coolDownSet(player);
         stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(InteractionHand.MAIN_HAND));
     }
 
     private void PlayMetalNoise(Level level, Player player) {
-        level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.KNIFE_SLASH_METAL.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.KNIFE_SLASH_METAL.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
     }
 
     private void PlayClothNoise(Level level, Player player) {
-        level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.CLOTH_RIP.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.CLOTH_RIP.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
     }
 
     private void GiveOutputItem(Level level, Player player) {
@@ -87,7 +88,7 @@ public class Knife extends Item {
         }
     }
 
-    private void CooldownSet(Player player) {
+    private void coolDownSet(Player player) {
         if (player.getMainHandItem().getItem() == ModItems.FLINT_KNIFE.get()) {
             player.getCooldowns().addCooldown(this, 60);
         }

@@ -2,7 +2,7 @@ package io.github.nano.devilry.block.custom;
 
 import io.github.nano.devilry.blockentity.ModBlockEntities;
 import io.github.nano.devilry.blockentity.MortarEntity;
-import io.github.nano.devilry.container.MortarContainer;
+import io.github.nano.devilry.container.MortarMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -143,7 +143,7 @@ public class MortarBlock extends BaseEntityBlock
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player playerEntity) {
-                        return new MortarContainer(windowId, level, pos, playerInventory, playerEntity, ((MortarEntity)blockEntity).mortarData);
+                        return new MortarMenu(windowId, level, pos, playerInventory, playerEntity, ((MortarEntity)blockEntity).mortarData);
                     }
                 };
                 NetworkHooks.openScreen((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());

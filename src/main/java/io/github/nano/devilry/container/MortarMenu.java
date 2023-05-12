@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 //todo
 
-public class MortarContainer extends AbstractContainerMenu
+public class MortarMenu extends AbstractContainerMenu
 {
     private final BlockEntity blockEntity;
     private final Player playerEntity;
@@ -26,13 +26,13 @@ public class MortarContainer extends AbstractContainerMenu
 
     private final ContainerData containerData;
 
-    public MortarContainer(int windowId, Level world, BlockPos pos,
-                           Inventory inventory, Player player) {
+    public MortarMenu(int windowId, Level world, BlockPos pos,
+                      Inventory inventory, Player player) {
         this(windowId, world, pos, inventory, player, new SimpleContainerData(2));
     }
 
-    public MortarContainer(int windowId, Level world, BlockPos pos,
-                           Inventory inventory, Player player, ContainerData data) {
+    public MortarMenu(int windowId, Level world, BlockPos pos,
+                      Inventory inventory, Player player, ContainerData data) {
         super(ModContainers.MORTAR_CONTAINER.get(), windowId);
         this.blockEntity = world.getBlockEntity(pos);
         playerEntity = player;

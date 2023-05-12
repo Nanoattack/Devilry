@@ -1,7 +1,7 @@
 package io.github.nano.devilry.util;
 
 import net.minecraft.util.StringRepresentable;
-//fixme
+import org.jetbrains.annotations.NotNull;
 //todo
 
 public enum AltarPart implements StringRepresentable {
@@ -18,7 +18,7 @@ public enum AltarPart implements StringRepresentable {
         return this.name;
     }
 
-    public String getSerializedName() {
+    public @NotNull String getSerializedName() {
         return this.name;
     }
 }

@@ -2,7 +2,6 @@ package io.github.nano.devilry.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.function.Function;
 
 public class Utils {

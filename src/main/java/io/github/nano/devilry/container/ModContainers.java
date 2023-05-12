@@ -16,12 +16,12 @@ public class ModContainers
     public static DeferredRegister<MenuType<?>> CONTAINERS
             = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ModMain.MOD_ID);
 
-    public static final RegistryObject<MenuType<MortarContainer>> MORTAR_CONTAINER
+    public static final RegistryObject<MenuType<MortarMenu>> MORTAR_CONTAINER
             = CONTAINERS.register("mortar_container",
             ()-> IForgeMenuType.create(((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 Level world = inv.player.getCommandSenderWorld();
-                return new MortarContainer(windowId, world, pos, inv, inv.player);
+                return new MortarMenu(windowId, world, pos, inv, inv.player);
             })));
 
     public static void register(IEventBus eventBus)

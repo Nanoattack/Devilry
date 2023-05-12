@@ -20,5 +20,6 @@
                 "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#bars" }
             }
         }
-    ]
+    ],
+    "render_type": "cutout"
 }
