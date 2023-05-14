@@ -25,9 +25,9 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public class ModItems
 {
-    public static final List<Supplier<? extends Item>> DEVILRY_MATERIALS = new ArrayList<>();
-    public static final List<Supplier<? extends Item>> DEVILRY_BLOCKS = new ArrayList<>();
-    public static final List<Supplier<? extends Item>> DEVILRY_MISC = new ArrayList<>();
+    public static final List<RegistryObject<? extends Item>> DEVILRY_MATERIALS = new ArrayList<>();
+    public static final List<RegistryObject<? extends Item>> DEVILRY_BLOCKS = new ArrayList<>();
+    public static final List<RegistryObject<? extends Item>> DEVILRY_MISC = new ArrayList<>();
 
     private enum Tab {
         DEVILRY_MATERIALS,
@@ -92,12 +92,13 @@ public class ModItems
     public static final RegistryObject<Item> SULPHUR_DUST = register("sulphur_dust", ()-> new Item(new Item.Properties()), Tab.DEVILRY_MATERIALS);
 
     public static <T extends Item> RegistryObject<T> register(String name, Supplier<T> item, Tab tab) {
+        var registryObject = ITEMS.register(name, item);
         switch (tab) {
-            case DEVILRY_MATERIALS -> DEVILRY_MATERIALS.add(item);
-            case DEVILRY_BLOCKS -> DEVILRY_BLOCKS.add(item);
-            case DEVILRY_MISC -> DEVILRY_MISC.add(item);
+            case DEVILRY_MATERIALS -> DEVILRY_MATERIALS.add(registryObject);
+            case DEVILRY_BLOCKS -> DEVILRY_BLOCKS.add(registryObject);
+            case DEVILRY_MISC -> DEVILRY_MISC.add(registryObject);
         }
-        return ITEMS.register(name, item);
+        return registryObject;
     }
 
     public static void register(IEventBus eventBus) {

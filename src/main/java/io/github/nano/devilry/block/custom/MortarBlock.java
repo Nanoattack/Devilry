@@ -7,9 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -37,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
-//todo
+
 @SuppressWarnings("deprecation")
 public class MortarBlock extends BaseEntityBlock
 {
@@ -105,8 +103,6 @@ public class MortarBlock extends BaseEntityBlock
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
-    //BLOCK ENTITY STUFF
-
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
@@ -114,19 +110,22 @@ public class MortarBlock extends BaseEntityBlock
                 (world2, pos, state2, entity) -> ((MortarEntity)entity).tick() : null;
     }
 
-    // drop blocks in getInventory() of the tile entity
     @Override
-    public void playerWillDestroy(@NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
-        //todo: drop contents in onRemove using  Containers.dropContents
+    public void onRemove(BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if (!pState.is(pNewState.getBlock())) {
+            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+            if (blockentity instanceof Container) {
+                Containers.dropContents(pLevel, pPos, (Container)blockentity);
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
 
-        super.playerWillDestroy(worldIn, pos, state, player);
+            super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+        }
     }
-
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState)
-    {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
         return new MortarEntity(pPos, pState);
     }
 
@@ -138,7 +137,7 @@ public class MortarBlock extends BaseEntityBlock
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public @NotNull Component getDisplayName() {
-                        return Component.translatable("screen.devilry.mortar");
+                        return Component.translatableWithFallback("screen.devilry.mortar", "Mortar");
                     }
 
                     @Override

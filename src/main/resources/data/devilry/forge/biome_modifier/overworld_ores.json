@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "devilry:ore_limestone_lower",
+    "devilry:ore_limestone_upper",
+    "devilry:ore_tin_small",
+    "devilry:ore_tin_large"
+    ],
+  "step": "underground_ores"
+}

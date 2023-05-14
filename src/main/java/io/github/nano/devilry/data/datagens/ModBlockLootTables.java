@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.RegistryObject;
@@ -53,7 +54,7 @@ public class ModBlockLootTables extends BlockLootSubProvider
         //SALTPETRE
 
 
-        this.add(ModBlocks.SALTPETRE_CLUSTER.get(), (p_176063_) -> createSilkTouchDispatchTable(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(applyExplosionDecay(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
+        this.add(ModBlocks.SALTPETRE_CLUSTER.get(), (p_176063_) -> createSilkTouchDispatchTable(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)).when(LootItemRandomChanceCondition.randomChance(0.33f))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).when(LootItemRandomChanceCondition.randomChance(0.33f)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(applyExplosionDecay(p_176063_, LootItem.lootTableItem(ModItems.SALTPETRE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
         this.dropWhenSilkTouch(ModBlocks.SMALL_SALPETRE_BUD.get());
         this.dropWhenSilkTouch(ModBlocks.MEDIUM_SALTPETRE_BUD.get());
         this.dropWhenSilkTouch(ModBlocks.LARGE_SALTPETRE_BUD.get());

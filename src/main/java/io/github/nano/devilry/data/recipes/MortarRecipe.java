@@ -10,7 +10,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -21,9 +21,7 @@ import java.util.Arrays;
 //fixme
 //todo
 
-public class MortarRecipe implements Recipe<SimpleContainer>
-
-{
+public class MortarRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
@@ -40,7 +38,7 @@ public class MortarRecipe implements Recipe<SimpleContainer>
         this.neededCrushes = crushes;
     }
     @Override
-    public boolean matches(@NotNull SimpleContainer inv, @NotNull Level level) {
+    public boolean matches(@NotNull Container inv, @NotNull Level level) {
         return recipeItems.stream().allMatch(ingredient -> {
             int slot = recipeItems.indexOf(ingredient) + 1;
             for (int i = isShaped() ? slot : 1; i <= (isShaped() ? slot : 6); i++) {
@@ -53,7 +51,7 @@ public class MortarRecipe implements Recipe<SimpleContainer>
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull SimpleContainer inv, @NotNull RegistryAccess registries) {
+    public @NotNull ItemStack assemble(@NotNull Container inv, @NotNull RegistryAccess registries) {
         return output;
     }
 
