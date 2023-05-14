@@ -22,7 +22,7 @@ public class ModRecipeTypes
             = RECIPE_SERIALIZER.register("grinding", MortarRecipe.Serializer::new);
 
     public static RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
-            RECIPE_TYPE.register( "grinding", () ->createType("grinding"));
+            RECIPE_TYPE.register( "grinding", () -> createType("grinding"));
 
     private static <T extends Recipe<?>> RecipeType<T> createType(String identifier){
         return new RecipeType<>() {
@@ -35,5 +35,6 @@ public class ModRecipeTypes
 
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZER.register(eventBus);
+        RECIPE_TYPE.register(eventBus);
     }
 }
