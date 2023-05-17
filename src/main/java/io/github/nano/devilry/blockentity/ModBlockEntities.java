@@ -16,9 +16,9 @@ public class ModBlockEntities
 
     //todo look at that null
     @SuppressWarnings("ConstantConditions")
-    public static final RegistryObject<BlockEntityType<MortarEntity>> MORTAR_ENTITY
+    public static final RegistryObject<BlockEntityType<MortarBlockEntity>> MORTAR_ENTITY
             = BLOCK_ENTITIES.register("mortar_entity", ()-> BlockEntityType.Builder.of(
-                    MortarEntity::new, ModBlocks.MORTAR.get()).build(null));
+                    MortarBlockEntity::new, ModBlocks.MORTAR.get()).build(null));
 
     public static void register(IEventBus eventBus)
     {

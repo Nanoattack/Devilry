@@ -1,7 +1,7 @@
 package io.github.nano.devilry.block.custom;
 
 import io.github.nano.devilry.blockentity.ModBlockEntities;
-import io.github.nano.devilry.blockentity.MortarEntity;
+import io.github.nano.devilry.blockentity.MortarBlockEntity;
 import io.github.nano.devilry.container.MortarMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -107,7 +107,7 @@ public class MortarBlock extends BaseEntityBlock
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
         return entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
-                (world2, pos, state2, entity) -> ((MortarEntity)entity).tick() : null;
+                (world2, pos, state2, entity) -> ((MortarBlockEntity)entity).tick() : null;
     }
 
     @Override
@@ -126,14 +126,14 @@ public class MortarBlock extends BaseEntityBlock
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
-        return new MortarEntity(pPos, pState);
+        return new MortarBlockEntity(pPos, pState);
     }
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult trace) {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof MortarEntity) {
+            if (blockEntity instanceof MortarBlockEntity) {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public @NotNull Component getDisplayName() {
@@ -142,7 +142,7 @@ public class MortarBlock extends BaseEntityBlock
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player playerEntity) {
-                        return new MortarMenu(windowId, level, pos, playerInventory, playerEntity, ((MortarEntity)blockEntity).mortarData);
+                        return new MortarMenu(windowId, level, pos, playerInventory, playerEntity, ((MortarBlockEntity)blockEntity).mortarData);
                     }
                 };
                 NetworkHooks.openScreen((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());
