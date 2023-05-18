@@ -106,8 +106,11 @@ public class MortarBlock extends BaseEntityBlock
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
-        return entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
+        world.getProfiler().push("Ticker:" + "mortar");
+        BlockEntityTicker<T> tick = entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
                 (world2, pos, state2, entity) -> ((MortarBlockEntity)entity).tick() : null;
+        world.getProfiler().pop();
+        return tick;
     }
 
     @Override
@@ -142,7 +145,7 @@ public class MortarBlock extends BaseEntityBlock
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player playerEntity) {
-                        return new MortarMenu(windowId, level, pos, playerInventory, playerEntity, ((MortarBlockEntity)blockEntity).mortarData);
+                        return new MortarMenu(windowId, playerInventory, blockEntity, ((MortarBlockEntity)blockEntity).mortarData);
                     }
                 };
                 NetworkHooks.openScreen((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());

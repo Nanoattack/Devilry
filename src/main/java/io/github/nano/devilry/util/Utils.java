@@ -28,6 +28,12 @@ public class Utils {
     public static <C extends Container, T extends Recipe<C>> List<T> getPossibleRecipes(LoadingCache<BooleanObjectPair<NonNullList<Ingredient>>, T> cache, List<ItemStack> items) {
         return cache.asMap().entrySet().stream()
                 .filter(entry -> {
+                    for (ItemStack item : items) {
+                        if (!item.isEmpty()) {
+                            break;
+                        }
+                        return true;
+                    }
                     var copy = Map.Entry.copyOf(entry);
                     if (copy.getKey().firstBoolean()) {
                         for (int i = 0; i < items.size(); i++) {
@@ -89,6 +95,12 @@ public class Utils {
         boolean flag = false;
         if (pReverseDirection) {
             ArrayUtils.reverse(slots);
+        }
+        for (int slot : slots) {
+            if (slot != -1) {
+                break;
+            }
+            return false;
         }
         if (pStack.isStackable()) {
             for (int slotIndex : slots) {

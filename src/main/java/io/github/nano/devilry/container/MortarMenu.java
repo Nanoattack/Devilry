@@ -4,22 +4,24 @@ import io.github.nano.devilry.block.ModBlocks;
 import io.github.nano.devilry.blockentity.MortarBlockEntity;
 import io.github.nano.devilry.screen.slot.ResultSlotItemHandler;
 import io.github.nano.devilry.util.Utils;
-import net.minecraft.core.BlockPos;
+import io.github.nano.devilry.util.tags.DevilryTags;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Objects;
 //todo
 
@@ -39,20 +41,18 @@ public class MortarMenu extends AbstractContainerMenu {
         this.containerData = data;
 
         addPlayerInventory(inv);
-        addPlayerHotbar(inv);
+        addPlayerHotBar(inv);
 
-        if (blockEntity != null) {
-            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 80, 10)); //pestle slot
-                addSlot(new SlotItemHandler(h, 1, 48, 10)); //top left
-                addSlot(new SlotItemHandler(h, 2, 35, 32)); //center left
-                addSlot(new SlotItemHandler(h, 3, 48, 54)); //bottom left
-                addSlot(new SlotItemHandler(h, 4, 112, 10)); //top right
-                addSlot(new SlotItemHandler(h, 5, 125, 32)); //center right
-                addSlot(new SlotItemHandler(h, 6, 112, 54)); //bottom center
-                addSlot(new ResultSlotItemHandler(h, 7, 80, 46)); //result (center)
-            });
-        }
+        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+            addSlot(new SlotItemHandler(h, 0, 80, 10)); //pestle slot
+            addSlot(new SlotItemHandler(h, 1, 48, 10)); //top left
+            addSlot(new SlotItemHandler(h, 2, 35, 32)); //center left
+            addSlot(new SlotItemHandler(h, 3, 48, 54)); //bottom left
+            addSlot(new SlotItemHandler(h, 4, 112, 10)); //top right
+            addSlot(new SlotItemHandler(h, 5, 125, 32)); //center right
+            addSlot(new SlotItemHandler(h, 6, 112, 54)); //bottom center
+            addSlot(new ResultSlotItemHandler(h, 7, 80, 46)); //result (center)
+        });
 
         addDataSlots(data);
     }
@@ -75,14 +75,14 @@ public class MortarMenu extends AbstractContainerMenu {
         }
     }
 
-    private void addPlayerHotbar(Inventory playerInventory) {
+    private void addPlayerHotBar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
         }
     }
 
     @Override
-    public void slotsChanged(Container pContainer) {
+    public void slotsChanged(@NotNull Container pContainer) {
         super.slotsChanged(pContainer);
     }
 
@@ -107,9 +107,13 @@ public class MortarMenu extends AbstractContainerMenu {
 
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
+        level.getProfiler().push("quickMoveStack");
         Slot sourceSlot = slots.get(index);
 
-        if (!sourceSlot.hasItem()) return ItemStack.EMPTY;//EMPTY_ITEM
+        if (!sourceSlot.hasItem()) {
+            level.getProfiler().pop();
+            return ItemStack.EMPTY;//EMPTY_ITEM
+        }
 
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
@@ -117,19 +121,50 @@ public class MortarMenu extends AbstractContainerMenu {
         // Check if the slot clicked is one of the vanilla container slots
         if (index < 36) {
             // This is a vanilla container slot so merge the stack into the tile inventory
-            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX
-                    + TE_INVENTORY_SLOT_COUNT, false)) {
+            if (this.getItems().get(index).is(DevilryTags.Items.PESTLE_IN_MORTAR)) {
+                if (!moveItemStackTo(this.getItems().get(index), 36, 37, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+            if (!Utils.smartQuickMove(blockEntity.recipeCache, sourceStack, false, this, 5, recipe -> {
+                var copy = new ArrayList<>(recipe.getIngredients());
+                if (recipe.isShaped()) {
+                    level.getProfiler().pop();
+                    return copy.stream().mapToInt(ingredient -> ingredient.test(sourceStack) ? copy.indexOf(ingredient) : -1);
+                } else {
+                    NonNullList<ItemStack> items = this.getItems();
+                    for (int i = 0; i < items.size(); i++) {
+                        ItemStack item = items.get(i);
+                        if (copy.get(i).test(item)) {
+                            copy.set(i, Ingredient.EMPTY);
+                        }
+                    }
+                    IntList ints = new IntArrayList();
+
+                    for (int i = 0; i < copy.size(); i++) {
+                        Ingredient ingredient = copy.get(i);
+                        if (ingredient.test(sourceStack)) {
+                            ints.add(i);
+                        }
+                    }
+                    level.getProfiler().pop();
+                    return ints.intStream();
+                }
+
+            })) {
+                level.getProfiler().pop();
                 return ItemStack.EMPTY;  // EMPTY_ITEM
             }
 
         } else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
             // This is a TE slot so merge the stack into the players inventory
-            //todo
-//            if (!Utils.smartQuickMove()) {
-//                return ItemStack.EMPTY;
-//            }
+            if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
+                level.getProfiler().pop();
+                return ItemStack.EMPTY;
+            }
         } else {
             System.out.println("Invalid slotIndex:" + index);
+            level.getProfiler().pop();
             return ItemStack.EMPTY;
         }
 
@@ -140,6 +175,7 @@ public class MortarMenu extends AbstractContainerMenu {
             sourceSlot.setChanged();
         }
         sourceSlot.onTake(playerIn, sourceStack);
+        level.getProfiler().pop();
         return copyOfSourceStack;
     }
 

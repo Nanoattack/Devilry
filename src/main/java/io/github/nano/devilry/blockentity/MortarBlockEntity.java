@@ -10,8 +10,11 @@ import io.github.nano.devilry.util.Utils;
 import io.github.nano.devilry.util.tags.DevilryTags;
 import it.unimi.dsi.fastutil.booleans.BooleanObjectPair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -19,18 +22,20 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 //todo
 
-public class MortarBlockEntity extends BaseContainerBlockEntity
-{
+public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     public int turns = 0;
     public int maxTurns = 4;
 
@@ -66,7 +71,12 @@ public class MortarBlockEntity extends BaseContainerBlockEntity
             for (int i = 1; i <= 6; i++) {
                 container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
-            maxTurns = Utils.getPossibleRecipes(recipeCache, container).get(0).getNeededCrushes();
+            var recipes = Utils.getPossibleRecipes(recipeCache, container);
+            if (recipes.size() > 0) {
+                maxTurns = recipes.get(0).getNeededCrushes();
+            } else {
+                maxTurns = 0;
+            }
         }
 
         @Override
@@ -94,7 +104,7 @@ public class MortarBlockEntity extends BaseContainerBlockEntity
         }
     });
 
-    private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     public final ContainerData mortarData;
 
     public MortarBlockEntity(BlockPos pos, BlockState state) {
@@ -120,62 +130,19 @@ public class MortarBlockEntity extends BaseContainerBlockEntity
         };
     }
 
-    @Override
-    protected @NotNull Component getDefaultName() {
-        return Component.translatableWithFallback("devilry.block_entities.mortar", "Mortar");
-    }
-
-    @Override
-    protected @NotNull AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pInventory) {
-        return new MortarMenu(pContainerId, pInventory, this, this.mortarData);
-    }
-
-    @Override
-    public int getContainerSize() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public @NotNull ItemStack getItem(int pSlot) {
-        return null;
-    }
-
-    @Override
-    public @NotNull ItemStack removeItem(int pSlot, int pAmount) {
-        return null;
-    }
-
-    @Override
-    public @NotNull ItemStack removeItemNoUpdate(int pSlot) {
-        return null;
-    }
-
-    @Override
-    public void setItem(int pSlot, @NotNull ItemStack pStack) {
-
-    }
-
-    @Override
-    public boolean stillValid(@NotNull Player pPlayer) {
-        return false;
-    }
-
-    @Override
-    public void clearContent() {
-
-    }
 
     public void tick(){
 
     }
 
     private MortarRecipe getRecipe(BooleanObjectPair<NonNullList<Ingredient>> key) throws Exception {
+        if (level != null) {
+            level.getProfiler().push("getRecipe");
+        }
         if (key.firstBoolean()) {
+            if (level != null) {
+                level.getProfiler().pop();
+            }
             return Objects.requireNonNull(level).getRecipeManager().getAllRecipesFor(ModRecipeTypes.MORTAR_RECIPE.get()).stream().max(Comparator.comparingInt((MortarRecipe recipe) -> {
                 int sum = 0;
                 @NotNull NonNullList<Ingredient> ingredients = recipe.getIngredients();
@@ -187,6 +154,9 @@ public class MortarBlockEntity extends BaseContainerBlockEntity
                 return sum;
             })).orElseThrow(() -> new Exception("couldn't find recipe with items: " + key.right()));
         } else {
+            if (level != null) {
+                level.getProfiler().pop();
+            }
             return Objects.requireNonNull(level).getRecipeManager().getAllRecipesFor(ModRecipeTypes.MORTAR_RECIPE.get()).stream().max(Comparator.comparingInt((MortarRecipe recipe) -> {
                 int sum = 0;
                 @NotNull NonNullList<Ingredient> ingredients = recipe.getIngredients();
@@ -198,5 +168,53 @@ public class MortarBlockEntity extends BaseContainerBlockEntity
                 return sum;
             })).orElseThrow(() -> new Exception("couldn't find recipe with items: " + key.right()));
         }
+
+    }
+
+    @Override
+    public @NotNull Component getDisplayName() {
+        return Component.translatableWithFallback("devilry.block_entities.mortar", "Mortar");
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
+        return new MortarMenu(pContainerId, pPlayerInventory, this, this.mortarData);
+    }
+
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if(cap == ForgeCapabilities.ITEM_HANDLER) {
+            return handler.cast();
+        }
+
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        handler = LazyOptional.of(() -> itemHandler);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        handler.invalidate();
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag nbt) {
+        nbt.put("inventory", itemHandler.serializeNBT());
+        nbt.putInt("turns", this.turns);
+
+        super.saveAdditional(nbt);
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag nbt) {
+        super.load(nbt);
+        itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+        turns = nbt.getInt("turns");
     }
 }
