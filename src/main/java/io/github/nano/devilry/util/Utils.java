@@ -1,6 +1,7 @@
 package io.github.nano.devilry.util;
 
 import com.google.common.cache.LoadingCache;
+import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.booleans.BooleanObjectPair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -87,8 +89,8 @@ public class Utils {
         return Arrays.equals(one.getItems(), other.getItems());
     }
 
-    public static <C extends Container, T extends Recipe<C>> boolean smartQuickMove(LoadingCache<BooleanObjectPair<NonNullList<Ingredient>>, T> cache, ItemStack stack, boolean dumbQuickMove, AbstractContainerMenu menu, int recipesToCheck, Function<? super T, ? extends IntStream> mapper) {
-        return moveOrdered(stack, Utils.getPossibleRecipes(cache, menu.getItems()).stream().limit(recipesToCheck).flatMapToInt(mapper).toArray(), dumbQuickMove, menu);
+    public static <T extends Recipe<Container>> boolean smartQuickMove(LoadingCache<Pair<NonNullList<BetterIngredient>, List<ItemStack>>, List<T>> cache, ItemStack stack, boolean dumbQuickMove, AbstractContainerMenu menu, int recipesToCheck, Function<T, ? extends IntStream> mapper) throws ExecutionException {
+        return moveOrdered(stack, cache.get(Pair.of(null, menu.getItems())).stream().limit(recipesToCheck).flatMapToInt(mapper).toArray(), dumbQuickMove, menu);
     }
 
     public static boolean moveOrdered(ItemStack pStack, int[] slots, boolean pReverseDirection, AbstractContainerMenu menu) {

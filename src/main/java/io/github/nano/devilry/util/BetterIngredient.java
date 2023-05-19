@@ -6,9 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 
 public class BetterIngredient {
+    public static final BetterIngredient EMPTY = new BetterIngredient(Ingredient.EMPTY);
     private final @NotNull Ingredient ingredient;
 
-    protected BetterIngredient(@NotNull Ingredient ingredient) {
+    public BetterIngredient(@NotNull Ingredient ingredient) {
         this.ingredient = ingredient;
     }
 
@@ -23,5 +24,9 @@ public class BetterIngredient {
         if (o == null) return false;
         if (this.getClass() != o.getClass()) return false;
         return Arrays.equals(ingredient.getItems(), ((BetterIngredient) o).ingredient.getItems());
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 }

@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 //todo
 
 public class MortarMenu extends AbstractContainerMenu {
@@ -126,34 +127,38 @@ public class MortarMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             }
-            if (!Utils.smartQuickMove(blockEntity.recipeCache, sourceStack, false, this, 5, recipe -> {
-                var copy = new ArrayList<>(recipe.getIngredients());
-                if (recipe.isShaped()) {
-                    level.getProfiler().pop();
-                    return copy.stream().mapToInt(ingredient -> ingredient.test(sourceStack) ? copy.indexOf(ingredient) : -1);
-                } else {
-                    NonNullList<ItemStack> items = this.getItems();
-                    for (int i = 0; i < items.size(); i++) {
-                        ItemStack item = items.get(i);
-                        if (copy.get(i).test(item)) {
-                            copy.set(i, Ingredient.EMPTY);
+            try {
+                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 5, recipe -> {
+                    var copy = new ArrayList<>(recipe.getIngredients());
+                    if (recipe.isShaped()) {
+                        level.getProfiler().pop();
+                        return copy.stream().mapToInt(ingredient -> ingredient.test(sourceStack) ? copy.indexOf(ingredient) : -1);
+                    } else {
+                        NonNullList<ItemStack> items = this.getItems();
+                        for (int i = 0; i < items.size(); i++) {
+                            ItemStack item = items.get(i);
+                            if (copy.get(i).test(item)) {
+                                copy.set(i, Ingredient.EMPTY);
+                            }
                         }
-                    }
-                    IntList ints = new IntArrayList();
+                        IntList ints = new IntArrayList();
 
-                    for (int i = 0; i < copy.size(); i++) {
-                        Ingredient ingredient = copy.get(i);
-                        if (ingredient.test(sourceStack)) {
-                            ints.add(i);
+                        for (int i = 0; i < copy.size(); i++) {
+                            Ingredient ingredient = copy.get(i);
+                            if (ingredient.test(sourceStack)) {
+                                ints.add(i);
+                            }
                         }
+                        level.getProfiler().pop();
+                        return ints.intStream();
                     }
+
+                })) {
                     level.getProfiler().pop();
-                    return ints.intStream();
+                    return ItemStack.EMPTY;  // EMPTY_ITEM
                 }
-
-            })) {
-                level.getProfiler().pop();
-                return ItemStack.EMPTY;  // EMPTY_ITEM
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
             }
 
         } else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {

@@ -1,11 +1,13 @@
 package io.github.nano.devilry.blockentity;
 
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.mojang.datafixers.util.Pair;
 import io.github.nano.devilry.container.MortarMenu;
+import io.github.nano.devilry.container.RecipeCache;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
 import io.github.nano.devilry.data.recipes.MortarRecipe;
+import io.github.nano.devilry.util.BetterIngredient;
 import io.github.nano.devilry.util.Utils;
 import io.github.nano.devilry.util.tags.DevilryTags;
 import it.unimi.dsi.fastutil.booleans.BooleanObjectPair;
@@ -22,6 +24,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -32,7 +36,12 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
 //todo
 
 public class MortarBlockEntity extends BlockEntity implements MenuProvider {
@@ -49,10 +58,15 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             if (level == null) return true;
 
             ArrayList<ItemStack> container = new ArrayList<>();
-            for (int i = 1; i <= 6; i++) {
+            for (int i = 0; i <= 6; i++) {
                 container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
-            List<MortarRecipe> possibleRecipes = Utils.getPossibleRecipes(recipeCache, container);
+            List<MortarRecipe> possibleRecipes = null;
+            try {
+                possibleRecipes = cache.get().get(Pair.of(null, container));
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }
             for (MortarRecipe possibleRecipe : possibleRecipes) {
                 if (possibleRecipe.isShaped()) {
                     return possibleRecipe.getIngredients().get(slot-1).test(stack);
@@ -68,10 +82,15 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             MortarBlockEntity.this.setChanged();
             turns = 0;
             ArrayList<ItemStack> container = new ArrayList<>();
-            for (int i = 1; i <= 6; i++) {
+            for (int i = 0; i <= 6; i++) {
                 container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
-            var recipes = Utils.getPossibleRecipes(recipeCache, container);
+            List<MortarRecipe> recipes;
+            try {
+                recipes = cache.get().get(Pair.of(null, container));
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }
             if (recipes.size() > 0) {
                 maxTurns = recipes.get(0).getNeededCrushes();
             } else {
@@ -86,29 +105,30 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     };
 
 
-    public final LoadingCache<BooleanObjectPair<NonNullList<Ingredient>>, MortarRecipe> recipeCache = CacheBuilder.newBuilder().build(new CacheLoader<>() {
-        @Override
-        public @NotNull MortarRecipe load(@NotNull BooleanObjectPair<NonNullList<Ingredient>> key) throws Exception {
-            if (level == null) throw new Exception("level is null, perhaps retrieving values too earlY?");
-            return getRecipe(key);
-        }
-
-        @Override
-        public @NotNull Map<BooleanObjectPair<NonNullList<Ingredient>>, MortarRecipe> loadAll(@NotNull Iterable<? extends BooleanObjectPair<NonNullList<Ingredient>>> keys) throws Exception {
-            if (level == null) throw new Exception("level is null, perhaps retrieving values too early?");
-            Map<BooleanObjectPair<NonNullList<Ingredient>>, MortarRecipe> toReturn = new HashMap<>();
-            for (BooleanObjectPair<NonNullList<Ingredient>> key : keys) {
-                toReturn.put(key, getRecipe(key));
-            }
-            return toReturn;
-        }
-    });
+    public final AtomicReference<LoadingCache<Pair<NonNullList<BetterIngredient>, List<ItemStack>>, List<MortarRecipe>>> cache = new AtomicReference<>();
 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     public final ContainerData mortarData;
 
     public MortarBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
+        cache.set(CacheBuilder.newBuilder().build(new RecipeCache<>() {
+            @Override
+            public Level getLevel() {
+                return level;
+            }
+
+            @Override
+            public AtomicReference<LoadingCache<Pair<NonNullList<BetterIngredient>, List<ItemStack>>, List<MortarRecipe>>> getCache() {
+                return cache;
+            }
+
+            @Override
+            public RecipeType<MortarRecipe> getRecipeType() {
+                return ModRecipeTypes.MORTAR_RECIPE.get();
+            }
+        }));
+
         mortarData = new SimpleContainerData(2) {
             @Override
             public int get(int index)
