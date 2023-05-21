@@ -2,6 +2,7 @@ package io.github.nano.devilry.container;
 
 import io.github.nano.devilry.block.ModBlocks;
 import io.github.nano.devilry.blockentity.MortarBlockEntity;
+import io.github.nano.devilry.data.recipes.MortarRecipe;
 import io.github.nano.devilry.screen.slot.ResultSlotItemHandler;
 import io.github.nano.devilry.util.Utils;
 import io.github.nano.devilry.util.tags.DevilryTags;
@@ -22,6 +23,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 //todo
@@ -128,14 +130,19 @@ public class MortarMenu extends AbstractContainerMenu {
                 }
             }
             try {
-                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 5, recipe -> {
+                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 7, (MortarRecipe recipe) -> {
                     var copy = new ArrayList<>(recipe.getIngredients());
                     if (recipe.isShaped()) {
                         level.getProfiler().pop();
                         return copy.stream().mapToInt(ingredient -> ingredient.test(sourceStack) ? copy.indexOf(ingredient) : -1);
                     } else {
-                        NonNullList<ItemStack> items = this.getItems();
-                        for (int i = 0; i < items.size(); i++) {
+                        NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
+                        List<ItemStack> subList = this.getItems().subList(36, 43);
+                        for (int i = 0; i < subList.size(); i++) {
+                            ItemStack itemStack = subList.get(i);
+                            items.set(i, itemStack);
+                        }
+                        for (int i = 0; i < items.size() -1; i++) {
                             ItemStack item = items.get(i);
                             if (copy.get(i).test(item)) {
                                 copy.set(i, Ingredient.EMPTY);
@@ -153,7 +160,7 @@ public class MortarMenu extends AbstractContainerMenu {
                         return ints.intStream();
                     }
 
-                })) {
+                }, itemStack -> new MortarItem(itemStack.getItem()))) {
                     level.getProfiler().pop();
                     return ItemStack.EMPTY;  // EMPTY_ITEM
                 }

@@ -3,6 +3,8 @@ package io.github.nano.devilry.blockentity;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import com.mojang.datafixers.util.Pair;
+import io.github.nano.devilry.container.CacheItem;
+import io.github.nano.devilry.container.MortarItem;
 import io.github.nano.devilry.container.MortarMenu;
 import io.github.nano.devilry.container.RecipeCache;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
@@ -58,20 +60,24 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             if (level == null) return true;
 
             ArrayList<ItemStack> container = new ArrayList<>();
-            for (int i = 0; i <= 6; i++) {
+            for (int i = 0; i <= 7; i++) {
                 container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
-            List<MortarRecipe> possibleRecipes = null;
+            List<MortarRecipe> possibleRecipes;
             try {
-                possibleRecipes = cache.get().get(Pair.of(null, container));
+                possibleRecipes = cache.get().get(Pair.of(null, container.stream().map(map -> new MortarItem(map.getItem())).toList()));
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
             for (MortarRecipe possibleRecipe : possibleRecipes) {
                 if (possibleRecipe.isShaped()) {
-                    return possibleRecipe.getIngredients().get(slot-1).test(stack);
+                    if (possibleRecipe.getIngredients().get(slot-1).test(stack)) {
+                        return true;
+                    }
                 } else {
-                    return possibleRecipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(stack));
+                    if(possibleRecipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(stack))) {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -87,7 +93,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
             List<MortarRecipe> recipes;
             try {
-                recipes = cache.get().get(Pair.of(null, container));
+                recipes = cache.get().get(Pair.of(null, new ArrayList<>(container.stream().map(map -> new MortarItem(map.getItem())).toList())));
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
@@ -105,7 +111,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     };
 
 
-    public final AtomicReference<LoadingCache<Pair<NonNullList<BetterIngredient>, List<ItemStack>>, List<MortarRecipe>>> cache = new AtomicReference<>();
+    public final AtomicReference<LoadingCache<Pair<NonNullList<BetterIngredient>, List<? extends CacheItem>>, List<MortarRecipe>>> cache = new AtomicReference<>();
 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     public final ContainerData mortarData;
@@ -119,7 +125,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
 
             @Override
-            public AtomicReference<LoadingCache<Pair<NonNullList<BetterIngredient>, List<ItemStack>>, List<MortarRecipe>>> getCache() {
+            public AtomicReference<LoadingCache<Pair<NonNullList<BetterIngredient>, List<? extends CacheItem>>, List<MortarRecipe>>> getCache() {
                 return cache;
             }
 
@@ -152,7 +158,6 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
 
 
     public void tick(){
-
     }
 
     private MortarRecipe getRecipe(BooleanObjectPair<NonNullList<Ingredient>> key) throws Exception {

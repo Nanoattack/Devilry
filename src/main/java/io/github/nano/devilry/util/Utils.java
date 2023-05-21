@@ -2,6 +2,7 @@ package io.github.nano.devilry.util;
 
 import com.google.common.cache.LoadingCache;
 import com.mojang.datafixers.util.Pair;
+import io.github.nano.devilry.container.CacheItem;
 import it.unimi.dsi.fastutil.booleans.BooleanObjectPair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
@@ -89,8 +90,8 @@ public class Utils {
         return Arrays.equals(one.getItems(), other.getItems());
     }
 
-    public static <T extends Recipe<Container>> boolean smartQuickMove(LoadingCache<Pair<NonNullList<BetterIngredient>, List<ItemStack>>, List<T>> cache, ItemStack stack, boolean dumbQuickMove, AbstractContainerMenu menu, int recipesToCheck, Function<T, ? extends IntStream> mapper) throws ExecutionException {
-        return moveOrdered(stack, cache.get(Pair.of(null, menu.getItems())).stream().limit(recipesToCheck).flatMapToInt(mapper).toArray(), dumbQuickMove, menu);
+    public static <T extends Recipe<Container>> boolean smartQuickMove(LoadingCache<Pair<NonNullList<BetterIngredient>, List<? extends CacheItem>>, List<T>> cache, ItemStack stack, boolean dumbQuickMove, AbstractContainerMenu menu, int recipesToCheck, Function<T, ? extends IntStream> mapper, Function<ItemStack, CacheItem> factory) throws ExecutionException {
+        return moveOrdered(stack, cache.get(Pair.of(null, menu.getItems().stream().map(factory).toList().subList(36, 43))).stream().limit(recipesToCheck).flatMapToInt(mapper).toArray(), dumbQuickMove, menu);
     }
 
     public static boolean moveOrdered(ItemStack pStack, int[] slots, boolean pReverseDirection, AbstractContainerMenu menu) {
@@ -106,7 +107,7 @@ public class Utils {
         }
         if (pStack.isStackable()) {
             for (int slotIndex : slots) {
-                Slot slot = menu.getSlot(slotIndex);
+                Slot slot = menu.slots.get(36 + slotIndex);
                 ItemStack itemstack = slot.getItem();
                 if (!itemstack.isEmpty() && ItemStack.isSameItemSameTags(pStack, itemstack)) {
                     int j = itemstack.getCount() + pStack.getCount();
@@ -127,7 +128,7 @@ public class Utils {
         }
         if (!pStack.isEmpty()) {
             for (int slot : slots) {
-                Slot slot1 = menu.getSlot(slot);
+                Slot slot1 = menu.slots.get(36 + slot);
                 ItemStack itemStack = slot1.getItem();
                 if (itemStack.isEmpty() && slot1.mayPlace(pStack)) {
                     if (pStack.getCount() > slot1.getMaxStackSize()) {
