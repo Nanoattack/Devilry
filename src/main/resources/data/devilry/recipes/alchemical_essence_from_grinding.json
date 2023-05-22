@@ -2,9 +2,6 @@
   "type": "devilry:grinding",
   "ingredients": [
     {
-      "tag": "devilry:pestle_in_mortar"
-    },
-    {
       "item": "minecraft:redstone"
     },
     {

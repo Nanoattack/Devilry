@@ -1,23 +1,16 @@
 package io.github.nano.devilry.util;
 
 import com.google.common.cache.LoadingCache;
-import com.mojang.datafixers.util.Pair;
 import io.github.nano.devilry.container.CacheItem;
-import it.unimi.dsi.fastutil.booleans.BooleanObjectPair;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.IntStream;
@@ -28,70 +21,8 @@ public class Utils {
         return value == null ? orElse : function.apply(value);
     }
 
-    public static <C extends Container, T extends Recipe<C>> List<T> getPossibleRecipes(LoadingCache<BooleanObjectPair<NonNullList<Ingredient>>, T> cache, List<ItemStack> items) {
-        return cache.asMap().entrySet().stream()
-                .filter(entry -> {
-                    for (ItemStack item : items) {
-                        if (!item.isEmpty()) {
-                            break;
-                        }
-                        return true;
-                    }
-                    var copy = Map.Entry.copyOf(entry);
-                    if (copy.getKey().firstBoolean()) {
-                        for (int i = 0; i < items.size(); i++) {
-                            if (!copy.getKey().right().get(i).test(items.get(i))) {
-                                return false;
-                            }
-                        }
-                    } else {
-                        for (ItemStack item : items) {
-                            for (int i = 0; i < copy.getKey().right().size(); i++) {
-                                if (copy.getKey().right().get(i).test(item)) {
-                                    copy.getKey().right().set(i, Ingredient.EMPTY);
-                                }
-                            }
-                        }
-                    }
-                    return true;
-                })
-                .sorted(Comparator.comparingInt((Map.Entry<BooleanObjectPair<NonNullList<Ingredient>>, T> key) -> {
-                    var copy = Map.Entry.copyOf(key);
-                    if (copy.getKey().leftBoolean()) {
-                        int sum = 0;
-                        NonNullList<Ingredient> ingredients = copy.getValue().getIngredients();
-                        for (int j = 0; j < ingredients.size(); j++) {
-                            Ingredient ingredient = ingredients.get(j);
-                            int i = Utils.ingredientEquals(ingredient, copy.getKey().right().get(j)) ? 1 : -1;
-                            sum += i;
-                        }
-                        return sum;
-                    } else {
-                        int sum = 0;
-                        NonNullList<Ingredient> ingredients = copy.getValue().getIngredients();
-                        int subtract = ingredients.size() - copy.getKey().right().size();
-                        for (int j = 0; j < ingredients.size() - subtract; j++) {
-                            int i;
-                            if (ingredients.contains(copy.getKey().right().get(j))) {
-                                i = 1;
-                                copy.getKey().right().set(j, Ingredient.EMPTY);
-                            } else {
-                                i = -1;
-                            }
-                            sum += i;
-                        }
-                        return sum;
-                    }
-                }).thenComparingDouble(e -> e.getKey().leftBoolean() ? 0.1f : 0).reversed()).map(Map.Entry::getValue).toList();
-    }
-
-    public static boolean ingredientEquals(Ingredient one, Ingredient other) {
-        if (one == other) return true;
-        return Arrays.equals(one.getItems(), other.getItems());
-    }
-
-    public static <T extends Recipe<Container>> boolean smartQuickMove(LoadingCache<Pair<NonNullList<BetterIngredient>, List<? extends CacheItem>>, List<T>> cache, ItemStack stack, boolean dumbQuickMove, AbstractContainerMenu menu, int recipesToCheck, Function<T, ? extends IntStream> mapper, Function<ItemStack, CacheItem> factory) throws ExecutionException {
-        return moveOrdered(stack, cache.get(Pair.of(null, menu.getItems().stream().map(factory).toList().subList(36, 43))).stream().limit(recipesToCheck).flatMapToInt(mapper).toArray(), dumbQuickMove, menu);
+    public static <T extends Recipe<Container>> boolean smartQuickMove(LoadingCache<List<? extends CacheItem>, List<T>> cache, ItemStack stack, boolean dumbQuickMove, AbstractContainerMenu menu, int recipesToCheck, Function<T, ? extends IntStream> mapper, Function<ItemStack, CacheItem> factory) throws ExecutionException {
+        return moveOrdered(stack, cache.get(menu.getItems().stream().map(factory).toList().subList(36, 42)).stream().limit(recipesToCheck).flatMapToInt(mapper).toArray(), dumbQuickMove, menu);
     }
 
     public static boolean moveOrdered(ItemStack pStack, int[] slots, boolean pReverseDirection, AbstractContainerMenu menu) {

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.nano.devilry.block.ModBlocks;
 import io.github.nano.devilry.util.Utils;
+import io.github.nano.devilry.util.tags.DevilryTags;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -42,7 +43,7 @@ public class MortarRecipe implements Recipe<Container> {
         return recipeItems.stream().allMatch(ingredient -> {
             int slot = recipeItems.indexOf(ingredient) + 1;
             for (int i = isShaped() ? slot : 1; i <= (isShaped() ? slot : 6); i++) {
-                if (ingredient.isEmpty() || ingredient.test(inv.getItem(i))) {
+                if ((ingredient.isEmpty() || ingredient.test(inv.getItem(i))) && inv.getItem(0).is(DevilryTags.Items.PESTLE_IN_MORTAR)) {
                     return true;
                 }
             }

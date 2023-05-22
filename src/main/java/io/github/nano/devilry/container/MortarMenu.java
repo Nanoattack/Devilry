@@ -130,19 +130,19 @@ public class MortarMenu extends AbstractContainerMenu {
                 }
             }
             try {
-                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 7, (MortarRecipe recipe) -> {
+                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 6, (MortarRecipe recipe) -> {
                     var copy = new ArrayList<>(recipe.getIngredients());
                     if (recipe.isShaped()) {
                         level.getProfiler().pop();
                         return copy.stream().mapToInt(ingredient -> ingredient.test(sourceStack) ? copy.indexOf(ingredient) : -1);
                     } else {
-                        NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
-                        List<ItemStack> subList = this.getItems().subList(36, 43);
-                        for (int i = 0; i < subList.size(); i++) {
+                        NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
+                        List<ItemStack> subList = this.getItems().subList(36, 42);
+                        for (int i = 1; i < subList.size(); i++) {
                             ItemStack itemStack = subList.get(i);
                             items.set(i, itemStack);
                         }
-                        for (int i = 0; i < items.size() -1; i++) {
+                        for (int i = 1; i < items.size() -1; i++) {
                             ItemStack item = items.get(i);
                             if (copy.get(i).test(item)) {
                                 copy.set(i, Ingredient.EMPTY);
@@ -150,7 +150,7 @@ public class MortarMenu extends AbstractContainerMenu {
                         }
                         IntList ints = new IntArrayList();
 
-                        for (int i = 0; i < copy.size(); i++) {
+                        for (int i = 1; i < copy.size(); i++) {
                             Ingredient ingredient = copy.get(i);
                             if (ingredient.test(sourceStack)) {
                                 ints.add(i);
