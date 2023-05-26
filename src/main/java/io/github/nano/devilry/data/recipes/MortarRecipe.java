@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.container.CacheItem;
 import io.github.nano.devilry.util.Utils;
 import io.github.nano.devilry.util.tags.DevilryTags;
 import net.minecraft.core.NonNullList;
@@ -14,20 +13,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.List;
 //fixme
 //todo
 
-public class MortarRecipe extends HashedRecipe<Container> {
+public class MortarRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
@@ -105,55 +100,6 @@ public class MortarRecipe extends HashedRecipe<Container> {
 
     public int getNeededCrushes() {
         return neededCrushes;
-    }
-
-    @Override
-    public boolean isPossible(List<? extends CacheItem> itemStackList, boolean isShaped) {
-        if (isShaped) {
-            for (int i = 0; i < itemStackList.size(); i++) {
-                if (itemStackList.get(i).getItemStack().isEmpty()) {
-                    continue;
-                }
-                if (!this.recipeItems.get(i).test(itemStackList.get(i).getItemStack())) {
-                    return false;
-                }
-            }
-        } else {
-            for (CacheItem itemStack : itemStackList) {
-                if (itemStack.getItemStack().isEmpty()) {
-                    continue;
-                }
-                if (this.recipeItems.stream().noneMatch(ingredient -> ingredient.test(itemStack.getItemStack()))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public int toInt(List<? extends CacheItem> itemStackList, boolean isShaped) {
-        int j = 0;
-        if (isShaped) {
-            for (int i = 0; i < itemStackList.size(); i++) {
-                if (itemStackList.get(i).getItemStack().isEmpty()) {
-                    continue;
-                }
-                if (this.recipeItems.get(i).test(itemStackList.get(i).getItemStack())) {
-                    j++;
-                }
-            }
-        } else {
-            for (CacheItem itemStack : itemStackList) {
-                if (itemStack.getItemStack().isEmpty()) {
-                    continue;
-                }
-                if (this.recipeItems.stream().anyMatch(ingredient -> ingredient.test(itemStack.getItemStack()))) {
-                    j++;
-                }
-            }
-        }
-        return j;
     }
 
     public static class Serializer implements RecipeSerializer<MortarRecipe> {

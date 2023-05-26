@@ -131,15 +131,18 @@ public class MortarMenu extends AbstractContainerMenu {
             }
             try {
                 if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 6, (MortarRecipe recipe) -> {
-                        var copy = new ArrayList<>(recipe.getIngredients());
+                    var copy = new ArrayList<>(recipe.getIngredients());
                     if (recipe.isShaped()) {
+                        level.getProfiler().pop();
+                        return copy.stream().mapToInt(ingredient -> ingredient.test(sourceStack) ? copy.indexOf(ingredient) : -1);
+                    } else {
                         NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
-                        List<ItemStack> subList = this.getItems().subList(37, 43);
-                        for (int i = 0; i < subList.size(); i++) {
+                        List<ItemStack> subList = this.getItems().subList(36, 42);
+                        for (int i = 1; i < subList.size(); i++) {
                             ItemStack itemStack = subList.get(i);
                             items.set(i, itemStack);
                         }
-                        for (int i = 0; i < items.size(); i++) {
+                        for (int i = 1; i < items.size() -1; i++) {
                             ItemStack item = items.get(i);
                             if (copy.get(i).test(item)) {
                                 copy.set(i, Ingredient.EMPTY);
@@ -147,46 +150,10 @@ public class MortarMenu extends AbstractContainerMenu {
                         }
                         IntList ints = new IntArrayList();
 
-                        for (int i = 0; i < copy.size(); i++) {
+                        for (int i = 1; i < copy.size(); i++) {
                             Ingredient ingredient = copy.get(i);
                             if (ingredient.test(sourceStack)) {
                                 ints.add(i);
-                            }
-                        }
-                        level.getProfiler().pop();
-                        return ints.intStream();
-                    } else {
-                        NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
-                        List<ItemStack> subList = this.getItems().subList(37, 43);
-                        for (int i = 0; i < subList.size(); i++) {
-                            ItemStack itemStack = subList.get(i);
-                            items.set(i, itemStack);
-                        }
-
-                        outer:
-                            for (int i = 0; i < copy.size(); i++)  {
-                                for (int j = 0; j < items.size(); j++) {
-                                    ItemStack item = items.get(j);
-                                    if (copy.get(i).test(item)) {
-                                        items.set(j, ItemStack.EMPTY);
-                                        copy.set(i, Ingredient.EMPTY);
-                                        continue outer;
-                                    }
-                                }
-                            }
-
-                        IntList ints = new IntArrayList();
-
-                        for (Ingredient ingredient : copy) {
-                            if (ingredient.isEmpty()) {
-                                continue;
-                            }
-                            if (ingredient.test(sourceStack)) {
-                                for (int j = 0; j < items.size(); j++) {
-                                    if (items.get(j).isEmpty() || items.get(j).is(sourceStack.getItem())) {
-                                        ints.add(j);
-                                    }
-                                }
                             }
                         }
                         level.getProfiler().pop();

@@ -20,7 +20,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -64,21 +63,11 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
             for (MortarRecipe possibleRecipe : possibleRecipes) {
                 if (possibleRecipe.isShaped()) {
-                    if (possibleRecipe.getIngredients().get(slot).test(stack)) {
+                    if (possibleRecipe.getIngredients().get(slot-1).test(stack)) {
                         return true;
                     }
                 } else {
-                    var list = new ArrayList<>(possibleRecipe.getIngredients());
-                    var items = new ArrayList<>(container);
-                    for (int i = 0; i < list.size(); i++) {
-                        for (int j = 0; j < items.size(); j++) {
-                            if (list.get(i).test(items.get(j))) {
-                                items.set(j, ItemStack.EMPTY);
-                                list.set(i, Ingredient.EMPTY);
-                            }
-                        }
-                    }
-                    if (list.stream().anyMatch(ingredient -> ingredient.test(stack))) {
+                    if(possibleRecipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(stack))) {
                         return true;
                     }
                 }
@@ -161,10 +150,6 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
 
 
     public void tick() {
-        if (level == null || level.isClientSide()) {
-            return;
-        }
-
     }
 
     @Override
