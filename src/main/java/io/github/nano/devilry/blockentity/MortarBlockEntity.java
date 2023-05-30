@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 //todo
@@ -159,14 +161,6 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
         };
     }
 
-
-    public void tick() {
-        if (level == null || level.isClientSide()) {
-            return;
-        }
-
-    }
-
     @Override
     public @NotNull Component getDisplayName() {
         return Component.translatableWithFallback("devilry.block_entities.mortar", "Mortar");
@@ -203,6 +197,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("turns", this.turns);
+        nbt.putInt("maxTurns", this.maxTurns);
 
         super.saveAdditional(nbt);
     }
@@ -212,5 +207,57 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         turns = nbt.getInt("turns");
+        maxTurns = nbt.getInt("maxTurns");
+    }
+
+    public boolean hasRecipe() {
+        if (level == null) return false;
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Optional<MortarRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inventory, level);
+
+        return recipe.isPresent() && itemHandler.getStackInSlot(0).is(DevilryTags.Items.PESTLE_IN_MORTAR)
+                && canInsertAmountIntoOutputSlot(inventory) &&
+                canInsertItemIntoOutputSlot(inventory, recipe.get().assemble(inventory, level.registryAccess()));
+    }
+
+    private boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
+        return inventory.getItem(7).getItem() == stack.getItem() || inventory.getItem(7).isEmpty();
+    }
+
+    private boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
+        return inventory.getItem(7).getMaxStackSize() > inventory.getItem(7).getCount();
+    }
+
+    public void craftItem() {
+        if (level == null) return;
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Optional<MortarRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inventory, level);
+
+        if(hasRecipe()) {
+            itemHandler.extractItem(1, 1, false);
+            itemHandler.extractItem(2, 1, false);
+            itemHandler.extractItem(3, 1, false);
+            itemHandler.extractItem(4, 1, false);
+            itemHandler.extractItem(5, 1, false);
+            itemHandler.extractItem(6, 1, false);
+            itemHandler.extractItem(7, 1, false);
+            ItemStack stack = itemHandler.getStackInSlot(0);
+            stack.setDamageValue(itemHandler.getStackInSlot(0).getDamageValue() -1);
+            itemHandler.setStackInSlot(0, stack);
+            itemHandler.setStackInSlot(7, new ItemStack(recipe.get().assemble(inventory, level.registryAccess()).getItem(),
+                    itemHandler.getStackInSlot(7).getCount() + 1));
+
+            this.turns = 0;
+        }
     }
 }

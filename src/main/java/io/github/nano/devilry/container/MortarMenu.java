@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
-//todo
 
 public class MortarMenu extends AbstractContainerMenu {
     private final MortarBlockEntity blockEntity;
@@ -213,7 +212,6 @@ public class MortarMenu extends AbstractContainerMenu {
             return ItemStack.EMPTY;
         }
 
-        // If stack size == 0 (the entire stack was moved) set slot contents to null
         if (sourceStack.getCount() == 0) {
             sourceSlot.set(ItemStack.EMPTY);
         } else {
@@ -223,7 +221,4 @@ public class MortarMenu extends AbstractContainerMenu {
         level.getProfiler().pop();
         return copyOfSourceStack;
     }
-
-
-
 }

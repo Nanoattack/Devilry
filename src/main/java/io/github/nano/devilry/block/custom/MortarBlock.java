@@ -1,6 +1,5 @@
 package io.github.nano.devilry.block.custom;
 
-import io.github.nano.devilry.blockentity.ModBlockEntities;
 import io.github.nano.devilry.blockentity.MortarBlockEntity;
 import io.github.nano.devilry.container.MortarMenu;
 import net.minecraft.core.BlockPos;
@@ -19,8 +18,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -103,15 +100,15 @@ public class MortarBlock extends BaseEntityBlock
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
-        world.getProfiler().push("Ticker:" + "mortar");
-        BlockEntityTicker<T> tick = entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
-                (world2, pos, state2, entity) -> ((MortarBlockEntity)entity).tick() : null;
-        world.getProfiler().pop();
-        return tick;
-    }
+//    @Nullable
+//    @Override
+//    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
+//        world.getProfiler().push("Ticker:" + "mortar");
+//        BlockEntityTicker<T> tick = entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
+//                (world2, pos, state2, entity) -> ((MortarBlockEntity)entity).tick() : null;
+//        world.getProfiler().pop();
+//        return tick;
+//    }
 
     @Override
     public void onRemove(BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
@@ -134,9 +131,26 @@ public class MortarBlock extends BaseEntityBlock
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult trace) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof MortarBlockEntity) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+
+        if (level.getBlockEntity(pos) instanceof MortarBlockEntity mortarBlockEntity) {
+            if (mortarBlockEntity.hasRecipe()) {
+                if (!player.isShiftKeyDown()) {
+                    if (mortarBlockEntity.turns < mortarBlockEntity.maxTurns) {
+                        //todo: play the animation
+                        //todo: play crushing sound
+                        mortarBlockEntity.turns++;
+                        mortarBlockEntity.setChanged();
+                    }
+                    if (mortarBlockEntity.turns >= mortarBlockEntity.maxTurns) {
+                        mortarBlockEntity.craftItem();
+                        mortarBlockEntity.setChanged();
+                    }
+                }
+            }
+            if (mortarBlockEntity.hasRecipe() == player.isShiftKeyDown()) {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public @NotNull Component getDisplayName() {
@@ -145,12 +159,10 @@ public class MortarBlock extends BaseEntityBlock
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player playerEntity) {
-                        return new MortarMenu(windowId, playerInventory, blockEntity, ((MortarBlockEntity)blockEntity).mortarData);
+                        return new MortarMenu(windowId, playerInventory, mortarBlockEntity, mortarBlockEntity.mortarData);
                     }
                 };
-                NetworkHooks.openScreen((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());
-            } else {
-                throw new IllegalStateException("Our named container provider is missing!");
+                NetworkHooks.openScreen((ServerPlayer) player, containerProvider, pos);
             }
         }
         return InteractionResult.SUCCESS;

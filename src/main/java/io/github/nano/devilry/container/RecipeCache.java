@@ -3,8 +3,6 @@ package io.github.nano.devilry.container;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import io.github.nano.devilry.data.recipes.HashedRecipe;
-import it.unimi.dsi.fastutil.Pair;
-import it.unimi.dsi.fastutil.booleans.BooleanObjectPair;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -37,59 +35,47 @@ public abstract class RecipeCache<T extends HashedRecipe<Container>> extends Cac
     }
 
     public List<T> getPossibleRecipes(List<? extends CacheItem> items) {
-        Map<List<? extends CacheItem>, List<BooleanObjectPair<T>>> cacheMap = new HashMap<>();
+        Map<List<? extends CacheItem>, List<T>> singleDifferenceCacheMap = new HashMap<>();
 
         for (Map.Entry<List<? extends CacheItem>, List<T>> listListEntry : getCache().get().asMap().entrySet()) {
-            cacheMap.put(listListEntry.getKey(), listListEntry.getValue().stream().map(entry -> BooleanObjectPair.of(entry.isShaped(), entry)).toList());
-        }
-
-        Map<List<? extends CacheItem>, List<BooleanObjectPair<T>>> singleDifferenceCacheMap = new HashMap<>();
-
-        for (Map.Entry<List<? extends CacheItem>, List<BooleanObjectPair<T>>> listListEntry : cacheMap.entrySet()) {
             if (getDifference(listListEntry.getKey(), items) <= 1) {
                 singleDifferenceCacheMap.put(listListEntry.getKey(), listListEntry.getValue());
             }
         }
 
         if (singleDifferenceCacheMap.isEmpty()) {
-            singleDifferenceCacheMap.put(items, getLevel().getRecipeManager().getAllRecipesFor(getRecipeType()).stream()
-                    .map(entry -> BooleanObjectPair.of(entry.isShaped(), entry)).toList());
+            singleDifferenceCacheMap.put(items, getLevel().getRecipeManager().getAllRecipesFor(getRecipeType()));
         }
-
 
         return singleDifferenceCacheMap.entrySet().stream()
                 .map(entry -> filter(entry, items))
-                .distinct().flatMap(entry -> entry.getValue().stream())
-                .sorted(Comparator.<BooleanObjectPair<T>>comparingInt(recipe -> recipe.right().toInt(items, recipe.leftBoolean()))
-                        .thenComparingDouble(recipe -> recipe.leftBoolean() ? 1.01d : 1.0d).reversed())
-                .map(Pair::right)
+                .distinct()
+                .flatMap(entry -> entry.getValue().stream())
+                .sorted(Comparator
+                        .<T>comparingInt(recipe -> recipe.toInt(items, recipe.isShaped()))
+                        .thenComparing(HashedRecipe::isShaped)
+                        .reversed())
                 .distinct()
                 .toList();
     }
 
-    private Map.Entry<List<? extends CacheItem>, List<BooleanObjectPair<T>>> filter(Map.Entry<List<? extends CacheItem>, List<BooleanObjectPair<T>>> cacheEntry, List<? extends CacheItem> items) {
-        List<BooleanObjectPair<T>> toReturn = new ArrayList<>();
-        for (BooleanObjectPair<T> pair : cacheEntry.getValue()) {
-            if (pair.right().isPossible(items, pair.leftBoolean())) {
-                toReturn.add(pair);
-            }
-        }
-        return Map.entry(cacheEntry.getKey(),toReturn);
+    private Map.Entry<List<? extends CacheItem>, List<T>> filter(Map.Entry<List<? extends CacheItem>, List<T>> cacheEntry, List<? extends CacheItem> items) {
+       return Map.entry(cacheEntry.getKey(), cacheEntry.getValue().stream()
+               .filter(recipe -> recipe.isPossible(items, recipe.isShaped())).toList());
     }
 
     private int getDifference(List<? extends CacheItem> cacheItems, List<? extends CacheItem> newItems) {
-        var list = new ArrayList<>(newItems);
         List<? super CacheItem> noDupes = new ArrayList<>(cacheItems);
-        list.removeIf(ingredient -> {
-            for (int i = 0; i < noDupes.size(); i++) {
-                CacheItem item = (CacheItem) noDupes.get(i);
-                if (item.equals(ingredient)) {
-                    noDupes.set(i, new MortarItem(Items.AIR));
-                    return true;
-                }
-            }
-            return false;
-        });
-        return list.size();
+        return (int) newItems.stream()
+                .filter(ingredient -> {
+                    for (int i = 0; i < noDupes.size(); i++) {
+                        CacheItem item = (CacheItem) noDupes.get(i);
+                        if (item.equals(ingredient)) {
+                            noDupes.set(i, new MortarItem(Items.AIR));
+                            return true;
+                        }
+                    }
+                    return false;
+                }).count();
     }
 }

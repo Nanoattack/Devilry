@@ -208,8 +208,7 @@ public class MortarRecipe extends HashedRecipe<Container> {
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, MortarRecipe pRecipe) {
             pBuffer.writeBoolean(pRecipe.isShaped());
-            pBuffer.writeCollection(pRecipe.getIngredients(), (buf, ingredient) ->
-                    buf.writeCollection(Arrays.asList(ingredient.getItems()), FriendlyByteBuf::writeItem));
+            pBuffer.writeCollection(pRecipe.getIngredients(), (buf, ingredient) -> buf.writeCollection(Arrays.asList(ingredient.getItems()), FriendlyByteBuf::writeItem));
             pBuffer.writeInt(pRecipe.getDurabilityCost());
             pBuffer.writeInt(pRecipe.getNeededCrushes());
             pBuffer.writeItem(pRecipe.output);
