@@ -97,23 +97,23 @@ public class OwlEntity extends Parrot {
 
     @Override
     public SoundEvent getAmbientSound() {
-        this.playSound(ModSoundEvents.OWL_AMBIENT.get(), 0.2F, 0.8F + level.random.nextFloat() * 0.4F);
+        this.playSound(ModSoundEvents.OWL_AMBIENT.get(), 0.2F, 0.8F + level().random.nextFloat() * 0.4F);
         return null;
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        this.playSound(ModSoundEvents.OWL_HURT.get(), 1.0F, 1.7F + level.random.nextFloat() * 0.4F);
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+        this.playSound(ModSoundEvents.OWL_HURT.get(), 1.0F, 1.7F + level().random.nextFloat() * 0.4F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        this.playSound(ModSoundEvents.OWL_DEATH.get(), 0.7F, 2.0F + level.random.nextFloat() * 0.4F);
+        this.playSound(ModSoundEvents.OWL_DEATH.get(), 0.7F, 2.0F + level().random.nextFloat() * 0.4F);
         return null;
     }
 
-    protected void playStepSound(BlockPos p_29419_, BlockState p_29420_) {
+    protected void playStepSound(@NotNull BlockPos p_29419_, @NotNull BlockState p_29420_) {
         this.playSound(SoundEvents.PARROT_STEP, 0.15F, 1.0F);
     }
 
@@ -127,15 +127,15 @@ public class OwlEntity extends Parrot {
     }
 
     @Override
-    public Vec3 getLeashOffset() {
+    public @NotNull Vec3 getLeashOffset() {
         return new Vec3(5.0D, (5.5F * this.getEyeHeight()), (this.getBbWidth() * 5.4F));
     }
 
-    protected float getStandingEyeHeight(Pose p_29411_, EntityDimensions p_29412_) {
+    protected float getStandingEyeHeight(@NotNull Pose p_29411_, EntityDimensions p_29412_) {
         return p_29412_.height * 0.6F;
     }
 
-    public InteractionResult mobInteract(Player p_29414_, InteractionHand p_29415_) {
+    public @NotNull InteractionResult mobInteract(Player p_29414_, @NotNull InteractionHand p_29415_) {
         ItemStack itemstack = p_29414_.getItemInHand(p_29415_);
         if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
             if (!p_29414_.getAbilities().instabuild) {
@@ -143,25 +143,25 @@ public class OwlEntity extends Parrot {
             }
 
             if (!this.isSilent()) {
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_29414_)) {
                     this.tame(p_29414_);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
             }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(p_29414_)) {
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(p_29414_, p_29415_);
         }
@@ -194,9 +194,9 @@ public class OwlEntity extends Parrot {
 
             for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(this.mob.getX() - 3.0D), Mth.floor(this.mob.getY() - 6.0D), Mth.floor(this.mob.getZ() - 3.0D), Mth.floor(this.mob.getX() + 3.0D), Mth.floor(this.mob.getY() + 6.0D), Mth.floor(this.mob.getZ() + 3.0D))) {
                 if (!blockpos.equals(blockpos1)) {
-                    BlockState blockstate = this.mob.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
+                    BlockState blockstate = this.mob.level().getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
                     boolean flag = blockstate.getBlock() instanceof LeavesBlock || blockstate.is(BlockTags.LOGS);
-                    if (flag && this.mob.level.isEmptyBlock(blockpos1) && this.mob.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP))) {
+                    if (flag && this.mob.level().isEmptyBlock(blockpos1) && this.mob.level().isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP))) {
                         return Vec3.atBottomCenterOf(blockpos1);
                     }
                 }
@@ -205,33 +205,33 @@ public class OwlEntity extends Parrot {
         }
     }
 
-    public boolean causeFallDamage(float p_148989_, float p_148990_, DamageSource p_148991_) {
+    public boolean causeFallDamage(float p_148989_, float p_148990_, @NotNull DamageSource p_148991_) {
         return false;
     }
 
-    protected void checkFallDamage(double p_29370_, boolean p_29371_, BlockState p_29372_, BlockPos p_29373_) {
+    protected void checkFallDamage(double p_29370_, boolean p_29371_, @NotNull BlockState p_29372_, @NotNull BlockPos p_29373_) {
     }
 
-    public boolean canMate(Animal p_29381_) {
+    public boolean canMate(@NotNull Animal p_29381_) {
         return false;
     }
 
 
     public boolean isFlying() {
-        return !this.onGround;
+        return !this.onGround();
     }
 
     public boolean isPushable() {
         return true;
     }
 
-    protected void doPush(Entity p_29367_) {
+    protected void doPush(@NotNull Entity p_29367_) {
         if (!(p_29367_ instanceof Player)) {
             super.doPush(p_29367_);
         }
     }
 
-    public boolean hurt(DamageSource p_29378_, float p_29379_) {
+    public boolean hurt(@NotNull DamageSource p_29378_, float p_29379_) {
         if (this.isInvulnerableTo(p_29378_)) {
             return false;
         } else {
@@ -240,7 +240,7 @@ public class OwlEntity extends Parrot {
         }
     }
 
-    protected PathNavigation createNavigation(Level p_29417_) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level p_29417_) {
         FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, p_29417_);
         flyingpathnavigation.setCanOpenDoors(false);
         flyingpathnavigation.setCanFloat(true);

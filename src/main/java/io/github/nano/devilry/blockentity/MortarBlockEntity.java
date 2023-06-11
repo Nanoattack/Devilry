@@ -54,6 +54,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             if (slot == 7) return false;
             if (level == null) return true;
 
+
             ArrayList<ItemStack> container = new ArrayList<>();
             for (int i = 1; i <= 6; i++) {
                 container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
@@ -250,9 +251,8 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             itemHandler.extractItem(4, 1, false);
             itemHandler.extractItem(5, 1, false);
             itemHandler.extractItem(6, 1, false);
-            itemHandler.extractItem(7, 1, false);
             ItemStack stack = itemHandler.getStackInSlot(0);
-            stack.setDamageValue(itemHandler.getStackInSlot(0).getDamageValue() -1);
+            stack.setDamageValue(itemHandler.getStackInSlot(0).getDamageValue() +1);
             itemHandler.setStackInSlot(0, stack);
             itemHandler.setStackInSlot(7, new ItemStack(recipe.get().assemble(inventory, level.registryAccess()).getItem(),
                     itemHandler.getStackInSlot(7).getCount() + 1));

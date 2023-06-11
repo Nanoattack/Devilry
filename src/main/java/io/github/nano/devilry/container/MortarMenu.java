@@ -33,13 +33,13 @@ public class MortarMenu extends AbstractContainerMenu {
     private final ContainerData containerData;
 
     public MortarMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
     public MortarMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModContainers.MORTAR_CONTAINER.get(), id);
         this.blockEntity = (MortarBlockEntity) entity;
-        this.level = inv.player.getLevel();
+        this.level = inv.player.level();
         this.containerData = data;
 
         addPlayerInventory(inv);
@@ -131,9 +131,9 @@ public class MortarMenu extends AbstractContainerMenu {
             try {
                 if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 6, (MortarRecipe recipe) -> {
                         var copy = new ArrayList<>(recipe.getIngredients());
+                    NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
+                    List<ItemStack> subList = this.getItems().subList(37, 43);
                     if (recipe.isShaped()) {
-                        NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
-                        List<ItemStack> subList = this.getItems().subList(37, 43);
                         for (int i = 0; i < subList.size(); i++) {
                             ItemStack itemStack = subList.get(i);
                             items.set(i, itemStack);
@@ -155,8 +155,6 @@ public class MortarMenu extends AbstractContainerMenu {
                         level.getProfiler().pop();
                         return ints.intStream();
                     } else {
-                        NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
-                        List<ItemStack> subList = this.getItems().subList(37, 43);
                         for (int i = 0; i < subList.size(); i++) {
                             ItemStack itemStack = subList.get(i);
                             items.set(i, itemStack);

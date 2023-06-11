@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
@@ -21,10 +20,6 @@ public class FesteringSaltPetreBlock extends Block {
 
     public FesteringSaltPetreBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
-    }
-
-    public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState pState) {
-        return PushReaction.DESTROY;
     }
 
 

@@ -1,13 +1,15 @@
 package io.github.nano.devilry.block;
 
 import io.github.nano.devilry.ModMain;
-import io.github.nano.devilry.block.custom.*;
+import io.github.nano.devilry.block.custom.FesteringSaltPetreBlock;
+import io.github.nano.devilry.block.custom.MortarBlock;
+import io.github.nano.devilry.block.custom.SaltPetreClusterBlock;
 import io.github.nano.devilry.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -28,11 +30,11 @@ public class ModBlocks
 
     //BUDDING BLOCKS
     public static final RegistryObject<Block> FESTERING_LIMESTONE = registerBlock("festering_limestone",
-            ()-> new FesteringSaltPetreBlock(BlockBehaviour.Properties.of(Material.STONE).randomTicks()
+            ()-> new FesteringSaltPetreBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).randomTicks()
                     .strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
     public static final RegistryObject<Block> SALTPETRE_CLUSTER = registerBlock("saltpetre_cluster", ()->
-            new SaltPetreClusterBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST)
+            new SaltPetreClusterBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE)
                     .noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).requiresCorrectToolForDrops()
                     .lightLevel((p_152632_) -> 5)));
 
@@ -50,13 +52,13 @@ public class ModBlocks
     //STONES
 
     public static final RegistryObject<Block> LIMESTONE = registerBlock("limestone",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
     public static final RegistryObject<Block> POLISHED_LIMESTONE = registerBlock("polished_limestone",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
     public static final RegistryObject<WallBlock> LIMESTONE_WALL = registerBlock("limestone_wall",
-            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
     public static final RegistryObject<StairBlock> LIMESTONE_STAIRS = registerBlock("limestone_stairs",
             () -> new StairBlock(()-> LIMESTONE.get().defaultBlockState(),
@@ -80,7 +82,7 @@ public class ModBlocks
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
 
     public static final RegistryObject<WallBlock> CALCITE_WALL = registerBlock("calcite_wall",
-            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.CALCITE)));
 
     public static final RegistryObject<StairBlock> TUFF_STAIRS = registerBlock("tuff_stairs",
             () -> new StairBlock(Blocks.TUFF::defaultBlockState,
@@ -90,7 +92,7 @@ public class ModBlocks
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<WallBlock> TUFF_WALL = registerBlock("tuff_wall",
-            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.TUFF)));
 
     public static final RegistryObject<StairBlock> DRIPSTONE_STAIRS = registerBlock("dripstone_stairs",
             () -> new StairBlock(Blocks.DRIPSTONE_BLOCK::defaultBlockState,
@@ -100,33 +102,33 @@ public class ModBlocks
             ()-> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<WallBlock> DRIPSTONE_WALL = registerBlock("dripstone_wall",
-            ()-> new WallBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.5f).requiresCorrectToolForDrops().sound(SoundType.DRIPSTONE_BLOCK)));
 
     //TIN
     public static final RegistryObject<Block> TIN_BLOCK = registerBlock("tin_block",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(6f).requiresCorrectToolForDrops()));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> TIN_ORE = registerBlock("tin_ore",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(3f).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> DEEPSLATE_TIN_ORE = registerBlock("deepslate_tin_ore",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> RAW_TIN_BLOCK = registerBlock("raw_tin_block",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(5f).requiresCorrectToolForDrops()));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5f).requiresCorrectToolForDrops()));
 
     //BRONZE
     public static final RegistryObject<Block> BRONZE_BLOCK = registerBlock("bronze_block",
-            ()-> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(6f).requiresCorrectToolForDrops().sound(SoundType.COPPER)));
+            ()-> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f).requiresCorrectToolForDrops().sound(SoundType.COPPER)));
 
     public static final RegistryObject<Block> BRONZE_BARS = BLOCKS.register("bronze_bars",
-            ()-> new IronBarsBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.COPPER)));
+            ()-> new IronBarsBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.COPPER)));
 
     public static final RegistryObject<Block> BRONZE_CHAIN = BLOCKS.register("bronze_chain",
-            ()-> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.CHAIN)));
+            ()-> new ChainBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.CHAIN)));
 
     public static final RegistryObject<Block> BRONZE_LANTERN = BLOCKS.register("bronze_lantern",
-            ()-> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.LANTERN)));
+            ()-> new LanternBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.LANTERN)));
 
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {

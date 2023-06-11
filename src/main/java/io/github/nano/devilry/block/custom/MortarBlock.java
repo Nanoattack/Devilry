@@ -100,16 +100,6 @@ public class MortarBlock extends BaseEntityBlock
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
-//    @Nullable
-//    @Override
-//    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
-//        world.getProfiler().push("Ticker:" + "mortar");
-//        BlockEntityTicker<T> tick = entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
-//                (world2, pos, state2, entity) -> ((MortarBlockEntity)entity).tick() : null;
-//        world.getProfiler().pop();
-//        return tick;
-//    }
-
     @Override
     public void onRemove(BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
