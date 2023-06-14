@@ -1,7 +1,7 @@
-package io.github.nano.devilry.entity;
+package io.github.nano.devilry.container.entity;
 
 import com.google.common.collect.Sets;
-import io.github.nano.devilry.entity.ai.OwlMoveControl;
+import io.github.nano.devilry.container.entity.ai.OwlMoveControl;
 import io.github.nano.devilry.events.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -1,7 +1,9 @@
 package io.github.nano.devilry.block.custom;
 
+import io.github.nano.devilry.blockentity.ModBlockEntities;
 import io.github.nano.devilry.blockentity.MortarBlockEntity;
 import io.github.nano.devilry.container.MortarMenu;
+import io.github.nano.devilry.events.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -18,6 +20,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -34,8 +38,7 @@ import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
 @SuppressWarnings("deprecation")
-public class MortarBlock extends BaseEntityBlock
-{
+public class MortarBlock extends BaseEntityBlock {
     private static final Property<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public MortarBlock(Properties builder) {
@@ -121,26 +124,23 @@ public class MortarBlock extends BaseEntityBlock
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult trace) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        }
-
         if (level.getBlockEntity(pos) instanceof MortarBlockEntity mortarBlockEntity) {
-            if (mortarBlockEntity.hasRecipe()) {
-                if (!player.isShiftKeyDown()) {
-                    if (mortarBlockEntity.turns < mortarBlockEntity.maxTurns) {
-                        //todo: play the animation
-                        //todo: play crushing sound
-                        mortarBlockEntity.turns++;
-                        mortarBlockEntity.setChanged();
-                    }
-                    if (mortarBlockEntity.turns >= mortarBlockEntity.maxTurns) {
+            if (mortarBlockEntity.hasRecipe() && !player.isShiftKeyDown()) {
+                if (mortarBlockEntity.turns < mortarBlockEntity.maxTurns && !mortarBlockEntity.isTurning) {
+                    player.playSound(ModSoundEvents.MORTAR_GRIND.get(), 1, level.random.nextFloat() * 0.1F + 0.9F);
+                    mortarBlockEntity.turns++;
+                    mortarBlockEntity.setChanged();
+                    mortarBlockEntity.isTurning = true;
+                    return InteractionResult.SUCCESS;
+                }
+                if (mortarBlockEntity.turns >= mortarBlockEntity.maxTurns) {
+                    if (!level.isClientSide()) {
                         mortarBlockEntity.craftItem();
                         mortarBlockEntity.setChanged();
                     }
                 }
             }
-            if (mortarBlockEntity.hasRecipe() == player.isShiftKeyDown()) {
+            if (!level.isClientSide() && mortarBlockEntity.hasRecipe() == player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public @NotNull Component getDisplayName() {
@@ -156,6 +156,13 @@ public class MortarBlock extends BaseEntityBlock
             }
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> entityType){
+        return entityType == ModBlockEntities.MORTAR_ENTITY.get() ?
+                (world2, pos, state2, entity) -> ((MortarBlockEntity)entity).tick() : null;
     }
 }
 

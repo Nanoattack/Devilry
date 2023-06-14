@@ -22,8 +22,10 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 //fixme
 //todo
 
@@ -45,15 +47,24 @@ public class MortarRecipe extends HashedRecipe<Container> {
     }
     @Override
     public boolean matches(@NotNull Container inv, @NotNull Level level) {
-        return recipeItems.stream().allMatch(ingredient -> {
-            int slot = recipeItems.indexOf(ingredient) + 1;
-            for (int i = isShaped() ? slot : 1; i <= (isShaped() ? slot : 6); i++) {
-                if ((ingredient.isEmpty() || ingredient.test(inv.getItem(i))) && inv.getItem(0).is(DevilryTags.Items.PESTLE_IN_MORTAR)) {
-                    return true;
+        if (isShaped) {
+            return recipeItems.stream().allMatch(ingredient -> {
+                int slot = recipeItems.indexOf(ingredient) + 1;
+                return (ingredient.isEmpty() || ingredient.test(inv.getItem(slot))) && inv.getItem(0).is(DevilryTags.Items.PESTLE_IN_MORTAR);
+            });
+        } else {
+            List<ItemStack> list = new ArrayList<>();
+            for (int i = 1; i <= 6; i++) {
+                list.add(inv.getItem(i));
+            }
+            List<Ingredient> ingredients = new ArrayList<>(recipeItems);
+            for (ItemStack itemStack : list) {
+                if (ingredients.stream().noneMatch(ingr -> ingr.test(itemStack))) {
+                    return false;
                 }
             }
-            return false;
-        });
+            return true;
+        }
     }
 
     @Override

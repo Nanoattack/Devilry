@@ -1,7 +1,7 @@
 package io.github.nano.devilry.client.entity.render;
 
 import io.github.nano.devilry.ModMain;
-import io.github.nano.devilry.entity.OwlEntity;
+import io.github.nano.devilry.container.entity.OwlEntity;
 import io.github.nano.devilry.client.entity.model.OwlModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;

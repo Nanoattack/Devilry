@@ -2,7 +2,7 @@ package io.github.nano.devilry.item;
 
 import io.github.nano.devilry.ModMain;
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.entity.ModEntityTypes;
+import io.github.nano.devilry.container.entity.ModEntityTypes;
 import io.github.nano.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.item.custom.Guano;
 import io.github.nano.devilry.item.custom.Knife;

@@ -44,6 +44,10 @@ import java.util.concurrent.atomic.AtomicReference;
 public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     public int turns = 0;
     public int maxTurns = 4;
+    public boolean isTurning;
+    public boolean shouldStop;
+    public int time = 0;
+    public int fixedTime = 0;
 
     public final ItemStackHandler itemHandler = new ItemStackHandler(8) {
         @Override
@@ -245,12 +249,9 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
                 .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inventory, level);
 
         if(hasRecipe()) {
-            itemHandler.extractItem(1, 1, false);
-            itemHandler.extractItem(2, 1, false);
-            itemHandler.extractItem(3, 1, false);
-            itemHandler.extractItem(4, 1, false);
-            itemHandler.extractItem(5, 1, false);
-            itemHandler.extractItem(6, 1, false);
+            for (int i = 1; i < 7; i++) {
+                itemHandler.extractItem(i, 1, false);
+            }
             ItemStack stack = itemHandler.getStackInSlot(0);
             stack.setDamageValue(itemHandler.getStackInSlot(0).getDamageValue() +1);
             itemHandler.setStackInSlot(0, stack);
@@ -258,6 +259,15 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
                     itemHandler.getStackInSlot(7).getCount() + 1));
 
             this.turns = 0;
+        }
+    }
+
+    public void tick() {
+        if (isTurning) {
+            time++;
+            fixedTime++;
+        } else {
+            time = 0;
         }
     }
 }
