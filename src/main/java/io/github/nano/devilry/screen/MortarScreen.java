@@ -15,6 +15,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu>
     private final ResourceLocation GUI = new ResourceLocation(ModMain.MOD_ID,
             "textures/gui/mortar_gui.png");
 
+
     public MortarScreen(MortarMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
@@ -24,7 +25,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu>
         final int i = (this.width - imageWidth) / 2;
         final int j = (this.height - imageHeight) / 2;
         guiGraphics.blit(GUI,  i, j, 0, 0, imageWidth, imageHeight, 256, 256);
-        //todo render progress arrow
+        guiGraphics.blit(GUI, i + 81, j + 28, 178, 0, 14, this.menu.getProgress());
     }
 
     @Override

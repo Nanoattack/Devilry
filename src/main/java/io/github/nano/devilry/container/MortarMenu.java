@@ -63,6 +63,10 @@ public class MortarMenu extends AbstractContainerMenu {
         return containerData.get(0) > 0;
     }
 
+    public int getProgress(){
+        return (15 / Math.max(1, containerData.get(1))) * containerData.get(0);
+    }
+
     @Override
     public boolean stillValid(@NotNull Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()),

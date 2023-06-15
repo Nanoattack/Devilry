@@ -66,21 +66,21 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SOUL_TORCH, 12)
-                .define('s', ModItems.SULPHUR_DUST.get())
+                .define('s', ModItems.SULPHUR.get())
                 .define('S', Items.STICK)
                 .pattern("s  ")
                 .pattern("S  ")
-                .unlockedBy("has_item", has(ModItems.SULPHUR_DUST.get()))
+                .unlockedBy("has_item", has(ModItems.SULPHUR.get()))
                 .save(consumer, "soul_torch_from_sulphur");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SOUL_CAMPFIRE)
-                .define('s', ModItems.SULPHUR_DUST.get())
+                .define('s', ModItems.SULPHUR.get())
                 .define('S', Items.STICK)
                 .define('L', ItemTags.LOGS)
                 .pattern(" S ")
                 .pattern("SsS")
                 .pattern("LLL")
-                .unlockedBy("has_item", has(ModItems.SULPHUR_DUST.get()))
+                .unlockedBy("has_item", has(ModItems.SULPHUR.get()))
                 .save(consumer, "soul_campfire_from_sulphur");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BLAZE_POWDER, 3)

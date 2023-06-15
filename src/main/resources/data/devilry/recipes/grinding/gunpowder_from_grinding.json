@@ -8,10 +8,10 @@
       "tag": "devilry:potassium_nitrate"
     },
     {
-      "item": "devilry:sulphur_dust"
+      "item": "devilry:sulphur"
     },
     {
-      "item": "devilry:sulphur_dust"
+      "item": "devilry:sulphur"
     },
     {
       "item": "minecraft:charcoal"
@@ -23,6 +23,5 @@
   "output": {
     "item": "minecraft:gunpowder",
     "count": 6
-  },
-  "amount": 6
+  }
 }

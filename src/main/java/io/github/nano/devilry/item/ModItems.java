@@ -89,7 +89,7 @@ public class ModItems
 
     public static final RegistryObject<Item> ENCHANTED_FOREST_MUSIC_DISC  = register("enchanted_forest_music_disc", () -> new RecordItem(1, ModSoundEvents.ENCHANTED_FOREST, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 1720), Tab.DEVILRY_MISC);
 
-    public static final RegistryObject<Item> SULPHUR_DUST = register("sulphur_dust", ()-> new Item(new Item.Properties()), Tab.DEVILRY_MATERIALS);
+    public static final RegistryObject<Item> SULPHUR = register("sulphur", ()-> new Item(new Item.Properties()), Tab.DEVILRY_MATERIALS);
 
     public static <T extends Item> RegistryObject<T> register(String name, Supplier<T> item, Tab tab) {
         var registryObject = ITEMS.register(name, item);

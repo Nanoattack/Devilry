@@ -2,16 +2,16 @@
   "type": "devilry:grinding",
   "ingredients": [
     {
-      "tag": "devilry:mortar_sulphur"
+      "tag": "minecraft:basalt"
     },
     {
-      "tag": "devilry:mortar_sulphur"
+      "tag": "minecraft:basalt"
     },
     {
-      "tag": "devilry:mortar_sulphur"
+      "tag": "minecraft:basalt"
     },
     {
-      "tag": "devilry:mortar_sulphur"
+      "tag": "minecraft:basalt"
     },
     {
       "tag": "minecraft:soul_fire_base_blocks"
@@ -21,8 +21,7 @@
     }
   ],
   "output": {
-    "item": "devilry:sulphur_dust",
+    "item": "devilry:sulphur",
     "count": 3
-  },
-  "amount": 3
+  }
 }
