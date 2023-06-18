@@ -1,4 +1,4 @@
-// 1.20	2023-06-18T18:23:26.5904082	Item Models: devilry
+// 1.20	2023-06-18T19:42:01.9121703	Item Models: devilry
 b5a709e6e655b025e23e2513b40fb8d8a0277c60 assets/devilry/models/item/alchemical_essence.json
 6cf8838a328e7f1640a8aec604fe391677df42a3 assets/devilry/models/item/bat_guano.json
 8a221f71e1e197b559ba53eb36f792d88f9b1499 assets/devilry/models/item/bone_ash.json
@@ -43,6 +43,7 @@ cc1a96283f2a9bff4ac4ccd40c2b085d5226046f assets/devilry/models/item/pestle.json
 45e9aca19d4aec60bca1df4b436103ffc72ec822 assets/devilry/models/item/small_saltpetre_bud.json
 610d0ffbae4a4a96532a477b1a19cf4ec5d656ad assets/devilry/models/item/stolas_effigy.json
 e5f953959575f7f60aa8373ead48d485ddebf5e5 assets/devilry/models/item/sulphur.json
+f7f1038710c2c0308416671cd2b8a0f1f139224a assets/devilry/models/item/sulphur_block.json
 6f8898ee206b828ebc3c1bdf0914eefbbf1b572f assets/devilry/models/item/tin_block.json
 d05e852ba6ebff26aa250d671faf70fd85197569 assets/devilry/models/item/tin_ingot.json
 de0649801bb39a50c6cf179a295449b76ad56b9b assets/devilry/models/item/tin_nugget.json

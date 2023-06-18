@@ -1,4 +1,4 @@
-// 1.20	2023-06-18T18:23:26.5804059	Recipes
+// 1.20	2023-06-18T19:39:02.0279964	Recipes
 60fe7b8cb274b47c621cb8761c3a32e5f34d5789 data/devilry/advancements/recipes/brewing/cured_flesh.json
 a52ea3622ba6239c23b5e1ae95c9a1d29002d5f4 data/devilry/advancements/recipes/building_blocks/bronze_block.json
 5fc7565acd0f0adf4a7c8c01cce28346b96a87e4 data/devilry/advancements/recipes/building_blocks/calcite_slab.json
@@ -14,6 +14,7 @@ f4d6b231edc6f19789281c8d48ddcf81a227684d data/devilry/advancements/recipes/build
 b4d89a5d6a33064e82999d3047126460ae246e2c data/devilry/advancements/recipes/building_blocks/polished_limestone_slab.json
 1f6a8a9a4ddd486c724fbd998728fd45aed155c5 data/devilry/advancements/recipes/building_blocks/polished_limestone_stairs.json
 818f4615b8b4da903c3e3d0d28bbf43e659e2ef3 data/devilry/advancements/recipes/building_blocks/raw_tin_block.json
+662a9856360b5913d5ee61ce3e667c5d2608f838 data/devilry/advancements/recipes/building_blocks/sulphur_block.json
 f5fbe754d0389a0b146e4d40388f61d331412170 data/devilry/advancements/recipes/building_blocks/tin_block.json
 d8e4d97ca0306875e8f56063a9d2819f5cb73feb data/devilry/advancements/recipes/building_blocks/tuff_slab.json
 8065ff27f7c9b576b3ab08d4ed340c452342518c data/devilry/advancements/recipes/building_blocks/tuff_stairs.json
@@ -67,6 +68,7 @@ bcd468a6f5590e560c97726a6d5dbd1fb8d7ba8d data/devilry/recipes/pestle.json
 560da3eedf2325911290f29a282b09f26e8c3289 data/devilry/recipes/polished_limestone_stairs.json
 0ff99d80df607ed30c3fbdcdb20ca0b0cf64c690 data/devilry/recipes/raw_tin.json
 35600c0ad23c7ebea5b19d4ba61c580de6b45bb5 data/devilry/recipes/raw_tin_block.json
+f8c33a5334fa115cc3d85b123e81a7800b671bdc data/devilry/recipes/sulphur_block.json
 fddf7873cfab5025e027b75afaf628bde8397f55 data/devilry/recipes/tin_block.json
 79eb7bde329a98729050a87ec9953375653e668e data/devilry/recipes/tin_ingot.json
 e9c04720c4a2d34af6ee28c9d23cb9d360e0cefe data/devilry/recipes/tin_ingot_blasting.json

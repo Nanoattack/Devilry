@@ -219,6 +219,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(Blocks.DRIPSTONE_BLOCK))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SULPHUR_BLOCK.get(), 1)
+                .define('S', ModItems.SULPHUR.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .unlockedBy("has_item", has(ModItems.SULPHUR.get()))
+                .save(consumer);
+
         //STONECUTTING
 
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.LIMESTONE.get()), RecipeCategory.BUILDING_BLOCKS, ModBlocks.POLISHED_LIMESTONE.get())

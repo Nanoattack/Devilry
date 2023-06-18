@@ -1,4 +1,4 @@
-// 1.20	2023-06-18T16:46:06.9904394	Block States: devilry
+// 1.20	2023-06-18T19:39:02.0309885	Block States: devilry
 6ab5c8df0be7d178a106c9fc55d73d5396dba5b6 assets/devilry/blockstates/bronze_block.json
 af6688745565a472457b267a9e04c44550467a4a assets/devilry/blockstates/calcite_slab.json
 333901155bfdab8e6f24c498c7a3a89c3f38a807 assets/devilry/blockstates/calcite_stairs.json
@@ -16,6 +16,7 @@ fc000c672cb70c0b1faf310396680f995d445f0f assets/devilry/blockstates/limestone_wa
 a09b3bcb3a37dd360942817ce9a254cd5fcda20a assets/devilry/blockstates/polished_limestone_slab.json
 94ce7411b26a5d89894e1bd4cdd82078b34a6b20 assets/devilry/blockstates/polished_limestone_stairs.json
 63e38cbbc089ab267fd1fa9472cda1991a66e572 assets/devilry/blockstates/raw_tin_block.json
+4a8bbadddf19a434b4020a17866f404d44a31297 assets/devilry/blockstates/sulphur_block.json
 3a95b1b331591782873e91db97659cea42583292 assets/devilry/blockstates/tin_block.json
 22ad12aec8aef58cf42f31d2e38d05dbc30d7b78 assets/devilry/blockstates/tin_ore.json
 9d3b405d40bf01561cc88cfe75d0fd4a4be81b32 assets/devilry/blockstates/tuff_slab.json
@@ -56,6 +57,7 @@ fbb1e86a32a1d5e37bbfe2b5ff8eaeb0d7f82b4b assets/devilry/models/block/polished_li
 b4b649dcc2e8ca92f3981f7c3011fd05b1d4b9ec assets/devilry/models/block/polished_limestone_stairs_inner.json
 80d9da2eac3c26938c0a4f054a30db3ba6e8cdfb assets/devilry/models/block/polished_limestone_stairs_outer.json
 3516b31f9bcb2a378da14eb8f24bb6a46d867d0f assets/devilry/models/block/raw_tin_block.json
+84c3e3605089e247c1472d3e969e8817449312f1 assets/devilry/models/block/sulphur_block.json
 662cff3f14f0023d736f2d406fb6c99e6ab8f5bf assets/devilry/models/block/tin_block.json
 fdd019680af17b8f795309fedce85e02df5d0090 assets/devilry/models/block/tin_ore.json
 c4fb3e298afd834a9617dcc3c84cd07eea76efb8 assets/devilry/models/block/tuff_slab.json

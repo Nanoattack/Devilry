@@ -47,6 +47,7 @@ public class ModItemModelProvider extends ItemModelProvider
     withExistingParent("dripstone_wall", modLoc("block/dripstone_wall_inventory"));
     withExistingParent("stolas_effigy", modLoc("block/stolas_effigy"));
     withExistingParent("wittling_table", modLoc("block/wittling_table"));
+    withExistingParent("sulphur_block", modLoc("block/sulphur_block"));
 
     ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
     // General

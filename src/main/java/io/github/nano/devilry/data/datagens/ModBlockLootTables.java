@@ -75,6 +75,7 @@ public class ModBlockLootTables extends BlockLootSubProvider
         dropSelf(ModBlocks.BRONZE_LANTERN.get());
 
         dropSelf(ModBlocks.BONE_ASH.get());
+        dropSelf(ModBlocks.SULPHUR_BLOCK.get());
     }
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks()

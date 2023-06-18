@@ -7,6 +7,7 @@ import io.github.nano.devilry.block.custom.MortarBlock;
 import io.github.nano.devilry.block.custom.SaltPetreClusterBlock;
 import io.github.nano.devilry.item.ModItems;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -134,6 +135,9 @@ public class ModBlocks
 
     public static final RegistryObject<Block> BONE_ASH = BLOCKS.register("bone_ash",
             () -> new BoneAshBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE).noCollission().noOcclusion().instabreak().pushReaction(PushReaction.DESTROY)));
+
+    public static final RegistryObject<Block> SULPHUR_BLOCK = registerBlock("sulphur_block",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(DyeColor.YELLOW)));
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

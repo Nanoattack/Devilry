@@ -29,6 +29,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         simpleBlock(ModBlocks.LIMESTONE.get());
         simpleBlock(ModBlocks.FESTERING_LIMESTONE.get());
         simpleBlock(ModBlocks.POLISHED_LIMESTONE.get());
+        simpleBlock(ModBlocks.SULPHUR_BLOCK.get());
         ResourceLocation limestone = modLoc("block/limestone");
         ResourceLocation polished_limestone = modLoc("block/polished_limestone");
         stairsBlock(ModBlocks.LIMESTONE_STAIRS.get(), limestone);

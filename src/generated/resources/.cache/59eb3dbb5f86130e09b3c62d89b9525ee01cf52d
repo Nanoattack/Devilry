@@ -1,4 +1,4 @@
-// 1.20	2023-06-18T17:44:21.7309015	Loot Tables
+// 1.20	2023-06-18T19:39:02.0250052	Loot Tables
 fa5fde140db4a997e891779055bbfa0287b28eb5 data/devilry/loot_tables/blocks/bone_ash.json
 2db590efdaf27e96b650ab0d970dd9721906d3aa data/devilry/loot_tables/blocks/bronze_bars.json
 4d637c34d01f62c4ef20ce58de54160640b69256 data/devilry/loot_tables/blocks/bronze_block.json
@@ -25,6 +25,7 @@ eae1cbb00963f1171d0baccf05a1160426941bfd data/devilry/loot_tables/blocks/polishe
 ae4c6c08945b7f7a5583183a76d64e05fea03eaf data/devilry/loot_tables/blocks/raw_tin_block.json
 07ab1d9b0c06bab4910621b2e228210202414061 data/devilry/loot_tables/blocks/saltpetre_cluster.json
 d09e384bcabd4a4cf3f0133f2e1ca0b9ac754e74 data/devilry/loot_tables/blocks/small_saltpetre_bud.json
+1522a6feaaeead943c1bd1c9834b120a9a3a1a27 data/devilry/loot_tables/blocks/sulphur_block.json
 4fe2ed3d4c7cf931ccf651d5992a57623d4a16b9 data/devilry/loot_tables/blocks/tin_block.json
 c676d562ec9b2f5423a2636a185a5bc10762c144 data/devilry/loot_tables/blocks/tin_ore.json
 f8002da26fd67365f46f01d76804beff7b7aff1b data/devilry/loot_tables/blocks/tuff_slab.json
