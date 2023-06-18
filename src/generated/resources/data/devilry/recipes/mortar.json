@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "D D",
-    "DSD"
-  ],
+  "category": "misc",
   "key": {
     "D": {
       "item": "minecraft:polished_deepslate"
@@ -12,7 +9,12 @@
       "item": "minecraft:polished_deepslate_slab"
     }
   },
+  "pattern": [
+    "D D",
+    "DSD"
+  ],
   "result": {
     "item": "devilry:mortar"
-  }
+  },
+  "show_notification": true
 }

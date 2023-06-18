@@ -70,7 +70,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "netherite_pestle");
     builder(itemGenerated, "flint_knife");
     builder(itemGenerated, "bronze_knife");
-    builder(itemGenerated, "sulphur_dust");
+    builder(itemGenerated, "sulphur");
     builder(itemGenerated, "saltpetre");
     builder(itemGenerated, "bat_guano");
     builder(itemGenerated, "cured_flesh");

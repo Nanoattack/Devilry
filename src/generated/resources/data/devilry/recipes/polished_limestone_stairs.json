@@ -1,17 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "L  ",
-    "LL ",
-    "LLL"
-  ],
+  "category": "building",
   "key": {
     "L": {
       "item": "devilry:polished_limestone"
     }
   },
+  "pattern": [
+    "L  ",
+    "LL ",
+    "LLL"
+  ],
   "result": {
-    "item": "devilry:polished_limestone_stairs",
-    "count": 4
-  }
+    "count": 4,
+    "item": "devilry:polished_limestone_stairs"
+  },
+  "show_notification": true
 }

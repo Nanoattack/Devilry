@@ -1,19 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "devilry:sulphur"
+    }
+  },
   "pattern": [
     "s  ",
     "S  "
   ],
-  "key": {
-    "s": {
-      "item": "devilry:sulphur_dust"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
-  },
   "result": {
-    "item": "minecraft:soul_torch",
-    "count": 12
-  }
+    "count": 6,
+    "item": "minecraft:soul_torch"
+  },
+  "show_notification": true
 }

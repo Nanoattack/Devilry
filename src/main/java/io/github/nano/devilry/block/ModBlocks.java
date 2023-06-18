@@ -1,6 +1,7 @@
 package io.github.nano.devilry.block;
 
 import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.block.custom.BoneAshBlock;
 import io.github.nano.devilry.block.custom.FesteringSaltPetreBlock;
 import io.github.nano.devilry.block.custom.MortarBlock;
 import io.github.nano.devilry.block.custom.SaltPetreClusterBlock;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -130,6 +132,8 @@ public class ModBlocks
     public static final RegistryObject<Block> BRONZE_LANTERN = BLOCKS.register("bronze_lantern",
             ()-> new LanternBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f).noOcclusion().requiresCorrectToolForDrops().sound(SoundType.LANTERN)));
 
+    public static final RegistryObject<Block> BONE_ASH = BLOCKS.register("bone_ash",
+            () -> new BoneAshBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE).noCollission().noOcclusion().instabreak().pushReaction(PushReaction.DESTROY)));
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
@@ -138,7 +142,7 @@ public class ModBlocks
     }
 
     private static<T extends Block> void registerBlockItem(String name, RegistryObject<T> block) {
-        ModItems.ITEMS.register(name, ()-> new BlockItem(block.get(), new Item.Properties()));
+        ModItems.register(name, ()-> new BlockItem(block.get(), new Item.Properties()), ModItems.Tab.DEVILRY_BLOCKS);
     }
 
     public static void register(IEventBus eventBus)

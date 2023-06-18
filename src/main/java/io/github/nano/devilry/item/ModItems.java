@@ -29,7 +29,7 @@ public class ModItems
     public static final List<RegistryObject<? extends Item>> DEVILRY_BLOCKS = new ArrayList<>();
     public static final List<RegistryObject<? extends Item>> DEVILRY_MISC = new ArrayList<>();
 
-    private enum Tab {
+    public enum Tab {
         DEVILRY_MATERIALS,
         DEVILRY_BLOCKS,
         DEVILRY_MISC
@@ -68,7 +68,7 @@ public class ModItems
 
     public static final RegistryObject<Item> ALCHEMICAL_ESSENCE = register("alchemical_essence", () -> new Item(new Item.Properties().stacksTo(16)), Tab.DEVILRY_MATERIALS);
 
-    public static final RegistryObject<Item> BONE_ASH = register("bone_ash", () -> new Item(new Item.Properties()), Tab.DEVILRY_MATERIALS);
+    public static final RegistryObject<Item> BONE_ASH = register("bone_ash", () -> new BlockItem(ModBlocks.BONE_ASH.get(), new Item.Properties()), Tab.DEVILRY_MATERIALS);
 
     public static final RegistryObject<Item> SALTPETRE = register("saltpetre", () -> new Item(new Item.Properties()), Tab.DEVILRY_MATERIALS);
 

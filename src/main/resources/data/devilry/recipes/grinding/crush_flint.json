@@ -1,0 +1,13 @@
+{
+  "type": "devilry:crushing",
+  "chance": 0.3,
+  "blockStates": [
+    {
+      "Name": "minecraft:gravel"
+    }
+  ],
+  "output": {
+    "item": "minecraft:flint",
+    "count": 1
+  }
+}

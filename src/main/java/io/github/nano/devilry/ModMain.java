@@ -31,9 +31,9 @@ public class ModMain
         IEventBus eventbus = FMLJavaModLoadingContext.get().getModEventBus();
 
         CreativeModeTabRegistry.CREATIVE_MODE_TABS.register(eventbus);
+        ModBlocks.register(eventbus);
 
         ModItems.register(eventbus);
-        ModBlocks.register(eventbus);
         ModBlockEntities.register(eventbus);
         ModContainers.register(eventbus);
 

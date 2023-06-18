@@ -1,15 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CCC"
-  ],
+  "category": "building",
   "key": {
     "C": {
       "item": "minecraft:calcite"
     }
   },
+  "pattern": [
+    "CCC"
+  ],
   "result": {
-    "item": "devilry:calcite_slab",
-    "count": 6
-  }
+    "count": 6,
+    "item": "devilry:calcite_slab"
+  },
+  "show_notification": true
 }

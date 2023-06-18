@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " B ",
-    "S  "
-  ],
+  "category": "equipment",
   "key": {
     "B": {
       "tag": "forge:ingots/bronze"
@@ -12,7 +9,12 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    " B ",
+    "S  "
+  ],
   "result": {
     "item": "devilry:bronze_knife"
-  }
+  },
+  "show_notification": true
 }

@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "tag": "forge:ingots/bronze"
     }
   ],
   "result": {
-    "item": "devilry:bronze_nugget",
-    "count": 9
+    "count": 9,
+    "item": "devilry:bronze_nugget"
   }
 }

@@ -1,9 +1,10 @@
 {
   "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.35,
   "ingredient": {
     "item": "minecraft:bone_meal"
   },
-  "result": "devilry:bone_ash",
-  "experience": 0.35,
-  "cookingtime": 200
+  "result": "devilry:bone_ash"
 }

@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " F ",
-    "S  "
-  ],
+  "category": "equipment",
   "key": {
     "F": {
       "item": "minecraft:flint"
@@ -12,7 +9,12 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    " F ",
+    "S  "
+  ],
   "result": {
     "item": "devilry:flint_knife"
-  }
+  },
+  "show_notification": true
 }

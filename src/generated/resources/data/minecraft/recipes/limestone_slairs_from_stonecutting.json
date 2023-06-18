@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "devilry:limestone"
-  },
-  "result": "devilry:limestone_stairs",
-  "count": 1
-}

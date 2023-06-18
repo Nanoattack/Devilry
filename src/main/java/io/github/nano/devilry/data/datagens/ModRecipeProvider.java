@@ -27,7 +27,6 @@ public class ModRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         // GENERAL RECIPES
-        //todo fix the tags
         SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(Items.BONE_MEAL), RecipeCategory.MISC, ModItems.BONE_ASH.get(), 0.35f, 200)
                 .unlockedBy("has_item", has(Items.BONE_MEAL))
                 .save(consumer, modId("bone_ash_campfire_cooking"));
@@ -44,7 +43,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('C', Items.CALCITE)
                 .define('T', ItemTags.create(new ResourceLocation("forge:ingots/tin")))
                 .pattern("  T")
-                .pattern(" C ")
+                .pattern(" T ")
                 .pattern("C  ")
                 .unlockedBy("has_item", has(Blocks.CALCITE))
                 .save(consumer);
@@ -65,7 +64,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_item", has(ModItems.BRONZE_INGOT.get()))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SOUL_TORCH, 12)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SOUL_TORCH, 6)
                 .define('s', ModItems.SULPHUR.get())
                 .define('S', Items.STICK)
                 .pattern("s  ")

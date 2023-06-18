@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BBB",
-    "BBB"
-  ],
+  "category": "misc",
   "key": {
     "B": {
       "tag": "forge:ingots/bronze"
     }
   },
+  "pattern": [
+    "BBB",
+    "BBB"
+  ],
   "result": {
-    "item": "devilry:bronze_bars",
-    "count": 16
-  }
+    "count": 16,
+    "item": "devilry:bronze_bars"
+  },
+  "show_notification": true
 }

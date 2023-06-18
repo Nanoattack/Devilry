@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "devilry:block/limestone_slab_top"
-    },
     "type=bottom": {
       "model": "devilry:block/limestone_slab"
     },
     "type=double": {
       "model": "devilry:block/limestone"
+    },
+    "type=top": {
+      "model": "devilry:block/limestone_slab_top"
     }
   }
 }

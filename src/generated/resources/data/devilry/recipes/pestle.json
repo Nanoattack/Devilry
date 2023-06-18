@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  T",
-    " C ",
-    "C  "
-  ],
+  "category": "misc",
   "key": {
     "C": {
       "item": "minecraft:calcite"
@@ -13,7 +9,13 @@
       "tag": "forge:ingots/tin"
     }
   },
+  "pattern": [
+    "  T",
+    " T ",
+    "C  "
+  ],
   "result": {
     "item": "devilry:pestle"
-  }
+  },
+  "show_notification": true
 }

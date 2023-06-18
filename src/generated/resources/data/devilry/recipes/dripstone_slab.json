@@ -1,15 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "DDD"
-  ],
+  "category": "building",
   "key": {
     "D": {
       "item": "minecraft:dripstone_block"
     }
   },
+  "pattern": [
+    "DDD"
+  ],
   "result": {
-    "item": "devilry:dripstone_slab",
-    "count": 6
-  }
+    "count": 6,
+    "item": "devilry:dripstone_slab"
+  },
+  "show_notification": true
 }

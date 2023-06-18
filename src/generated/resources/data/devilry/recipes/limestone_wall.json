@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "LLL",
-    "LLL"
-  ],
+  "category": "building",
   "key": {
     "L": {
       "item": "devilry:limestone"
     }
   },
+  "pattern": [
+    "LLL",
+    "LLL"
+  ],
   "result": {
-    "item": "devilry:limestone_wall",
-    "count": 6
-  }
+    "count": 6,
+    "item": "devilry:limestone_wall"
+  },
+  "show_notification": true
 }

@@ -1,0 +1,7 @@
+{
+    "parent": "devilry:block/bone_ash_side",
+    "render_type": "cutout",
+    "textures": {
+        "line": "devilry:block/bone_ash_line0"
+    }
+}

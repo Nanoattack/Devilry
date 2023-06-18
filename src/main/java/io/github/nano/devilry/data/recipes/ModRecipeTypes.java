@@ -1,6 +1,7 @@
 package io.github.nano.devilry.data.recipes;
 
 import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.item.custom.Pestle;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,8 +22,14 @@ public class ModRecipeTypes
     public static final RegistryObject<MortarRecipe.Serializer> MORTAR_SERIALIZER
             = RECIPE_SERIALIZER.register("grinding", MortarRecipe.Serializer::new);
 
+    public static final RegistryObject<PestleRecipe.Serializer> PESTLE_SERIALIZER
+            = RECIPE_SERIALIZER.register("crushing", PestleRecipe.Serializer::new);
+
     public static RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
             RECIPE_TYPE.register( "grinding", () -> createType("grinding"));
+
+    public  static RegistryObject<RecipeType<PestleRecipe>> PESTLE_RECIPE =
+            RECIPE_TYPE.register("crushing", () -> createType("crushing"));
 
     private static <T extends Recipe<?>> RecipeType<T> createType(String identifier){
         return new RecipeType<>() {

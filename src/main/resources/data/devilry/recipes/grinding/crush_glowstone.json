@@ -1,0 +1,13 @@
+{
+  "type": "devilry:crushing",
+  "chance": 0.3,
+  "blockStates": [
+    {
+      "Name": "minecraft:glowstone"
+    }
+  ],
+  "output": {
+    "item": "minecraft:glowstone_dust",
+    "count": 4
+  }
+}

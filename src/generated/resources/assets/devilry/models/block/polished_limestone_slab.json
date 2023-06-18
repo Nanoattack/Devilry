@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab",
   "textures": {
-    "side": "devilry:block/polished_limestone",
     "bottom": "devilry:block/polished_limestone",
+    "side": "devilry:block/polished_limestone",
     "top": "devilry:block/polished_limestone"
   }
 }

@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BBB",
-    "BTB",
-    "BBB"
-  ],
+  "category": "misc",
   "key": {
     "B": {
       "item": "devilry:bronze_nugget"
@@ -13,7 +9,13 @@
       "item": "minecraft:torch"
     }
   },
+  "pattern": [
+    "BBB",
+    "BTB",
+    "BBB"
+  ],
   "result": {
     "item": "devilry:bronze_lantern"
-  }
+  },
+  "show_notification": true
 }

@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "minecraft:copper_ingot"
     }
   ],
   "result": {
-    "item": "devilry:copper_nugget",
-    "count": 9
+    "count": 9,
+    "item": "devilry:copper_nugget"
   }
 }

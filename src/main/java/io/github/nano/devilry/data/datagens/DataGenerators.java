@@ -1,8 +1,8 @@
 package io.github.nano.devilry.data.datagens;
 
 import io.github.nano.devilry.ModMain;
-import io.github.nano.devilry.data.client.ModItemModelProvider;
 import io.github.nano.devilry.data.datagens.client.ModBlockStateProvider;
+import io.github.nano.devilry.data.datagens.client.ModItemModelProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;

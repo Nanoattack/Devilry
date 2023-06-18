@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -34,6 +33,10 @@
                   "type": "minecraft:item",
                   "conditions": [
                     {
+                      "chance": 0.33,
+                      "condition": "minecraft:random_chance"
+                    },
+                    {
                       "condition": "minecraft:match_tool",
                       "predicate": {
                         "tag": "minecraft:cluster_max_harvestables"
@@ -42,14 +45,20 @@
                   ],
                   "functions": [
                     {
-                      "function": "minecraft:set_count",
+                      "add": false,
+                      "conditions": [
+                        {
+                          "chance": 0.33,
+                          "condition": "minecraft:random_chance"
+                        }
+                      ],
                       "count": 1.0,
-                      "add": false
+                      "function": "minecraft:set_count"
                     },
                     {
-                      "function": "minecraft:apply_bonus",
                       "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
+                      "formula": "minecraft:ore_drops",
+                      "function": "minecraft:apply_bonus"
                     }
                   ],
                   "name": "devilry:saltpetre"
@@ -58,9 +67,9 @@
                   "type": "minecraft:item",
                   "functions": [
                     {
-                      "function": "minecraft:set_count",
+                      "add": false,
                       "count": 2.0,
-                      "add": false
+                      "function": "minecraft:set_count"
                     },
                     {
                       "function": "minecraft:explosion_decay"
@@ -72,7 +81,9 @@
             }
           ]
         }
-      ]
+      ],
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "devilry:blocks/saltpetre_cluster"
 }

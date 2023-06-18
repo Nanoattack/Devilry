@@ -1,12 +1,15 @@
 package io.github.nano.devilry.util;
 
 import com.google.common.cache.LoadingCache;
+import com.google.gson.JsonElement;
 import io.github.nano.devilry.container.CacheItem;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 

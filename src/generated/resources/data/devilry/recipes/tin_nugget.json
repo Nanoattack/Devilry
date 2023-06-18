@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "devilry:tin_ingot"
     }
   ],
   "result": {
-    "item": "devilry:tin_nugget",
-    "count": 9
+    "count": 9,
+    "item": "devilry:tin_nugget"
   }
 }
