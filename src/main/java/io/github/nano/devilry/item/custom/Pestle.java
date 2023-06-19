@@ -36,13 +36,14 @@ public class Pestle extends Item {
     }
 
     private InteractionResult rightClickOnCertainBlockState(BlockState clickedBlock, UseOnContext context, Player player, ItemStack stack, Level level) {
-        if (!level.isClientSide()) {
+        if (!level.isClientSide() && player.isShiftKeyDown()) {
+            player.getCooldowns().addCooldown(this, 10);
             BlockStateContainer container = new BlockStateContainer(clickedBlock, level);
             stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(context.getHand()));
             Optional<PestleRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.PESTLE_RECIPE.get(),
                     container, level);
 
-            if (recipe.isPresent()) {
+            if (recipe.isPresent() && recipe.get().getChance() <= .33D) {
                 level.addFreshEntity(new ItemEntity(level,
                         context.getClickedPos().getX(),
                         context.getClickedPos().getY(),
@@ -52,6 +53,9 @@ public class Pestle extends Item {
                 level.destroyBlock(context.getClickedPos(), false);
                 context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.CALCITE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 return InteractionResult.SUCCESS;
+            } else if (recipe.isPresent()) {
+                context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.BEE_LOOP, SoundSource.NEUTRAL, 1.0f, 0.8F + context.getLevel().random.nextFloat() * 0.4f);
+                level.addDestroyBlockEffect(context.getClickedPos(), clickedBlock);
             } else {
                 context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 return InteractionResult.FAIL;

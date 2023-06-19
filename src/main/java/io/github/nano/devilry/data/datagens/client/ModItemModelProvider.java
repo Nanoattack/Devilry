@@ -48,8 +48,10 @@ public class ModItemModelProvider extends ItemModelProvider
     withExistingParent("stolas_effigy", modLoc("block/stolas_effigy"));
     withExistingParent("wittling_table", modLoc("block/wittling_table"));
     withExistingParent("sulphur_block", modLoc("block/sulphur_block"));
+    withExistingParent("limestone_altar", modLoc("block/limestone_altar"));
 
     ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
+    ModelFile handheld = getExistingFile(mcLoc("item/handheld"));
     // General
 
     builder(itemGenerated, "tin_ingot");
@@ -57,9 +59,7 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "tin_nugget");
     builder(itemGenerated, "bronze_ingot");
     builder(itemGenerated, "bronze_nugget");
-    //todo look into this
-        //noinspection DuplicatedCode
-        builder(itemGenerated, "bronze_blend");
+    builder(itemGenerated, "bronze_blend");
     builder(itemGenerated, "copper_nugget");
     builder(itemGenerated, "alchemical_essence");
     builder(itemGenerated, "bone_ash");
@@ -67,8 +67,8 @@ public class ModItemModelProvider extends ItemModelProvider
     builder(itemGenerated, "bronze_chain");
     builder(itemGenerated, "bronze_lantern");
     builder(itemGenerated, "mortar");
-    builder(itemGenerated, "pestle");
-    builder(itemGenerated, "netherite_pestle");
+    builder(handheld, "pestle");
+    builder(handheld, "netherite_pestle");
     builder(itemGenerated, "flint_knife");
     builder(itemGenerated, "bronze_knife");
     builder(itemGenerated, "sulphur");

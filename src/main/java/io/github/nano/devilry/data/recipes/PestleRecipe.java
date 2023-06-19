@@ -34,7 +34,7 @@ public class PestleRecipe implements Recipe<BlockStateContainer> {
     }
     @Override
     public boolean matches(@NotNull BlockStateContainer inv, @NotNull Level level) {
-        return blockStates.contains(inv.getBlockState()) && level.getRandom().nextDouble() <= chance;
+        return blockStates.contains(inv.getBlockState());
     }
 
     @Override

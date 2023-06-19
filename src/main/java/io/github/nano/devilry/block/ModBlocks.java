@@ -1,10 +1,7 @@
 package io.github.nano.devilry.block;
 
 import io.github.nano.devilry.ModMain;
-import io.github.nano.devilry.block.custom.BoneAshBlock;
-import io.github.nano.devilry.block.custom.FesteringSaltPetreBlock;
-import io.github.nano.devilry.block.custom.MortarBlock;
-import io.github.nano.devilry.block.custom.SaltPetreClusterBlock;
+import io.github.nano.devilry.block.custom.*;
 import io.github.nano.devilry.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -138,6 +135,9 @@ public class ModBlocks
 
     public static final RegistryObject<Block> SULPHUR_BLOCK = registerBlock("sulphur_block",
             () -> new Block(BlockBehaviour.Properties.of().mapColor(DyeColor.YELLOW)));
+
+    public static final RegistryObject<LimeStoneAltar> LIMESTONE_ALTAR = registerBlock("limestone_altar",
+            () -> new LimeStoneAltar(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)));
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

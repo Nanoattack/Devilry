@@ -1,4 +1,4 @@
-// 1.20	2023-06-18T19:39:02.0250052	Loot Tables
+// 1.20	2023-06-19T19:51:30.8584118	Loot Tables
 fa5fde140db4a997e891779055bbfa0287b28eb5 data/devilry/loot_tables/blocks/bone_ash.json
 2db590efdaf27e96b650ab0d970dd9721906d3aa data/devilry/loot_tables/blocks/bronze_bars.json
 4d637c34d01f62c4ef20ce58de54160640b69256 data/devilry/loot_tables/blocks/bronze_block.json
@@ -14,6 +14,7 @@ cdd73b63c2906687708348ab40f1cefe5cc91f83 data/devilry/loot_tables/blocks/dripsto
 5ca46ded55ff73170f533a2a63c48a0c5b7e9491 data/devilry/loot_tables/blocks/festering_limestone.json
 d613c0146beb09a585e3e4c1a80fa7064b62845f data/devilry/loot_tables/blocks/large_saltpetre_bud.json
 b93e685e2aff5b4727f8366fd52936db83b966dc data/devilry/loot_tables/blocks/limestone.json
+5443086e70da9be2743e5d3b3f5bb964bb2ae098 data/devilry/loot_tables/blocks/limestone_altar.json
 26679ad13348532318aa534a7aecd639cf0fd056 data/devilry/loot_tables/blocks/limestone_slab.json
 e35f2bda833e2a4c673255959d288c28b4799d3c data/devilry/loot_tables/blocks/limestone_stairs.json
 da96de0e412e28e887f6675f1a80fa17cb9168e9 data/devilry/loot_tables/blocks/limestone_wall.json

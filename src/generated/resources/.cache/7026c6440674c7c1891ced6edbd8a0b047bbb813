@@ -1,4 +1,4 @@
-// 1.20	2023-06-18T19:42:01.9121703	Item Models: devilry
+// 1.20	2023-06-19T20:02:29.3309726	Item Models: devilry
 b5a709e6e655b025e23e2513b40fb8d8a0277c60 assets/devilry/models/item/alchemical_essence.json
 6cf8838a328e7f1640a8aec604fe391677df42a3 assets/devilry/models/item/bat_guano.json
 8a221f71e1e197b559ba53eb36f792d88f9b1499 assets/devilry/models/item/bone_ash.json
@@ -25,14 +25,15 @@ f996cc571d63d775e8891dfa33f5d3de66590529 assets/devilry/models/item/festering_li
 5ea05e086d451b4d6105612b24773cd2bc712dd0 assets/devilry/models/item/flint_knife.json
 56630ffddd2ee99968f27d85de739971d1def7bf assets/devilry/models/item/large_saltpetre_bud.json
 03ddd0584df834631737e6aec4d3f16b547c1d27 assets/devilry/models/item/limestone.json
+36faa0aedfbffca5d2c5cac22fca19ab94dcc157 assets/devilry/models/item/limestone_altar.json
 dce2e1318c01d8df43aa2e5dc6fbcdca91add476 assets/devilry/models/item/limestone_slab.json
 146da418ac0bb32a581ea8cf55d0fa6ee0638c22 assets/devilry/models/item/limestone_stairs.json
 40dfb3cf00719fe1d86bea110d329d28b8aa1de2 assets/devilry/models/item/limestone_wall.json
 62b63916973807e5a56c65b8928d9f6f4898fe8e assets/devilry/models/item/medium_saltpetre_bud.json
 caa46ccc62b45fef2b32a43d56800c5648602470 assets/devilry/models/item/mortar.json
-348d9bcf948e594a8bb529dd01720a3cda31788e assets/devilry/models/item/netherite_pestle.json
+9db041ebd6af5ecc24c40ffcd33a859e9facf021 assets/devilry/models/item/netherite_pestle.json
 c5a9b15c7ecc7f7e23e290c3eb96f80b4d980bcf assets/devilry/models/item/owl_feather.json
-cc1a96283f2a9bff4ac4ccd40c2b085d5226046f assets/devilry/models/item/pestle.json
+e6417766d0b9e3ada18e9e5c9e7df0488e45f682 assets/devilry/models/item/pestle.json
 38596eb25e2402441611fae27e6a63bf79e12f24 assets/devilry/models/item/polished_limestone.json
 833ff0749c5ee981af59b314123090909d69153b assets/devilry/models/item/polished_limestone_slab.json
 481c343f9e6a92f531c6671121b1687b4ce6017e assets/devilry/models/item/polished_limestone_stairs.json
