@@ -30,11 +30,11 @@
       "y": 180
     },
     "north=true,east=false,south=true,west=false": {
-      "model": "devilry:block/limestone_altar_centre"
-    },
-    "north=false,east=true,south=false,west=true": {
       "model": "devilry:block/limestone_altar_centre",
       "y": 90
+    },
+    "north=false,east=true,south=false,west=true": {
+      "model": "devilry:block/limestone_altar_centre"
     }
   }
 }

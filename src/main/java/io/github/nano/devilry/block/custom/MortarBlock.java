@@ -107,8 +107,12 @@ public class MortarBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof Container) {
-                Containers.dropContents(pLevel, pPos, (Container)blockentity);
+            if (blockentity instanceof MortarBlockEntity entity) {
+                SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+                for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
+                    inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
+                }
+                Containers.dropContents(pLevel, pPos, inventory);
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
 
@@ -134,10 +138,8 @@ public class MortarBlock extends BaseEntityBlock {
                     return InteractionResult.SUCCESS;
                 }
                 if (mortarBlockEntity.turns >= mortarBlockEntity.maxTurns) {
-                    if (!level.isClientSide()) {
-                        mortarBlockEntity.craftItem();
-                        mortarBlockEntity.setChanged();
-                    }
+                    mortarBlockEntity.craftItem();
+                    mortarBlockEntity.setChanged();
                 }
             }
             if (!level.isClientSide() && mortarBlockEntity.hasRecipe() == player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {

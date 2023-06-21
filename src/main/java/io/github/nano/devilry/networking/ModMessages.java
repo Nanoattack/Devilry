@@ -1,6 +1,7 @@
 package io.github.nano.devilry.networking;
 
 import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.networking.packets.BreakParticlePacket;
 import io.github.nano.devilry.networking.packets.UpdateTurningPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,6 +33,12 @@ public class ModMessages {
                 .encoder(UpdateTurningPacket::toBytes)
                 .consumerMainThread(UpdateTurningPacket::handle)
                 .add();
+
+        net.messageBuilder(BreakParticlePacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(BreakParticlePacket::new)
+                .encoder(BreakParticlePacket::toBytes)
+                .consumerMainThread(BreakParticlePacket::handle)
+                .add();;
     }
 
     public static <MSG> void sendToServer(MSG message) {

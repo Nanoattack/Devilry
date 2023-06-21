@@ -65,17 +65,19 @@ public abstract class RecipeCache<T extends HashedRecipe<Container>> extends Cac
     }
 
     private int getDifference(List<? extends CacheItem> cacheItems, List<? extends CacheItem> newItems) {
-        List<? super CacheItem> noDupes = new ArrayList<>(cacheItems);
-        return (int) newItems.stream()
-                .filter(ingredient -> {
+        List<? super CacheItem> noDupes = new ArrayList<>(newItems);
+        cacheItems.forEach(ingredient -> {
                     for (int i = 0; i < noDupes.size(); i++) {
                         CacheItem item = (CacheItem) noDupes.get(i);
                         if (item.equals(ingredient)) {
                             noDupes.set(i, new MortarItem(Items.AIR));
-                            return true;
+                            break;
+                        } else {
+                            noDupes.set(i, new MortarItem(Items.STONE));
                         }
                     }
-                    return false;
-                }).count();
+                });
+        
+        return ((int) noDupes.stream().filter(item -> !((CacheItem) item).getItemStack().isEmpty()).count());
     }
 }

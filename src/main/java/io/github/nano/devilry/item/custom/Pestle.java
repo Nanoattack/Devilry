@@ -3,6 +3,9 @@ package io.github.nano.devilry.item.custom;
 import io.github.nano.devilry.data.recipes.BlockStateContainer;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
 import io.github.nano.devilry.data.recipes.PestleRecipe;
+import io.github.nano.devilry.networking.ModMessages;
+import io.github.nano.devilry.networking.packets.BreakParticlePacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -43,7 +46,7 @@ public class Pestle extends Item {
             Optional<PestleRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.PESTLE_RECIPE.get(),
                     container, level);
 
-            if (recipe.isPresent() && recipe.get().getChance() <= .33D) {
+            if (recipe.isPresent() && level.random.nextDouble() <= recipe.get().getChance()) {
                 level.addFreshEntity(new ItemEntity(level,
                         context.getClickedPos().getX(),
                         context.getClickedPos().getY(),
@@ -54,8 +57,10 @@ public class Pestle extends Item {
                 context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.CALCITE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 return InteractionResult.SUCCESS;
             } else if (recipe.isPresent()) {
-                context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.BEE_LOOP, SoundSource.NEUTRAL, 1.0f, 0.8F + context.getLevel().random.nextFloat() * 0.4f);
-                level.addDestroyBlockEffect(context.getClickedPos(), clickedBlock);
+                context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.STONE_FALL, SoundSource.NEUTRAL, 1.0f, 0.8F + context.getLevel().random.nextFloat() * 0.4f);
+                for (ServerPlayer serverPlayer : level.getServer().getPlayerList().getPlayers()) {
+                    ModMessages.sendToPlayer(new BreakParticlePacket(context.getClickedPos()), serverPlayer);
+                }
             } else {
                 context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.POLISHED_DEEPSLATE_PLACE, SoundSource.NEUTRAL, 1.0F, 0.8F + context.getLevel().random.nextFloat() * 0.4F);
                 return InteractionResult.FAIL;

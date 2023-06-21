@@ -13,13 +13,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class LimeStoneAltar extends Block {
@@ -41,13 +41,13 @@ public class LimeStoneAltar extends Block {
             Block.box(2, 14, 0, 14, 16, 16)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-    VoxelShape CENTRE = Stream.of(
+    VoxelShape CENTRE_90 = Stream.of(
             Block.box(0, 0, 2, 16, 2, 14),
             Block.box(0, 2, 4, 16, 14, 12),
             Block.box(0, 14, 2, 16, 16, 14)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-    VoxelShape CENTRE_90 = Stream.of(
+    VoxelShape CENTRE = Stream.of(
             Block.box(2, 0, 0, 14, 2, 16),
             Block.box(4, 2, 0, 12, 14, 16),
             Block.box(2, 14, 0, 14, 16, 16)
@@ -77,9 +77,10 @@ public class LimeStoneAltar extends Block {
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     public LimeStoneAltar(Properties pProperties) {
         super(pProperties);
+        this.registerDefaultState(getStateDefinition().any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(FACING, Direction.NORTH));
     }
 
-    public BlockState rotate(@NotNull BlockState pState, Rotation pRot) {
+    public @NotNull BlockState rotate(@NotNull BlockState pState, Rotation pRot) {
         return switch (pRot) {
             case CLOCKWISE_180 ->
                     pState.setValue(NORTH, pState.getValue(SOUTH)).setValue(EAST, pState.getValue(WEST)).setValue(SOUTH, pState.getValue(NORTH)).setValue(WEST, pState.getValue(EAST));
@@ -91,7 +92,7 @@ public class LimeStoneAltar extends Block {
         };
     }
 
-    public BlockState mirror(BlockState pState, Mirror pMirror) {
+    public @NotNull BlockState mirror(@NotNull BlockState pState, Mirror pMirror) {
         return switch (pMirror) {
             case LEFT_RIGHT -> pState.setValue(NORTH, pState.getValue(SOUTH)).setValue(SOUTH, pState.getValue(NORTH));
             case FRONT_BACK -> pState.setValue(EAST, pState.getValue(WEST)).setValue(WEST, pState.getValue(EAST));
@@ -100,17 +101,18 @@ public class LimeStoneAltar extends Block {
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+    public @NotNull BlockState updateShape(BlockState pState, Direction pDirection, @NotNull BlockState pNeighborState, @NotNull LevelAccessor pLevel, @NotNull BlockPos pCurrentPos, @NotNull BlockPos pNeighborPos) {
+        boolean north = pState.getValue(NORTH);
+        boolean east = pState.getValue(EAST);
+        boolean south = pState.getValue(SOUTH);
+        boolean west = pState.getValue(WEST);
+        pNeighborState = pLevel.getBlockState(pNeighborPos);
         if (pDirection.getAxis().isHorizontal() && pNeighborState.is(this)) {
             boolean nNorth = pNeighborState.getValue(NORTH);
             boolean nEast = pNeighborState.getValue(EAST);
             boolean nSouth = pNeighborState.getValue(SOUTH);
             boolean nWest = pNeighborState.getValue(WEST);
 
-            boolean north = pState.getValue(NORTH);
-            boolean east = pState.getValue(EAST);
-            boolean south = pState.getValue(SOUTH);
-            boolean west = pState.getValue(WEST);
             if (pNeighborPos.distManhattan(pCurrentPos) == 1) {
                 if (!(nNorth || nEast || nSouth || nWest)) {
                     if (!(north || east || south || west)) {
@@ -121,8 +123,9 @@ public class LimeStoneAltar extends Block {
                     }
                     return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
                 }
-                if (!(pNeighborState.getValue(getPropertyFromDirection(pDirection.getCounterClockWise())) ||
-                        pNeighborState.getValue(getPropertyFromDirection(pDirection.getClockWise())))) {
+                if (!pNeighborState.getValue(getPropertyFromDirection(pDirection.getCounterClockWise())) &&
+                        !pNeighborState.getValue(getPropertyFromDirection(pDirection.getClockWise()))
+                && !pState.getValue(getPropertyFromDirection(pDirection.getClockWise())) && !pState.getValue(getPropertyFromDirection(pDirection.getCounterClockWise()))) {
                     return pState.setValue(getPropertyFromDirection(pDirection), true);
                 } else {
                     return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
@@ -131,12 +134,58 @@ public class LimeStoneAltar extends Block {
                 return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
             }
         } else {
+            if (pDirection.getAxis().isHorizontal()) {
+                BlockState blockStateClockwise = pLevel.getBlockState(pCurrentPos.relative(pDirection.getClockWise()));
+                BlockState blockStateCounterClockwise = pLevel.getBlockState(pCurrentPos.relative(pDirection.getCounterClockWise()));
+                BlockState blockStateOpposite = pLevel.getBlockState(pCurrentPos.relative(pDirection.getOpposite()));
+
+                if (blockStateOpposite.is(this) && blockStateOpposite.getValue(getPropertyFromDirection(pDirection)) && !pNeighborState.is(this)) {
+                    return pState.setValue(getPropertyFromDirection(pDirection), false)
+                            .setValue(getPropertyFromDirection(pDirection), false);
+                }
+
+                if (blockStateClockwise.is(this)) {
+                    if (blockStateClockwise.getValue(getPropertyFromDirection(pDirection.getClockWise())) && !pNeighborState.is(this)) {
+                        return pState.setValue(getPropertyFromDirection(pDirection.getClockWise()), true)
+                                .setValue(getPropertyFromDirection(pDirection), false);
+                    }
+                    if (!blockStateClockwise.getValue(NORTH) &&
+                            !blockStateClockwise.getValue(EAST) &&
+                            !blockStateClockwise.getValue(SOUTH) &&
+                            !blockStateClockwise.getValue(WEST)) {
+                        return pState.setValue(getPropertyFromDirection(pDirection.getClockWise()), true)
+                                .setValue(getPropertyFromDirection(pDirection), false);
+                    }
+                }
+                if (blockStateCounterClockwise.is(this)) {
+                    if (blockStateCounterClockwise.getValue(getPropertyFromDirection(pDirection.getCounterClockWise())) && !pNeighborState.is(this)) {
+                        return pState.setValue(getPropertyFromDirection(pDirection.getCounterClockWise()), true)
+                                .setValue(getPropertyFromDirection(pDirection), false);
+                    }
+                    if (!blockStateCounterClockwise.getValue(NORTH) &&
+                            !blockStateCounterClockwise.getValue(EAST) &&
+                            !blockStateCounterClockwise.getValue(SOUTH) &&
+                            !blockStateCounterClockwise.getValue(WEST)) {
+                        return pState.setValue(getPropertyFromDirection(pDirection.getCounterClockWise()), true)
+                                .setValue(getPropertyFromDirection(pDirection), false);
+                    }
+                }
+                if (Arrays.stream(Direction.values()).allMatch(direction -> {
+                    BlockState state = pLevel.getBlockState(pCurrentPos.relative(direction));
+                    if (!state.is(this)) {
+                        return true;
+                    }
+                    return !state.getValue(getPropertyFromDirection(direction)) && (state.getValue(NORTH) || state.getValue(EAST) || state.getValue(SOUTH) || state.getValue(WEST));
+                })) {
+                    pState.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false);
+                }
+            }
             return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
         }
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public @NotNull VoxelShape getShape(BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
         boolean north = pState.getValue(NORTH);
         boolean east = pState.getValue(EAST);
         boolean south = pState.getValue(SOUTH);
@@ -171,7 +220,6 @@ public class LimeStoneAltar extends Block {
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         BlockGetter blockgetter = pContext.getLevel();
         BlockPos blockpos = pContext.getClickedPos();
-        FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());
         BlockPos north = blockpos.north();
         BlockPos east = blockpos.east();
         BlockPos south = blockpos.south();
@@ -180,37 +228,28 @@ public class LimeStoneAltar extends Block {
         BlockState eastState = blockgetter.getBlockState(east);
         BlockState southState = blockgetter.getBlockState(south);
         BlockState westState = blockgetter.getBlockState(west);
-        return super.getStateForPlacement(pContext)
-                .setValue(NORTH,
-                        northState.is(this) && (
-                                northState.getValue(NORTH) ||
-                                        !(northState.getValue(NORTH) ||
-                                                northState.getValue(EAST) ||
-                                                northState.getValue(SOUTH) ||
-                                                northState.getValue(WEST))))
-                .setValue(EAST,
-                        eastState.is(this) && (
-                                eastState.getValue(EAST) ||
-                                        !(eastState.getValue(NORTH) ||
-                                                eastState.getValue(EAST) ||
-                                                eastState.getValue(SOUTH) ||
-                                                eastState.getValue(WEST))))
-                .setValue(SOUTH,
-                        southState.is(this) && (
-                                southState.getValue(SOUTH) ||
-                                        !(southState.getValue(NORTH) ||
-                                                southState.getValue(EAST) ||
-                                                southState.getValue(SOUTH) ||
-                                                southState.getValue(WEST))))
-                .setValue(WEST,
-                        westState.is(this) && (
-                                westState.getValue(WEST) ||
-                                        !(westState.getValue(NORTH) ||
-                                                westState.getValue(EAST) ||
-                                                westState.getValue(SOUTH) ||
-                                                westState.getValue(WEST))))
-                .setValue(FACING,
-                        pContext.getHorizontalDirection());
+        var state = super.getStateForPlacement(pContext);
+        if (state == null) {
+            return null;
+        }
+        boolean bNorth = false, bEast = false, bSouth = false;
+        if (northState.is(this) && !northState.getValue(EAST) && !northState.getValue(WEST)) {
+            state.setValue(NORTH, true);
+            bNorth = true;
+        }
+        if (eastState.is(this) && !bNorth && !eastState.getValue(NORTH) && !eastState.getValue(SOUTH) && !state.getValue(NORTH)) {
+            state.setValue(EAST, true);
+            bEast = true;
+        }
+        if (southState.is(this) && !bEast && !southState.getValue(EAST) && !southState.getValue(WEST) && !state.getValue(EAST)) {
+            state.setValue(SOUTH, true);
+            bSouth = true;
+        }
+        if (westState.is(this) && ! bNorth && !bSouth && !westState.getValue(NORTH) && !westState.getValue(SOUTH) && !state.getValue(NORTH) && !state.getValue(SOUTH)) {
+            state.setValue(WEST, true);
+        }
+        state.setValue(FACING, pContext.getHorizontalDirection());
+        return state;
     }
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(NORTH, EAST, WEST, SOUTH, FACING);
