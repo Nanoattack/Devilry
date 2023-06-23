@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
@@ -19,7 +20,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class LimeStoneAltar extends Block {
@@ -101,87 +104,33 @@ public class LimeStoneAltar extends Block {
     }
 
     @Override
-    public @NotNull BlockState updateShape(BlockState pState, Direction pDirection, @NotNull BlockState pNeighborState, @NotNull LevelAccessor pLevel, @NotNull BlockPos pCurrentPos, @NotNull BlockPos pNeighborPos) {
-        boolean north = pState.getValue(NORTH);
-        boolean east = pState.getValue(EAST);
-        boolean south = pState.getValue(SOUTH);
-        boolean west = pState.getValue(WEST);
+    public @NotNull BlockState updateShape(@NotNull BlockState pState, Direction pDirection, @NotNull BlockState pNeighborState, @NotNull LevelAccessor pLevel, @NotNull BlockPos pCurrentPos, @NotNull BlockPos pNeighborPos) {
         pNeighborState = pLevel.getBlockState(pNeighborPos);
-        if (pDirection.getAxis().isHorizontal() && pNeighborState.is(this)) {
-            boolean nNorth = pNeighborState.getValue(NORTH);
-            boolean nEast = pNeighborState.getValue(EAST);
-            boolean nSouth = pNeighborState.getValue(SOUTH);
-            boolean nWest = pNeighborState.getValue(WEST);
-
-            if (pNeighborPos.distManhattan(pCurrentPos) == 1) {
-                if (!(nNorth || nEast || nSouth || nWest)) {
-                    if (!(north || east || south || west)) {
-                        return pState.setValue(getPropertyFromDirection(pDirection), true);
-                    }
-                    if (pState.getValue(getPropertyFromDirection(pDirection.getOpposite()))) {
-                        return pState.setValue(getPropertyFromDirection(pDirection), true);
-                    }
-                    return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
-                }
-                if (!pNeighborState.getValue(getPropertyFromDirection(pDirection.getCounterClockWise())) &&
-                        !pNeighborState.getValue(getPropertyFromDirection(pDirection.getClockWise()))
-                && !pState.getValue(getPropertyFromDirection(pDirection.getClockWise())) && !pState.getValue(getPropertyFromDirection(pDirection.getCounterClockWise()))) {
-                    return pState.setValue(getPropertyFromDirection(pDirection), true);
-                } else {
-                    return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+        if (pDirection.getAxis().isHorizontal()) {
+            if (pNeighborState.is(this)) {
+                if (pNeighborPos.distManhattan(pCurrentPos) == 1 && canConnect(pNeighborState, pDirection.getOpposite()) && canConnect(pState, pDirection)) {
+                    return setConnection(pDirection, pState, true);
                 }
             } else {
-                return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
-            }
-        } else {
-            if (pDirection.getAxis().isHorizontal()) {
-                BlockState blockStateClockwise = pLevel.getBlockState(pCurrentPos.relative(pDirection.getClockWise()));
-                BlockState blockStateCounterClockwise = pLevel.getBlockState(pCurrentPos.relative(pDirection.getCounterClockWise()));
-                BlockState blockStateOpposite = pLevel.getBlockState(pCurrentPos.relative(pDirection.getOpposite()));
-
-                if (blockStateOpposite.is(this) && blockStateOpposite.getValue(getPropertyFromDirection(pDirection)) && !pNeighborState.is(this)) {
-                    return pState.setValue(getPropertyFromDirection(pDirection), false)
-                            .setValue(getPropertyFromDirection(pDirection), false);
-                }
-
-                if (blockStateClockwise.is(this)) {
-                    if (blockStateClockwise.getValue(getPropertyFromDirection(pDirection.getClockWise())) && !pNeighborState.is(this)) {
-                        return pState.setValue(getPropertyFromDirection(pDirection.getClockWise()), true)
-                                .setValue(getPropertyFromDirection(pDirection), false);
-                    }
-                    if (!blockStateClockwise.getValue(NORTH) &&
-                            !blockStateClockwise.getValue(EAST) &&
-                            !blockStateClockwise.getValue(SOUTH) &&
-                            !blockStateClockwise.getValue(WEST)) {
-                        return pState.setValue(getPropertyFromDirection(pDirection.getClockWise()), true)
-                                .setValue(getPropertyFromDirection(pDirection), false);
-                    }
-                }
-                if (blockStateCounterClockwise.is(this)) {
-                    if (blockStateCounterClockwise.getValue(getPropertyFromDirection(pDirection.getCounterClockWise())) && !pNeighborState.is(this)) {
-                        return pState.setValue(getPropertyFromDirection(pDirection.getCounterClockWise()), true)
-                                .setValue(getPropertyFromDirection(pDirection), false);
-                    }
-                    if (!blockStateCounterClockwise.getValue(NORTH) &&
-                            !blockStateCounterClockwise.getValue(EAST) &&
-                            !blockStateCounterClockwise.getValue(SOUTH) &&
-                            !blockStateCounterClockwise.getValue(WEST)) {
-                        return pState.setValue(getPropertyFromDirection(pDirection.getCounterClockWise()), true)
-                                .setValue(getPropertyFromDirection(pDirection), false);
-                    }
-                }
-                if (Arrays.stream(Direction.values()).allMatch(direction -> {
-                    BlockState state = pLevel.getBlockState(pCurrentPos.relative(direction));
-                    if (!state.is(this)) {
-                        return true;
-                    }
-                    return !state.getValue(getPropertyFromDirection(direction)) && (state.getValue(NORTH) || state.getValue(EAST) || state.getValue(SOUTH) || state.getValue(WEST));
-                })) {
-                    pState.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false);
+                if (hasConnection(pDirection, pState)) {
+                    return setConnection(pDirection, pState, false);
                 }
             }
-            return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
         }
+        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+    }
+
+    public boolean canConnect(BlockState state, Direction direction) {
+        return state.is(this) && !state.getValue(getPropertyFromDirection(direction.getClockWise())) &&
+                !state.getValue(getPropertyFromDirection(direction.getCounterClockWise()));
+    }
+
+    public BlockState setConnection(Direction direction, BlockState state, boolean value) {
+        return state.setValue(getPropertyFromDirection(direction), value);
+    }
+
+    public boolean hasConnection(Direction direction, BlockState state) {
+        return state.getValue(getPropertyFromDirection(direction));
     }
 
     @Override
@@ -218,37 +167,20 @@ public class LimeStoneAltar extends Block {
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        BlockGetter blockgetter = pContext.getLevel();
+        Level level = pContext.getLevel();
+        Direction[] directions = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
         BlockPos blockpos = pContext.getClickedPos();
-        BlockPos north = blockpos.north();
-        BlockPos east = blockpos.east();
-        BlockPos south = blockpos.south();
-        BlockPos west = blockpos.west();
-        BlockState northState = blockgetter.getBlockState(north);
-        BlockState eastState = blockgetter.getBlockState(east);
-        BlockState southState = blockgetter.getBlockState(south);
-        BlockState westState = blockgetter.getBlockState(west);
-        var state = super.getStateForPlacement(pContext);
+
+        BlockState state = super.getStateForPlacement(pContext);
         if (state == null) {
             return null;
         }
-        boolean bNorth = false, bEast = false, bSouth = false;
-        if (northState.is(this) && !northState.getValue(EAST) && !northState.getValue(WEST)) {
-            state.setValue(NORTH, true);
-            bNorth = true;
-        }
-        if (eastState.is(this) && !bNorth && !eastState.getValue(NORTH) && !eastState.getValue(SOUTH) && !state.getValue(NORTH)) {
-            state.setValue(EAST, true);
-            bEast = true;
-        }
-        if (southState.is(this) && !bEast && !southState.getValue(EAST) && !southState.getValue(WEST) && !state.getValue(EAST)) {
-            state.setValue(SOUTH, true);
-            bSouth = true;
-        }
-        if (westState.is(this) && ! bNorth && !bSouth && !westState.getValue(NORTH) && !westState.getValue(SOUTH) && !state.getValue(NORTH) && !state.getValue(SOUTH)) {
-            state.setValue(WEST, true);
-        }
         state.setValue(FACING, pContext.getHorizontalDirection());
+        for (Direction direction : directions) {
+            updateShape(state, direction, level.getBlockState(blockpos.relative(direction)),
+                    level, blockpos, blockpos.relative(direction));
+        }
+
         return state;
     }
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
