@@ -1,5 +1,6 @@
 {
   "type": "devilry:grinding",
+  "color": 8791165,
   "ingredients": [
     {
       "item": "minecraft:redstone"

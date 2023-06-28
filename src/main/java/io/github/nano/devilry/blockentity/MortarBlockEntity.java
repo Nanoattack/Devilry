@@ -48,6 +48,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     public boolean shouldStop;
     public int time = 0;
     public int fixedTime = 0;
+    public int color;
 
     public final ItemStackHandler itemHandler = new ItemStackHandler(8) {
         @Override
@@ -109,8 +110,10 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
             if (recipes.size() > 0) {
                 maxTurns = recipes.get(0).getNeededCrushes();
+                color = recipes.get(0).getColor();
             } else {
                 maxTurns = 0;
+                color = 0;
             }
         }
 
@@ -145,13 +148,14 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
         }));
 
-        mortarData = new SimpleContainerData(2) {
+        mortarData = new SimpleContainerData(3) {
             @Override
             public int get(int index)
             {
                 return switch (index) {
                     case 0 -> MortarBlockEntity.this.turns;
                     case 1 -> MortarBlockEntity.this.maxTurns;
+                    case 2 -> MortarBlockEntity.this.color;
                     default -> 0;
                 };
             }
@@ -161,6 +165,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
                 switch (index) {
                     case 0: MortarBlockEntity.this.turns = value;
                     case 1: MortarBlockEntity.this.maxTurns  = value;
+                    case 2: MortarBlockEntity.this.color = value;
                 }
             }
         };
@@ -203,6 +208,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("turns", this.turns);
         nbt.putInt("maxTurns", this.maxTurns);
+        nbt.putInt("color", this.color);
 
         super.saveAdditional(nbt);
     }
@@ -213,6 +219,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         turns = nbt.getInt("turns");
         maxTurns = nbt.getInt("maxTurns");
+        color = nbt.getInt("color");
     }
 
     public boolean hasRecipe() {

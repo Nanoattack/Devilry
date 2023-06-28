@@ -139,6 +139,9 @@ public class ModBlocks
     public static final RegistryObject<LimeStoneAltar> LIMESTONE_ALTAR = registerBlock("limestone_altar",
             () -> new LimeStoneAltar(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)));
 
+    public static final RegistryObject<DemonicAltarSide> DEMONIC_ALTAR_SIDE = registerBlock("demonic_altar_side",
+            () -> new DemonicAltarSide(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

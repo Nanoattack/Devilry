@@ -1,5 +1,6 @@
 {
   "type": "devilry:grinding",
+  "color": 686626,
   "ingredients": [
     {
       "tag": "minecraft:basalt"

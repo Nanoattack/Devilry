@@ -36,14 +36,16 @@ public class MortarRecipe extends HashedRecipe<Container> {
     private final boolean isShaped;
     private final int durabilityCost;
     private final int neededCrushes;
+    private final int color;
 
-    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, boolean isShaped, int durabilityCost, int crushes) {
+    public MortarRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, boolean isShaped, int durabilityCost, int crushes, int color) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
         this.isShaped = isShaped;
         this.durabilityCost = durabilityCost;
         this.neededCrushes = crushes;
+        this.color = color;
     }
     @Override
     public boolean matches(@NotNull Container inv, @NotNull Level level) {
@@ -94,6 +96,10 @@ public class MortarRecipe extends HashedRecipe<Container> {
     @Override
     public @NotNull ResourceLocation getId() {
         return id;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     @Override
@@ -189,11 +195,12 @@ public class MortarRecipe extends HashedRecipe<Container> {
                 centerRight = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(4), Ingredient.EMPTY);
                 bottomRight = Utils.useNonNullOrElse(Ingredient::fromJson, ingredients.get(5), Ingredient.EMPTY);
             }
+            int color = GsonHelper.getAsInt(json, "color");
             NonNullList<Ingredient> inputs = NonNullList.of(Ingredient.EMPTY, topLeft, centerLeft, bottomLeft, topRight, centerRight, bottomRight);
             int durabilityCost = GsonHelper.getAsInt(json, "durabilityCost", 1);
             int crushes = GsonHelper.getAsInt(json, "crushes", 4);
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            return new MortarRecipe(recipeId, output, inputs, isShaped, durabilityCost, crushes);
+            return new MortarRecipe(recipeId, output, inputs, isShaped, durabilityCost, crushes, color);
         }
 
         private static JsonElement getJsonElement(JsonObject json, String name) {
@@ -213,7 +220,9 @@ public class MortarRecipe extends HashedRecipe<Container> {
 
             ItemStack output = pBuffer.readItem();
 
-            return new MortarRecipe(pRecipeId, output, inputs, isShaped, durabilityCost, crushes);
+            int color = pBuffer.readInt();
+
+            return new MortarRecipe(pRecipeId, output, inputs, isShaped, durabilityCost, crushes, color);
         }
 
         @Override
@@ -223,6 +232,7 @@ public class MortarRecipe extends HashedRecipe<Container> {
             pBuffer.writeInt(pRecipe.getDurabilityCost());
             pBuffer.writeInt(pRecipe.getNeededCrushes());
             pBuffer.writeItem(pRecipe.output);
+            pBuffer.writeInt(pRecipe.getColor());
         }
     }
 }

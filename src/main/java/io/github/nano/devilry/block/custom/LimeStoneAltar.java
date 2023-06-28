@@ -20,9 +20,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class LimeStoneAltar extends Block {
@@ -83,6 +80,7 @@ public class LimeStoneAltar extends Block {
         this.registerDefaultState(getStateDefinition().any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(FACING, Direction.NORTH));
     }
 
+    @Override
     public @NotNull BlockState rotate(@NotNull BlockState pState, Rotation pRot) {
         return switch (pRot) {
             case CLOCKWISE_180 ->
@@ -95,6 +93,7 @@ public class LimeStoneAltar extends Block {
         };
     }
 
+    @Override
     public @NotNull BlockState mirror(@NotNull BlockState pState, Mirror pMirror) {
         return switch (pMirror) {
             case LEFT_RIGHT -> pState.setValue(NORTH, pState.getValue(SOUTH)).setValue(SOUTH, pState.getValue(NORTH));
@@ -166,6 +165,7 @@ public class LimeStoneAltar extends Block {
         };
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         Level level = pContext.getLevel();
         Direction[] directions = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
@@ -183,6 +183,8 @@ public class LimeStoneAltar extends Block {
 
         return state;
     }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(NORTH, EAST, WEST, SOUTH, FACING);
     }

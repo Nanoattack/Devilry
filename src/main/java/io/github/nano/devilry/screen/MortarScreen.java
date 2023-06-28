@@ -26,6 +26,7 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu>
         final int j = (this.height - imageHeight) / 2;
         guiGraphics.blit(GUI,  i, j, 0, 0, imageWidth, imageHeight, 256, 256);
         guiGraphics.blit(GUI, i + 81, j + 28, 178, 0, 14, this.menu.getProgress());
+        guiGraphics.blit(GUI, i + 44, j + 26, 44, 192, 88, 51, 1, 0, 0);
     }
 
     @Override

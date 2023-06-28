@@ -1,5 +1,6 @@
 {
   "type": "devilry:grinding",
+  "color": 142152037,
   "ingredients": [
     {
       "item": "minecraft:raw_copper"

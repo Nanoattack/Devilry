@@ -1,5 +1,6 @@
 {
   "type": "devilry:grinding",
+  "color": 7434609,
   "ingredients": [
     {
       "tag": "devilry:potassium_nitrate"
