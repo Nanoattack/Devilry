@@ -175,7 +175,7 @@ public class LimeStoneAltar extends Block {
         if (state == null) {
             return null;
         }
-        state.setValue(FACING, pContext.getHorizontalDirection());
+        state = state.setValue(FACING, pContext.getHorizontalDirection());
         for (Direction direction : directions) {
             updateShape(state, direction, level.getBlockState(blockpos.relative(direction)),
                     level, blockpos, blockpos.relative(direction));
