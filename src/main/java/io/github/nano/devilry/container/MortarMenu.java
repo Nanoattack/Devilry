@@ -21,7 +21,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,7 @@ public class MortarMenu extends AbstractContainerMenu {
     private final ContainerData containerData;
 
     public MortarMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
     }
 
     public MortarMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -63,6 +65,9 @@ public class MortarMenu extends AbstractContainerMenu {
         return containerData.get(0) > 0;
     }
 
+    public Vector3f getColor(){
+        return new Vector3f((containerData.get(2) >> 16) & 0xFF, (containerData.get(2) >> 8) & 0xFF, containerData.get(2) & 0xFF);
+    }
     public int getProgress(){
         return (15 / Math.max(1, containerData.get(1))) * containerData.get(0);
     }

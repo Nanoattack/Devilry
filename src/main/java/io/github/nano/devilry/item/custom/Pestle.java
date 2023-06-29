@@ -39,7 +39,7 @@ public class Pestle extends Item {
     }
 
     private InteractionResult rightClickOnCertainBlockState(BlockState clickedBlock, UseOnContext context, Player player, ItemStack stack, Level level) {
-        if (!level.isClientSide() && player.isShiftKeyDown()) {
+        if (!level.isClientSide() && player.isShiftKeyDown() && !player.getCooldowns().isOnCooldown(this)) {
             player.getCooldowns().addCooldown(this, 10);
             BlockStateContainer container = new BlockStateContainer(clickedBlock, level);
             stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(context.getHand()));

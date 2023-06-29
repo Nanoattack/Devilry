@@ -263,7 +263,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             stack.setDamageValue(itemHandler.getStackInSlot(0).getDamageValue() +1);
             itemHandler.setStackInSlot(0, stack);
             itemHandler.setStackInSlot(7, new ItemStack(recipe.get().assemble(inventory, level.registryAccess()).getItem(),
-                    itemHandler.getStackInSlot(7).getCount() + 1));
+                    itemHandler.getStackInSlot(7).getCount() + recipe.get().assemble(inventory, level.registryAccess()).getCount()));
 
             this.turns = 0;
         }

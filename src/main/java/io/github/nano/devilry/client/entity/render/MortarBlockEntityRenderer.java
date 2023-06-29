@@ -31,6 +31,7 @@ public class MortarBlockEntityRenderer implements BlockEntityRenderer<MortarBloc
     @Override
     public void render(MortarBlockEntity pBlockEntity, float pPartialTick, @NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         ItemStack pestle = pBlockEntity.itemHandler.getStackInSlot(0);
+
         if (pestle.getItem() instanceof Pestle) {
             VertexConsumer consumer = pBufferSource.getBuffer(getRenderType(pestle));
             pPoseStack.pushPose();
