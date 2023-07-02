@@ -1,17 +1,20 @@
 package io.github.nano.devilry.block.custom;
 
+import io.github.nano.devilry.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -94,7 +97,8 @@ public class DemonicAltar extends BaseEntityBlock {
         if (state == null) {
             return null;
         }
-        return state.setValue(FACING, pContext.getHorizontalDirection());
+        BlockPos relative = pContext.getClickedPos().relative(pContext.getHorizontalDirection().getCounterClockWise());
+        return pContext.getLevel().getBlockState(relative).canBeReplaced(pContext) && pContext.getLevel().getWorldBorder().isWithinBounds(relative) ? state.setValue(FACING, pContext.getHorizontalDirection()) : null;
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
@@ -105,5 +109,33 @@ public class DemonicAltar extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return null;
+    }
+
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @javax.annotation.Nullable LivingEntity pPlacer, ItemStack pStack) {
+        super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
+        if (!pLevel.isClientSide) {
+            BlockPos blockpos = pPos.relative(pState.getValue(FACING).getCounterClockWise());
+            pLevel.setBlock(blockpos, ModBlocks.DEMONIC_ALTAR_SIDE.get().defaultBlockState().setValue(FACING, pState.getValue(FACING).getOpposite()), 3);
+            pLevel.blockUpdated(pPos, Blocks.AIR);
+            pState.updateNeighbourShapes(pLevel, pPos, 3);
+        }
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+        if (pDirection.getAxis().isHorizontal()) {
+            if (pDirection == pState.getValue(FACING).getCounterClockWise()) {
+                if (pLevel.getBlockState(pCurrentPos.relative(pState.getValue(FACING).getCounterClockWise())).is(Blocks.AIR)) {
+                    return ModBlocks.LIMESTONE_ALTAR.get().defaultBlockState().setValue(FACING, pDirection.getClockWise());
+                }
+            }
+        }
+        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
     }
 }

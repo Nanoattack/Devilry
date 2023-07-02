@@ -1,8 +1,8 @@
 {
   "variants": {
-    "facing=north": {"model":  "devilry:block/demonic_altar_right"},
-    "facing=south": {"model":  "devilry:block/demonic_altar_right", "y": 180 },
-    "facing=west": {"model":  "devilry:block/demonic_altar_right", "y": 270 },
-    "facing=east": {"model":  "devilry:block/demonic_altar_right", "y": 90 }
+    "facing=south": {"model":  "devilry:block/demonic_altar_right"},
+    "facing=north": {"model":  "devilry:block/demonic_altar_right", "y": 180 },
+    "facing=east": {"model":  "devilry:block/demonic_altar_right", "y": 270 },
+    "facing=west": {"model":  "devilry:block/demonic_altar_right", "y": 90 }
   }
 }
