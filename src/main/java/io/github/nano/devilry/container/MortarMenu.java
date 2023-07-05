@@ -35,7 +35,7 @@ public class MortarMenu extends AbstractContainerMenu {
     private final ContainerData containerData;
 
     public MortarMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public MortarMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -62,7 +62,11 @@ public class MortarMenu extends AbstractContainerMenu {
     }
 
     public boolean isCrafting() {
-        return containerData.get(0) > 0;
+        return containerData.get(1) > 0;
+    }
+
+    public boolean hasRecipe() {
+        return containerData.get(3) == 1;
     }
 
     public Vector3f getColor(){

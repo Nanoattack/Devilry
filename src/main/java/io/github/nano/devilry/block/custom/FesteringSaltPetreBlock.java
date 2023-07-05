@@ -24,24 +24,23 @@ public class FesteringSaltPetreBlock extends Block {
 
 
     public void randomTick(@NotNull BlockState pState, @NotNull ServerLevel pLevel, @NotNull BlockPos pPos, RandomSource pRandom) {
-        if (pRandom.nextInt(GROWTH_CHANCE) == 0) {
+        if (pRandom.nextInt(GROWTH_CHANCE) == 4) {
             Direction direction = DIRECTIONS[pRandom.nextInt(DIRECTIONS.length)];
             BlockPos blockpos = pPos.relative(direction);
             BlockState blockstate = pLevel.getBlockState(blockpos);
             Block block = null;
             if (canClusterGrowAtState(blockstate)) {
-                block = ModBlocks.SMALL_SALPETRE_BUD.get()
-                ;
-            } else if (blockstate.is(Blocks.SMALL_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-                block = Blocks.MEDIUM_AMETHYST_BUD;
-            } else if (blockstate.is(Blocks.MEDIUM_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-                block = Blocks.LARGE_AMETHYST_BUD;
-            } else if (blockstate.is(Blocks.LARGE_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-                block = Blocks.AMETHYST_CLUSTER;
+                block = ModBlocks.SMALL_SALPETRE_BUD.get();
+            } else if (blockstate.is(ModBlocks.SMALL_SALPETRE_BUD.get()) && blockstate.getValue(SaltPetreClusterBlock.FACING) == direction) {
+                block = ModBlocks.MEDIUM_SALTPETRE_BUD.get();
+            } else if (blockstate.is(ModBlocks.MEDIUM_SALTPETRE_BUD.get()) && blockstate.getValue(SaltPetreClusterBlock.FACING) == direction) {
+                block = ModBlocks.LARGE_SALTPETRE_BUD.get();
+            } else if (blockstate.is(ModBlocks.LARGE_SALTPETRE_BUD.get()) && blockstate.getValue(SaltPetreClusterBlock.FACING) == direction) {
+                block = ModBlocks.SALTPETRE_CLUSTER.get();
             }
 
             if (block != null) {
-                BlockState blockState = block.defaultBlockState().setValue(AmethystClusterBlock.FACING, direction).setValue(AmethystClusterBlock.WATERLOGGED, blockstate.getFluidState().getType() == Fluids.WATER);
+                BlockState blockState = block.defaultBlockState().setValue(SaltPetreClusterBlock.FACING, direction).setValue(SaltPetreClusterBlock.WATERLOGGED, blockstate.getFluidState().getType() == Fluids.WATER);
                 pLevel.setBlockAndUpdate(blockpos, blockState);
             }
 

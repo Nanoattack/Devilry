@@ -13,9 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -44,15 +41,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 //todo
 
-public class MortarBlockEntity extends BlockEntity implements MenuProvider {
+public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     public int turns = 0;
-    public int maxTurns = 0;
+    public int maxTurns = 4;
     public boolean isTurning;
-    public boolean shouldStop;
     public int time = 0;
     public int fixedTime = 0;
     public int color;
-    public boolean recipeInside = false;
 
     public final ItemStackHandler itemHandler = new ItemStackHandler(8) {
         @Override
@@ -66,7 +61,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
 
             ArrayList<ItemStack> container = new ArrayList<>();
             for (int i = 1; i <= 6; i++) {
-                container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
+                container.add(AltarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
             List<MortarRecipe> possibleRecipes;
             try {
@@ -100,11 +95,11 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
 
         @Override
         protected void onContentsChanged(int slot) {
-            MortarBlockEntity.this.setChanged();
+            AltarBlockEntity.this.setChanged();
             turns = 0;
             ArrayList<ItemStack> container = new ArrayList<>();
             for (int i = 1; i <= 6; i++) {
-                container.add(MortarBlockEntity.this.itemHandler.getStackInSlot(i));
+                container.add(AltarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
             List<MortarRecipe> recipes;
             try {
@@ -115,7 +110,6 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             if (recipes.size() > 0) {
                 maxTurns = recipes.get(0).getNeededCrushes();
                 color = recipes.get(0).getColor();
-                recipeInside = hasRecipe();
             } else {
                 maxTurns = 0;
                 color = 0;
@@ -134,7 +128,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     public final ContainerData mortarData;
 
-    public MortarBlockEntity(BlockPos pos, BlockState state) {
+    public AltarBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
         cache.set(CacheBuilder.newBuilder().build(new RecipeCache<>() {
             @Override
@@ -153,15 +147,14 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
         }));
 
-        mortarData = new SimpleContainerData(4) {
+        mortarData = new SimpleContainerData(3) {
             @Override
             public int get(int index)
             {
                 return switch (index) {
-                    case 0 -> MortarBlockEntity.this.turns;
-                    case 1 -> MortarBlockEntity.this.maxTurns;
-                    case 2 -> MortarBlockEntity.this.color;
-                    case 3 -> MortarBlockEntity.this.recipeInside ? 1 : 0;
+                    case 0 -> AltarBlockEntity.this.turns;
+                    case 1 -> AltarBlockEntity.this.maxTurns;
+                    case 2 -> AltarBlockEntity.this.color;
                     default -> 0;
                 };
             }
@@ -169,10 +162,9 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public void set(int index, int value) {
                 switch (index) {
-                    case 0: MortarBlockEntity.this.turns = value;
-                    case 1: MortarBlockEntity.this.maxTurns  = value;
-                    case 2: MortarBlockEntity.this.color = value;
-                    case 3: MortarBlockEntity.this.recipeInside = value == 1;
+                    case 0: AltarBlockEntity.this.turns = value;
+                    case 1: AltarBlockEntity.this.maxTurns  = value;
+                    case 2: AltarBlockEntity.this.color = value;
                 }
             }
         };
@@ -216,22 +208,8 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
         nbt.putInt("turns", this.turns);
         nbt.putInt("maxTurns", this.maxTurns);
         nbt.putInt("color", this.color);
-        nbt.putBoolean("isRecipe", recipeInside);
 
         super.saveAdditional(nbt);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        tag.put("inventory", itemHandler.serializeNBT());
-        return tag;
-    }
-
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -241,7 +219,6 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
         turns = nbt.getInt("turns");
         maxTurns = nbt.getInt("maxTurns");
         color = nbt.getInt("color");
-        recipeInside = nbt.getBoolean("isRecipe");
     }
 
     public boolean hasRecipe() {

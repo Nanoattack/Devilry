@@ -30,7 +30,9 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu>
         final int j = (this.height - imageHeight) / 2;
         guiGraphics.blit(GUI,  i, j, 0, 0, imageWidth, imageHeight, 256, 256);
         guiGraphics.blit(GUI, i + 81, j + 28, 178, 0, 14, this.menu.getProgress());
-        blitWithColor(guiGraphics.pose(), GUI,i + 44, i + 44 + 88, j + 26, j + 26 + 51, 0, 44, 132, 192, 243, menu.getColor().x, menu.getColor().y, menu.getColor().z, 1);
+        if (this.menu.hasRecipe()) {
+            this.blit(guiGraphics, GUI, i + 44, j + 26, 44, 192, 88, 51);
+        }
     }
 
     @Override
@@ -41,18 +43,22 @@ public class MortarScreen extends AbstractContainerScreen<MortarMenu>
         guiGraphics.renderComponentHoverEffect(this.font, null, x, y);
     }
 
-    void blitWithColor(PoseStack pose, ResourceLocation textureLocation, int x1, int x2, int y1, int y2, int z, float u1, float u2, float v1, float v2, float red, float green, float blue, float alpha) {
-        RenderSystem.setShaderTexture(0, textureLocation);
+    void innerBlit(GuiGraphics guiGraphics, ResourceLocation p_283461_, int p_281399_, int p_283222_, int p_283615_, int p_283430_, float p_283247_, float p_282598_, float p_282883_, float p_283017_) {
+        RenderSystem.setShaderTexture(0, p_283461_);
         RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
         RenderSystem.enableBlend();
-        Matrix4f matrix4f = pose.last().pose();
+        Matrix4f matrix4f = guiGraphics.pose().last().pose();
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
-        bufferbuilder.vertex(matrix4f, (float)x1, (float)y1, (float)z).color(red, green, blue, alpha).uv(u1, v1).endVertex();
-        bufferbuilder.vertex(matrix4f, (float)x1, (float)y2, (float)z).color(red, green, blue, alpha).uv(u1, v2).endVertex();
-        bufferbuilder.vertex(matrix4f, (float)x2, (float)y2, (float)z).color(red, green, blue, alpha).uv(u2, v2).endVertex();
-        bufferbuilder.vertex(matrix4f, (float)x2, (float)y1, (float)z).color(red, green, blue, alpha).uv(u2, v1).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)p_281399_, (float)p_283615_, (float) 1).color(menu.getColor().x(), menu.getColor().z(), menu.getColor().y(), 1).uv(p_283247_, p_282883_).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)p_281399_, (float)p_283430_, (float) 1).color(menu.getColor().x(), menu.getColor().z(), menu.getColor().y(), 1).uv(p_283247_, p_283017_).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)p_283222_, (float)p_283430_, (float) 1).color(menu.getColor().x(), menu.getColor().z(), menu.getColor().y(), 1).uv(p_282598_, p_283017_).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)p_283222_, (float)p_283615_, (float) 1).color(menu.getColor().x(), menu.getColor().z(), menu.getColor().y(), 1).uv(p_282598_, p_282883_).endVertex();
         BufferUploader.drawWithShader(bufferbuilder.end());
         RenderSystem.disableBlend();
+    }
+
+    void blit(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, float u, float v, int width, int height) {
+        this.innerBlit(guiGraphics, texture, x, x + width, y, y + height, (u + 0.0F) / (float) 256, (u + (float)width) / (float) 256, (v + 0.0F) / (float) 256, (v + (float)height) / (float) 256);
     }
 }
