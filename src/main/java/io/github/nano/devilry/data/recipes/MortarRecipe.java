@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.nano.devilry.block.ModBlocks;
 import io.github.nano.devilry.container.CacheItem;
+import io.github.nano.devilry.data.recipes.utility.HashedRecipe;
 import io.github.nano.devilry.util.Utils;
 import io.github.nano.devilry.util.tags.DevilryTags;
 import net.minecraft.core.NonNullList;
@@ -25,7 +26,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 //fixme
 //todo
 

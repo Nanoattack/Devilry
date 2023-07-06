@@ -25,11 +25,17 @@ public class ModRecipeTypes
     public static final RegistryObject<PestleRecipe.Serializer> PESTLE_SERIALIZER
             = RECIPE_SERIALIZER.register("crushing", PestleRecipe.Serializer::new);
 
+    public static final RegistryObject<AltarRecipe.Serializer> DEMON_ALTAR_SERIALIZER
+            = RECIPE_SERIALIZER.register("altar_crafting", AltarRecipe.Serializer::new);
+
     public static RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
             RECIPE_TYPE.register( "grinding", () -> createType("grinding"));
 
-    public  static RegistryObject<RecipeType<PestleRecipe>> PESTLE_RECIPE =
+    public static RegistryObject<RecipeType<PestleRecipe>> PESTLE_RECIPE =
             RECIPE_TYPE.register("crushing", () -> createType("crushing"));
+
+    public static RegistryObject<RecipeType<AltarRecipe>> DEMON_ALTAR_RECIPE =
+            RECIPE_TYPE.register("altar_crafting", () -> createType("altar_crafting"));
 
     private static <T extends Recipe<?>> RecipeType<T> createType(String identifier){
         return new RecipeType<>() {

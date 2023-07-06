@@ -2,7 +2,7 @@ package io.github.nano.devilry.container;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import io.github.nano.devilry.data.recipes.HashedRecipe;
+import io.github.nano.devilry.data.recipes.utility.HashedRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;

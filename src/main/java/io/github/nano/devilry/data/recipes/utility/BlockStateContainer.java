@@ -1,4 +1,4 @@
-package io.github.nano.devilry.data.recipes;
+package io.github.nano.devilry.data.recipes.utility;
 
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.Container;

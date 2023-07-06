@@ -1,4 +1,4 @@
-package io.github.nano.devilry.data.recipes;
+package io.github.nano.devilry.data.recipes.utility;
 
 import io.github.nano.devilry.container.CacheItem;
 import net.minecraft.world.Container;

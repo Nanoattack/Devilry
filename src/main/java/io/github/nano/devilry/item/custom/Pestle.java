@@ -1,6 +1,6 @@
 package io.github.nano.devilry.item.custom;
 
-import io.github.nano.devilry.data.recipes.BlockStateContainer;
+import io.github.nano.devilry.data.recipes.utility.BlockStateContainer;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
 import io.github.nano.devilry.data.recipes.PestleRecipe;
 import io.github.nano.devilry.networking.ModMessages;

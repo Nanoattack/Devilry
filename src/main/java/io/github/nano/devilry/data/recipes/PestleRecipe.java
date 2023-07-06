@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
+import io.github.nano.devilry.data.recipes.utility.BlockStateContainer;
 import io.github.nano.devilry.item.ModItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
