@@ -18,6 +18,10 @@ public class ModContainers
             = CONTAINERS.register("mortar_container",
             ()-> IForgeMenuType.create(MortarMenu::new));
 
+    public static final RegistryObject<MenuType<DemonicAltarMenu>> DEMONIC_ALTAR_CONTAINER
+            = CONTAINERS.register("demonic_altar_container",
+            ()-> IForgeMenuType.create(DemonicAltarMenu::new));
+
     public static void register(IEventBus eventBus)
     {
         CONTAINERS.register(eventBus);

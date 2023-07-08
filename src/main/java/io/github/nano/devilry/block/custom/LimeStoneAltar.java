@@ -156,7 +156,7 @@ public class LimeStoneAltar extends Block {
         }
     }
 
-    static BooleanProperty getPropertyFromDirection(Direction direction) {
+    public static BooleanProperty getPropertyFromDirection(Direction direction) {
         return switch (direction) {
             case EAST -> EAST;
             case SOUTH -> SOUTH;

@@ -1,9 +1,18 @@
 package io.github.nano.devilry.block.custom;
 
 import io.github.nano.devilry.block.ModBlocks;
+import io.github.nano.devilry.blockentity.DemonicAltarBlockEntity;
+import io.github.nano.devilry.container.DemonicAltarMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,12 +26,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class DemonicAltarSide extends Block {
@@ -119,5 +131,26 @@ public class DemonicAltarSide extends Block {
             }
         }
         return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+    }
+
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (!pLevel.isClientSide() && pLevel.getBlockEntity(pPos.relative(pState.getValue(FACING).getCounterClockWise())) instanceof DemonicAltarBlockEntity demonicAltarBlockEntity) {
+            if (pHand == InteractionHand.MAIN_HAND) {
+                MenuProvider containerProvider = new MenuProvider() {
+                    @Override
+                    public @NotNull Component getDisplayName() {
+                        return Component.translatableWithFallback("screen.devilry.demonic_altar", "Demonic Altar");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player playerEntity) {
+                        return new DemonicAltarMenu(windowId, playerInventory, demonicAltarBlockEntity, demonicAltarBlockEntity.altarData);
+                    }
+                };
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, containerProvider, pPos.relative(pState.getValue(FACING).getCounterClockWise()));
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 }

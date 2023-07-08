@@ -1,6 +1,6 @@
 package io.github.nano.devilry.data.recipes.utility;
 
-import io.github.nano.devilry.container.CacheItem;
+import io.github.nano.devilry.container.cache.CacheItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
 

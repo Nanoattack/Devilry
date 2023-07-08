@@ -1,12 +1,11 @@
 package io.github.nano.devilry.container;
 
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.blockentity.MortarBlockEntity;
+import io.github.nano.devilry.blockentity.DemonicAltarBlockEntity;
 import io.github.nano.devilry.container.cache.basicItem;
-import io.github.nano.devilry.data.recipes.MortarRecipe;
+import io.github.nano.devilry.data.recipes.AltarRecipe;
 import io.github.nano.devilry.screen.slot.ResultSlotItemHandler;
 import io.github.nano.devilry.util.Utils;
-import io.github.nano.devilry.util.tags.DevilryTags;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.NonNullList;
@@ -22,77 +21,57 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class MortarMenu extends AbstractContainerMenu {
-    private final MortarBlockEntity blockEntity;
+public class DemonicAltarMenu extends AbstractContainerMenu {
+    private final DemonicAltarBlockEntity blockEntity;
     private final Level level;
-    private final ContainerData containerData;
-
-    public MortarMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+    public DemonicAltarMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(0));
     }
 
-    public MortarMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModContainers.MORTAR_CONTAINER.get(), id);
-        this.blockEntity = (MortarBlockEntity) entity;
+    public DemonicAltarMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModContainers.DEMONIC_ALTAR_CONTAINER.get(), id);
+        this.blockEntity = (DemonicAltarBlockEntity) entity;
         this.level = inv.player.level();
-        this.containerData = data;
 
         addPlayerInventory(inv);
         addPlayerHotBar(inv);
 
         blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 80, 10)); //pestle slot
-            addSlot(new SlotItemHandler(h, 1, 48, 10)); //top left
-            addSlot(new SlotItemHandler(h, 2, 35, 32)); //center left
-            addSlot(new SlotItemHandler(h, 3, 48, 54)); //bottom left
-            addSlot(new SlotItemHandler(h, 4, 112, 10)); //top right
-            addSlot(new SlotItemHandler(h, 5, 125, 32)); //center right
-            addSlot(new SlotItemHandler(h, 6, 112, 54)); //bottom center
-            addSlot(new ResultSlotItemHandler(h, 7, 80, 46)); //result (center)
+            addSlot(new SlotItemHandler(h, 0, 97, 11));
+            addSlot(new SlotItemHandler(h, 1, 124, 30));
+            addSlot(new SlotItemHandler(h, 2, 117, 61));
+            addSlot(new SlotItemHandler(h, 3, 77, 61));
+            addSlot(new SlotItemHandler(h, 4, 70, 30));
+            addSlot(new SlotItemHandler(h, 5, 97, 39));
+            addSlot(new ResultSlotItemHandler(h, 6, 176, 32));
         });
 
         addDataSlots(data);
     }
 
-    public boolean isCrafting() {
-        return containerData.get(1) > 0;
-    }
-
-    public boolean hasRecipe() {
-        return containerData.get(3) == 1;
-    }
-
-    public Vector3f getColor(){
-        return new Vector3f((containerData.get(2) >> 16) & 0xFF, (containerData.get(2) >> 8) & 0xFF, containerData.get(2) & 0xFF);
-    }
-    public int getProgress(){
-        return (15 / Math.max(1, containerData.get(1))) * containerData.get(0);
-    }
-
     @Override
     public boolean stillValid(@NotNull Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()),
-                blockEntity.getBlockPos()), pPlayer, ModBlocks.MORTAR.get());
+                blockEntity.getBlockPos()), pPlayer, ModBlocks.DEMONIC_ALTAR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 30 + l * 18, 85 + i * 18));
             }
         }
     }
 
     private void addPlayerHotBar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
+            this.addSlot(new Slot(playerInventory, i, 30 + i * 18, 143));
         }
     }
 
@@ -136,72 +115,44 @@ public class MortarMenu extends AbstractContainerMenu {
         // Check if the slot clicked is one of the vanilla container slots
         if (index < 36) {
             // This is a vanilla container slot so merge the stack into the tile inventory
-            if (this.getItems().get(index).is(DevilryTags.Items.PESTLE_IN_MORTAR)) {
-                if (!moveItemStackTo(this.getItems().get(index), 36, 37, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
             try {
-                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 6, (MortarRecipe recipe) -> {
-                        var copy = new ArrayList<>(recipe.getIngredients());
+                if (!Utils.smartQuickMove(blockEntity.cache.get(), sourceStack, false, this, 6, (AltarRecipe recipe) -> {
+                    var copy = new ArrayList<>(recipe.getIngredients());
                     NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
                     List<ItemStack> subList = this.getItems().subList(37, 43);
-                    if (recipe.isShaped()) {
-                        for (int i = 0; i < subList.size(); i++) {
-                            ItemStack itemStack = subList.get(i);
-                            items.set(i, itemStack);
-                        }
-                        for (int i = 0; i < items.size(); i++) {
-                            ItemStack item = items.get(i);
-                            if (copy.get(i).test(item)) {
-                                copy.set(i, Ingredient.EMPTY);
-                            }
-                        }
-                        IntList ints = new IntArrayList();
-
-                        for (int i = 0; i < copy.size(); i++) {
-                            Ingredient ingredient = copy.get(i);
-                            if (ingredient.test(sourceStack)) {
-                                ints.add(i);
-                            }
-                        }
-                        level.getProfiler().pop();
-                        return ints.intStream();
-                    } else {
-                        for (int i = 0; i < subList.size(); i++) {
-                            ItemStack itemStack = subList.get(i);
-                            items.set(i, itemStack);
-                        }
-
-                        outer:
-                            for (int i = 0; i < copy.size(); i++)  {
-                                for (int j = 0; j < items.size(); j++) {
-                                    ItemStack item = items.get(j);
-                                    if (copy.get(i).test(item)) {
-                                        items.set(j, ItemStack.EMPTY);
-                                        copy.set(i, Ingredient.EMPTY);
-                                        continue outer;
-                                    }
-                                }
-                            }
-
-                        IntList ints = new IntArrayList();
-
-                        for (Ingredient ingredient : copy) {
-                            if (ingredient.isEmpty()) {
-                                continue;
-                            }
-                            if (ingredient.test(sourceStack)) {
-                                for (int j = 0; j < items.size(); j++) {
-                                    if (items.get(j).isEmpty() || items.get(j).is(sourceStack.getItem())) {
-                                        ints.add(j);
-                                    }
-                                }
-                            }
-                        }
-                        level.getProfiler().pop();
-                        return ints.intStream();
+                    for (int i = 0; i < subList.size(); i++) {
+                        ItemStack itemStack = subList.get(i);
+                        items.set(i, itemStack);
                     }
+
+                    outer:
+                        for (int i = 0; i < copy.size(); i++)  {
+                            for (int j = 0; j < items.size(); j++) {
+                                ItemStack item = items.get(j);
+                                if (copy.get(i).test(item)) {
+                                    items.set(j, ItemStack.EMPTY);
+                                    copy.set(i, Ingredient.EMPTY);
+                                    continue outer;
+                                }
+                            }
+                        }
+
+                    IntList ints = new IntArrayList();
+
+                    for (Ingredient ingredient : copy) {
+                        if (ingredient.isEmpty()) {
+                            continue;
+                        }
+                        if (ingredient.test(sourceStack)) {
+                            for (int j = 0; j < items.size(); j++) {
+                                if (items.get(j).isEmpty() || items.get(j).is(sourceStack.getItem())) {
+                                    ints.add(j);
+                                }
+                            }
+                        }
+                    }
+                    level.getProfiler().pop();
+                    return ints.intStream();
 
                 }, itemStack -> new basicItem(itemStack.getItem()))) {
                     level.getProfiler().pop();

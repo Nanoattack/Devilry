@@ -2,20 +2,22 @@ package io.github.nano.devilry.blockentity;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
-import io.github.nano.devilry.container.CacheItem;
-import io.github.nano.devilry.container.MortarItem;
-import io.github.nano.devilry.container.MortarMenu;
-import io.github.nano.devilry.container.RecipeCache;
+import com.mojang.datafixers.util.Either;
+import io.github.nano.devilry.container.DemonicAltarMenu;
+import io.github.nano.devilry.container.cache.CacheItem;
+import io.github.nano.devilry.container.cache.basicItem;
+import io.github.nano.devilry.container.cache.RecipeCache;
 import io.github.nano.devilry.data.recipes.AltarRecipe;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
-import io.github.nano.devilry.data.recipes.MortarRecipe;
-import io.github.nano.devilry.util.tags.DevilryTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -42,7 +44,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 //todo
 
-public class AltarBlockEntity extends BlockEntity implements MenuProvider {
+public class DemonicAltarBlockEntity extends BlockEntity implements MenuProvider {
+    private LivingEntity sacrifice;
+
     public final ItemStackHandler itemHandler = new ItemStackHandler(7) {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
@@ -51,59 +55,30 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
 
             ArrayList<ItemStack> container = new ArrayList<>();
             for (int i = 0; i <= 5; i++) {
-                container.add(AltarBlockEntity.this.itemHandler.getStackInSlot(i));
+                container.add(DemonicAltarBlockEntity.this.itemHandler.getStackInSlot(i));
             }
             List<AltarRecipe> possibleRecipes;
             try {
-                possibleRecipes = cache.get().get(container.stream().map(map -> new MortarItem(map.getItem())).toList());
+                possibleRecipes = cache.get().get(container.stream().map(map -> new basicItem(map.getItem())).toList());
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
-            for (MortarRecipe possibleRecipe : possibleRecipes) {
-                if (possibleRecipe.isShaped()) {
-                    if (possibleRecipe.getIngredients().get(slot).test(stack)) {
-                        return true;
-                    }
-                } else {
-                    var list = new ArrayList<>(possibleRecipe.getIngredients());
-                    var items = new ArrayList<>(container);
-                    for (int i = 0; i < list.size(); i++) {
-                        for (int j = 0; j < items.size(); j++) {
-                            if (list.get(i).test(items.get(j))) {
-                                items.set(j, ItemStack.EMPTY);
-                                list.set(i, Ingredient.EMPTY);
-                            }
+            for (AltarRecipe possibleRecipe : possibleRecipes) {
+                var list = new ArrayList<>(possibleRecipe.getIngredients());
+                var items = new ArrayList<>(container);
+                for (int i = 0; i < list.size(); i++) {
+                    for (int j = 0; j < items.size(); j++) {
+                        if (list.get(i).test(items.get(j))) {
+                            items.set(j, ItemStack.EMPTY);
+                            list.set(i, Ingredient.EMPTY);
                         }
                     }
-                    if (list.stream().anyMatch(ingredient -> ingredient.test(stack))) {
-                        return true;
-                    }
+                }
+                if (list.stream().anyMatch(ingredient -> ingredient.test(stack))) {
+                    return true;
                 }
             }
             return false;
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            AltarBlockEntity.this.setChanged();
-            turns = 0;
-            ArrayList<ItemStack> container = new ArrayList<>();
-            for (int i = 1; i <= 6; i++) {
-                container.add(AltarBlockEntity.this.itemHandler.getStackInSlot(i));
-            }
-            List<MortarRecipe> recipes;
-            try {
-                recipes = cache.get().get(new ArrayList<>(container.stream().map(map -> new MortarItem(map.getItem())).toList()));
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-            if (recipes.size() > 0) {
-                maxTurns = recipes.get(0).getNeededCrushes();
-                color = recipes.get(0).getColor();
-            } else {
-                maxTurns = 0;
-                color = 0;
-            }
         }
 
         @Override
@@ -116,10 +91,10 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     public final AtomicReference<LoadingCache<List<? extends CacheItem>, List<AltarRecipe>>> cache = new AtomicReference<>();
 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
-    public final ContainerData mortarData;
+    public final ContainerData altarData;
 
-    public AltarBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.MORTAR_ENTITY.get(), pos, state);
+    public DemonicAltarBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.DEMONIC_ALTAR_ENTITY.get(), pos, state);
         cache.set(CacheBuilder.newBuilder().build(new RecipeCache<>() {
             @Override
             public Level getLevel() {
@@ -127,48 +102,38 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             }
 
             @Override
-            public AtomicReference<LoadingCache<List<? extends CacheItem>, List<MortarRecipe>>> getCache() {
+            public AtomicReference<LoadingCache<List<? extends CacheItem>, List<AltarRecipe>>> getCache() {
                 return cache;
             }
 
             @Override
-            public RecipeType<MortarRecipe> getRecipeType() {
-                return ModRecipeTypes.MORTAR_RECIPE.get();
+            public RecipeType<AltarRecipe> getRecipeType() {
+                return ModRecipeTypes.DEMON_ALTAR_RECIPE.get();
             }
         }));
 
-        mortarData = new SimpleContainerData(3) {
+        altarData = new SimpleContainerData(0) {
             @Override
             public int get(int index)
             {
-                return switch (index) {
-                    case 0 -> AltarBlockEntity.this.turns;
-                    case 1 -> AltarBlockEntity.this.maxTurns;
-                    case 2 -> AltarBlockEntity.this.color;
-                    default -> 0;
-                };
+                return 0;
             }
 
             @Override
             public void set(int index, int value) {
-                switch (index) {
-                    case 0: AltarBlockEntity.this.turns = value;
-                    case 1: AltarBlockEntity.this.maxTurns  = value;
-                    case 2: AltarBlockEntity.this.color = value;
-                }
             }
         };
     }
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatableWithFallback("devilry.block_entities.mortar", "Mortar");
+        return Component.translatableWithFallback("devilry.block_entities.demonic_altar", "Demonic Altar");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return new MortarMenu(pContainerId, pPlayerInventory, this, this.mortarData);
+        return new DemonicAltarMenu(pContainerId, pPlayerInventory, this, this.altarData);
     }
 
     @Override
@@ -195,9 +160,6 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
-        nbt.putInt("turns", this.turns);
-        nbt.putInt("maxTurns", this.maxTurns);
-        nbt.putInt("color", this.color);
 
         super.saveAdditional(nbt);
     }
@@ -206,9 +168,6 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
     public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
-        turns = nbt.getInt("turns");
-        maxTurns = nbt.getInt("maxTurns");
-        color = nbt.getInt("color");
     }
 
     public boolean hasRecipe() {
@@ -218,20 +177,37 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
 
-        Optional<MortarRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inventory, level);
+        Optional<AltarRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.DEMON_ALTAR_RECIPE.get(), inventory, level);
 
-        return recipe.isPresent() && itemHandler.getStackInSlot(0).is(DevilryTags.Items.PESTLE_IN_MORTAR)
-                && canInsertAmountIntoOutputSlot(inventory) &&
+        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && correctSacrifice(recipe.get()) &&
                 canInsertItemIntoOutputSlot(inventory, recipe.get().assemble(inventory, level.registryAccess()));
     }
 
+    public boolean correctSacrifice(AltarRecipe recipe){
+        if (sacrifice == null) {
+            return false;
+        }
+        for (Either<EntityType<?>, MobType> entityTypeMobTypeEither : recipe.getSacrifice()) {
+            if (entityTypeMobTypeEither.left().isPresent()) {
+                if (sacrifice.getType().equals(entityTypeMobTypeEither.left().get())) {
+                    return true;
+                }
+            } else {
+                if (sacrifice.getMobType() == entityTypeMobTypeEither.right().get()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
-        return inventory.getItem(7).getItem() == stack.getItem() || inventory.getItem(7).isEmpty();
+        return inventory.getItem(6).getItem() == stack.getItem() || inventory.getItem(6).isEmpty();
     }
 
     private boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
-        return inventory.getItem(7).getMaxStackSize() > inventory.getItem(7).getCount();
+        return inventory.getItem(6).getMaxStackSize() > inventory.getItem(6).getCount();
     }
 
     public void craftItem() {
@@ -241,29 +217,28 @@ public class AltarBlockEntity extends BlockEntity implements MenuProvider {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
 
-        Optional<MortarRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(ModRecipeTypes.MORTAR_RECIPE.get(), inventory, level);
+        Optional<AltarRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(ModRecipeTypes.DEMON_ALTAR_RECIPE.get(), inventory, level);
 
         if(hasRecipe()) {
-            for (int i = 1; i < 7; i++) {
+            for (int i = 1; i < 6; i++) {
                 itemHandler.extractItem(i, 1, false);
             }
+            setSacrifice(null);
             ItemStack stack = itemHandler.getStackInSlot(0);
             stack.setDamageValue(itemHandler.getStackInSlot(0).getDamageValue() +1);
             itemHandler.setStackInSlot(0, stack);
-            itemHandler.setStackInSlot(7, new ItemStack(recipe.get().assemble(inventory, level.registryAccess()).getItem(),
-                    itemHandler.getStackInSlot(7).getCount() + recipe.get().assemble(inventory, level.registryAccess()).getCount()));
+            itemHandler.setStackInSlot(6, new ItemStack(recipe.get().assemble(inventory, level.registryAccess()).getItem(),
+                    itemHandler.getStackInSlot(6).getCount() + recipe.get().assemble(inventory, level.registryAccess()).getCount()));
 
-            this.turns = 0;
         }
     }
 
-    public void tick() {
-        if (isTurning) {
-            time++;
-            fixedTime++;
-        } else {
-            time = 0;
-        }
+    public LivingEntity getSacrifice() {
+        return sacrifice;
+    }
+
+    public void setSacrifice(LivingEntity sacrifice) {
+        this.sacrifice = sacrifice;
     }
 }

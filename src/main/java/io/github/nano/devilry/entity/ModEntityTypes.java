@@ -1,4 +1,4 @@
-package io.github.nano.devilry.container.entity;
+package io.github.nano.devilry.entity;
 
 import io.github.nano.devilry.ModMain;
 import net.minecraft.resources.ResourceLocation;

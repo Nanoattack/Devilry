@@ -1,22 +1,14 @@
 package io.github.nano.devilry.util;
 
 import com.google.common.cache.LoadingCache;
-import com.google.gson.JsonElement;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
-import io.github.nano.devilry.container.CacheItem;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import io.github.nano.devilry.container.cache.CacheItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

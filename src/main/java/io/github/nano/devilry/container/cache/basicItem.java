@@ -1,10 +1,10 @@
-package io.github.nano.devilry.container;
+package io.github.nano.devilry.container.cache;
 
 import com.google.common.base.Objects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public record MortarItem(Item item) implements CacheItem{
+public record basicItem(Item item) implements CacheItem{
     @Override
     public ItemStack getItemStack() {
         return new ItemStack(item);
@@ -14,7 +14,7 @@ public record MortarItem(Item item) implements CacheItem{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MortarItem that = (MortarItem) o;
+        basicItem that = (basicItem) o;
         return item.equals(that.item);
     }
 

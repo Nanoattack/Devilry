@@ -2,10 +2,10 @@ package io.github.nano.devilry.blockentity;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
-import io.github.nano.devilry.container.CacheItem;
-import io.github.nano.devilry.container.MortarItem;
+import io.github.nano.devilry.container.cache.CacheItem;
+import io.github.nano.devilry.container.cache.basicItem;
 import io.github.nano.devilry.container.MortarMenu;
-import io.github.nano.devilry.container.RecipeCache;
+import io.github.nano.devilry.container.cache.RecipeCache;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
 import io.github.nano.devilry.data.recipes.MortarRecipe;
 import io.github.nano.devilry.util.tags.DevilryTags;
@@ -70,7 +70,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
             List<MortarRecipe> possibleRecipes;
             try {
-                possibleRecipes = cache.get().get(container.stream().map(map -> new MortarItem(map.getItem())).toList());
+                possibleRecipes = cache.get().get(container.stream().map(map -> new basicItem(map.getItem())).toList());
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
@@ -108,7 +108,7 @@ public class MortarBlockEntity extends BlockEntity implements MenuProvider {
             }
             List<MortarRecipe> recipes;
             try {
-                recipes = cache.get().get(new ArrayList<>(container.stream().map(map -> new MortarItem(map.getItem())).toList()));
+                recipes = cache.get().get(new ArrayList<>(container.stream().map(map -> new basicItem(map.getItem())).toList()));
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }

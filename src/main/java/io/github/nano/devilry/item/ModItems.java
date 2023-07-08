@@ -2,8 +2,9 @@ package io.github.nano.devilry.item;
 
 import io.github.nano.devilry.ModMain;
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.container.entity.ModEntityTypes;
+import io.github.nano.devilry.entity.ModEntityTypes;
 import io.github.nano.devilry.events.ModSoundEvents;
+import io.github.nano.devilry.item.custom.DemonicEssence;
 import io.github.nano.devilry.item.custom.Guano;
 import io.github.nano.devilry.item.custom.Knife;
 import io.github.nano.devilry.item.custom.Pestle;
@@ -91,6 +92,7 @@ public class ModItems
 
     public static final RegistryObject<Item> SULPHUR = register("sulphur", ()-> new Item(new Item.Properties()), Tab.DEVILRY_MATERIALS);
 
+    public static final RegistryObject<DemonicEssence> DEMONIC_ESSENCE = register("demonic_essence", () -> new DemonicEssence(new Item.Properties()), Tab.DEVILRY_MATERIALS);
     public static <T extends Item> RegistryObject<T> register(String name, Supplier<T> item, Tab tab) {
         var registryObject = ITEMS.register(name, item);
         switch (tab) {

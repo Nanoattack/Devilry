@@ -1,20 +1,17 @@
 package io.github.nano.devilry.data.recipes;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Either;
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.container.CacheItem;
+import io.github.nano.devilry.container.cache.CacheItem;
 import io.github.nano.devilry.data.recipes.utility.HashedRecipe;
-import io.github.nano.devilry.util.Utils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +25,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 //fixme
 //todo

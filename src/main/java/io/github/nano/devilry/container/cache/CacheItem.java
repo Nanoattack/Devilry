@@ -1,4 +1,4 @@
-package io.github.nano.devilry.container;
+package io.github.nano.devilry.container.cache;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

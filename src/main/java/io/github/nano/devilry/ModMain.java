@@ -4,10 +4,11 @@ import io.github.nano.devilry.block.ModBlocks;
 import io.github.nano.devilry.blockentity.ModBlockEntities;
 import io.github.nano.devilry.container.ModContainers;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
-import io.github.nano.devilry.container.entity.ModEntityTypes;
+import io.github.nano.devilry.entity.ModEntityTypes;
 import io.github.nano.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.item.ModItems;
 import io.github.nano.devilry.networking.ModMessages;
+import io.github.nano.devilry.screen.DemonicAltarScreen;
 import io.github.nano.devilry.screen.MortarScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
@@ -56,6 +57,7 @@ public class ModMain
     private void doClientStuff(final FMLClientSetupEvent event)
     {
         MenuScreens.register(ModContainers.MORTAR_CONTAINER.get(), MortarScreen::new);
+        MenuScreens.register(ModContainers.DEMONIC_ALTAR_CONTAINER.get(), DemonicAltarScreen::new);
         ModMessages.register();
     }
 }

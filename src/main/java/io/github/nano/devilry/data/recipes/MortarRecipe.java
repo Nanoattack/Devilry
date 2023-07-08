@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.nano.devilry.block.ModBlocks;
-import io.github.nano.devilry.container.CacheItem;
+import io.github.nano.devilry.container.cache.CacheItem;
 import io.github.nano.devilry.data.recipes.utility.HashedRecipe;
 import io.github.nano.devilry.util.Utils;
 import io.github.nano.devilry.util.tags.DevilryTags;

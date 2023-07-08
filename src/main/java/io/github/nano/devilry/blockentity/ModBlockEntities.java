@@ -20,6 +20,11 @@ public class ModBlockEntities
             = BLOCK_ENTITIES.register("mortar_entity", ()-> BlockEntityType.Builder.of(
                     MortarBlockEntity::new, ModBlocks.MORTAR.get()).build(null));
 
+    @SuppressWarnings("ConstantConditions")
+    public static final RegistryObject<BlockEntityType<DemonicAltarBlockEntity>> DEMONIC_ALTAR_ENTITY
+            = BLOCK_ENTITIES.register("demonic_altar_block_entity", () -> BlockEntityType.Builder.of(
+                    DemonicAltarBlockEntity::new, ModBlocks.DEMONIC_ALTAR.get()).build(null));
+
     public static void register(IEventBus eventBus)
     {
         BLOCK_ENTITIES.register(eventBus);

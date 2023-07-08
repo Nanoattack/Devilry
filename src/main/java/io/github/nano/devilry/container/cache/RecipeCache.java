@@ -1,4 +1,4 @@
-package io.github.nano.devilry.container;
+package io.github.nano.devilry.container.cache;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -70,10 +70,10 @@ public abstract class RecipeCache<T extends HashedRecipe<Container>> extends Cac
                     for (int i = 0; i < noDupes.size(); i++) {
                         CacheItem item = (CacheItem) noDupes.get(i);
                         if (item.equals(ingredient)) {
-                            noDupes.set(i, new MortarItem(Items.AIR));
+                            noDupes.set(i, new basicItem(Items.AIR));
                             break;
                         } else {
-                            noDupes.set(i, new MortarItem(Items.STONE));
+                            noDupes.set(i, new basicItem(Items.STONE));
                         }
                     }
                 });
