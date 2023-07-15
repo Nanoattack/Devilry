@@ -9,6 +9,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
@@ -23,7 +25,7 @@ public class DemonicEssence extends Item {
 
     @Override
     public @NotNull InteractionResult useOn(@NotNull UseOnContext pContext) {
-        if (!pContext.getLevel().isClientSide() && pContext.getItemInHand().is(this)) {
+        if (pContext.getItemInHand().is(this)) {
             BlockState clickedBlock = pContext.getLevel().getBlockState(pContext.getClickedPos());
             if (clickedBlock.is(ModBlocks.LIMESTONE_ALTAR.get())) {
                 int sides = (clickedBlock.getValue(LimeStoneAltar.NORTH) ? 1 : 0) << 1 |
@@ -42,15 +44,24 @@ public class DemonicEssence extends Item {
                     return InteractionResult.FAIL;
                 }
                 if (isRight(pContext.getHorizontalDirection(), clickedBlock)) {
-                    pContext.getLevel().setBlock(pContext.getClickedPos(), ModBlocks.DEMONIC_ALTAR.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getClockWise()), 3);
-                    pContext.getLevel().setBlock(pContext.getClickedPos().relative(getDirection(clickedBlock)), ModBlocks.DEMONIC_ALTAR_SIDE.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getCounterClockWise()), 3);
-                    ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().getX(), pContext.getClickedPos().getY(), pContext.getClickedPos().getZ(), 20, 0, 0, 0, 2);
-                    ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getX(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getY(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getZ(), 10, 0, 0, 0, 1);
+                    if (!pContext.getLevel().isClientSide()) {
+                        pContext.getLevel().setBlock(pContext.getClickedPos(), ModBlocks.DEMONIC_ALTAR.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getClockWise()), 3);
+                        pContext.getLevel().setBlock(pContext.getClickedPos().relative(getDirection(clickedBlock)), ModBlocks.DEMONIC_ALTAR_SIDE.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getCounterClockWise()), 3);
+                        ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().getX() + 0.5, pContext.getClickedPos().getY() + 0.5, pContext.getClickedPos().getZ() + 0.5, 20, 0.5, 0.5, 0.5, 2);
+                        ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getX() + 0.5, pContext.getClickedPos().relative(getDirection(clickedBlock)).getY() + 0.5, pContext.getClickedPos().relative(getDirection(clickedBlock)).getZ() + 0.5, 10, 0.5, 0.5, 0.5, 1);
+                    } else {
+                        pContext.getLevel().playLocalSound(pContext.getClickedPos(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, 1, 1, false);
+                    }
                 } else {
-                    pContext.getLevel().setBlock(pContext.getClickedPos().relative(getDirection(clickedBlock)), ModBlocks.DEMONIC_ALTAR.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getCounterClockWise()), 3);
-                    pContext.getLevel().setBlock(pContext.getClickedPos(), ModBlocks.DEMONIC_ALTAR_SIDE.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getClockWise()), 3);
-                    ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().getX(), pContext.getClickedPos().getY(), pContext.getClickedPos().getZ(), 20, 0, 0, 0, 2);
-                    ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getX(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getY(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getZ(), 10, 0, 0, 0, 1);
+                    if (!pContext.getLevel().isClientSide()) {
+                        pContext.getLevel().setBlock(pContext.getClickedPos().relative(getDirection(clickedBlock)), ModBlocks.DEMONIC_ALTAR.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getCounterClockWise()), 3);
+                        pContext.getLevel().setBlock(pContext.getClickedPos(), ModBlocks.DEMONIC_ALTAR_SIDE.get().defaultBlockState().setValue(DemonicAltar.FACING, getDirection(clickedBlock).getClockWise()), 3);
+                        ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().getX() + 0.5, pContext.getClickedPos().getY() + 0.5, pContext.getClickedPos().getZ() + 0.5, 20, 0, 0, 0, 2);
+                        ((ServerLevel) pContext.getLevel()).sendParticles(ParticleTypes.CRIMSON_SPORE.getType(), pContext.getClickedPos().relative(getDirection(clickedBlock)).getX() + 0.5, pContext.getClickedPos().relative(getDirection(clickedBlock)).getY() + 0.5, pContext.getClickedPos().relative(getDirection(clickedBlock)).getZ() + 0.5, 10, 0.5, 0.5, 0.5, 1);
+                        pContext.getLevel().playLocalSound(pContext.getClickedPos().getX(), pContext.getClickedPos().getY(), pContext.getClickedPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, 1, 1, false);
+                    } else {
+                        pContext.getLevel().playLocalSound(pContext.getClickedPos(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, 1, 1, false);
+                    }
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -73,7 +84,6 @@ public class DemonicEssence extends Item {
     }
     private static boolean isRight(Direction direction, BlockState state) {
         return switch (direction) {
-            case NORTH -> state.getValue(LimeStoneAltar.WEST) || state.getValue(LimeStoneAltar.NORTH);
             case SOUTH -> state.getValue(LimeStoneAltar.EAST) || state.getValue(LimeStoneAltar.SOUTH);
             case WEST -> state.getValue(LimeStoneAltar.SOUTH) || state.getValue(LimeStoneAltar.WEST);
             case EAST -> state.getValue(LimeStoneAltar.NORTH) || state.getValue(LimeStoneAltar.EAST);

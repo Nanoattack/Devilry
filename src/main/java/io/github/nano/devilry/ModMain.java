@@ -8,8 +8,10 @@ import io.github.nano.devilry.entity.ModEntityTypes;
 import io.github.nano.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.item.ModItems;
 import io.github.nano.devilry.networking.ModMessages;
+import io.github.nano.devilry.particles.ModParticles;
 import io.github.nano.devilry.screen.DemonicAltarScreen;
 import io.github.nano.devilry.screen.MortarScreen;
+import io.github.nano.devilry.util.ModPOI;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,8 +42,11 @@ public class ModMain
 
         ModRecipeTypes.register(eventbus);
         ModSoundEvents.register(eventbus);
+        ModParticles.PARTICLE_TYPES.register(eventbus);
+
 
         ModEntityTypes.register(eventbus);
+        ModPOI.POI.register(eventbus);
 
 
         eventbus.addListener(this::setup);

@@ -12,9 +12,11 @@ import io.github.nano.devilry.data.recipes.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -160,7 +162,12 @@ public class DemonicAltarBlockEntity extends BlockEntity implements MenuProvider
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
-
+        CompoundTag sacrifice = new CompoundTag();
+        if (this.sacrifice != null && this.sacrifice.getEncodeId() != null) {
+            this.sacrifice.saveWithoutId(sacrifice);
+            sacrifice.putString("id", this.sacrifice.getEncodeId());
+            nbt.put("sacrifice", sacrifice);
+        }
         super.saveAdditional(nbt);
     }
 
@@ -168,6 +175,13 @@ public class DemonicAltarBlockEntity extends BlockEntity implements MenuProvider
     public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+        if (nbt.contains("sacrifice")) {
+            var entity = EntityType.by(nbt.getCompound("sacrifice"));
+            if (entity.isPresent()) {
+                var actualEntity = entity.get().create(getLevel());
+                actualEntity.load(nbt.getCompound("sacrifice"));
+            }
+        }
     }
 
     public boolean hasRecipe() {
