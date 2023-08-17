@@ -3,6 +3,8 @@ package io.github.nano.devilry.events;
 import io.github.nano.devilry.ModMain;
 import io.github.nano.devilry.blockentity.DemonicAltarBlockEntity;
 import io.github.nano.devilry.particles.ModParticles;
+import io.github.nano.devilry.particles.PathParticleOptions;
+import io.github.nano.devilry.particles.UndeadSoulParticle;
 import io.github.nano.devilry.util.ModPOI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -19,6 +21,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.List;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -32,7 +35,7 @@ public class ForgeEvents {
             pos.ifPresent(blockPos -> ((DemonicAltarBlockEntity) Objects.requireNonNull(level.getBlockEntity(blockPos))).setSacrifice(event.getEntity()));
         }
         if (level.isClientSide()) {
-            var particle = Minecraft.getInstance().particleEngine.createParticle(ModParticles.UNDEAD_SOUL.get(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 0, 0, 0);
+            var particle = Minecraft.getInstance().particleEngine.createParticle(new PathParticleOptions(PathParticleOptions.Interpolation.LINEAR, List.of(), 20, 20, PathParticleOptions.End.LINGER, PathParticleOptions.End.REPEAT, 20), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 0, 0, 0);
         }
     }
 }
