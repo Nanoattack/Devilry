@@ -28,6 +28,9 @@ public class ModRecipeTypes
     public static final RegistryObject<AltarRecipe.Serializer> DEMON_ALTAR_SERIALIZER
             = RECIPE_SERIALIZER.register("altar_crafting", AltarRecipe.Serializer::new);
 
+    public static final RegistryObject<CarveRecipe.Serializer> CARVING_SERIALIZER
+            = RECIPE_SERIALIZER.register("carving", CarveRecipe.Serializer::new);
+
     public static RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
             RECIPE_TYPE.register( "grinding", () -> createType("grinding"));
 
@@ -36,6 +39,9 @@ public class ModRecipeTypes
 
     public static RegistryObject<RecipeType<AltarRecipe>> DEMON_ALTAR_RECIPE =
             RECIPE_TYPE.register("altar_crafting", () -> createType("altar_crafting"));
+
+    public static RegistryObject<RecipeType<CarveRecipe>> CARVING_RECIPE =
+            RECIPE_TYPE.register("carving", () -> createType("carving"));
 
     private static <T extends Recipe<?>> RecipeType<T> createType(String identifier){
         return new RecipeType<>() {

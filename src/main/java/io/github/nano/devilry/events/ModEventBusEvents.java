@@ -8,6 +8,7 @@ import io.github.nano.devilry.client.entity.render.MortarBlockEntityRenderer;
 import io.github.nano.devilry.client.entity.render.OwlRenderer;
 import io.github.nano.devilry.entity.ModEntityTypes;
 import io.github.nano.devilry.entity.OwlEntity;
+import io.github.nano.devilry.particles.CircleParticle;
 import io.github.nano.devilry.particles.ModParticles;
 import io.github.nano.devilry.particles.UndeadSoulParticle;
 import io.github.nano.devilry.util.ModPOI;
@@ -50,5 +51,6 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.UNDEAD_SOUL.get(), UndeadSoulParticle.Provider::new);
+        event.registerSpecial(ModParticles.CIRCLE.get(), new CircleParticle.Provider());
     }
 }

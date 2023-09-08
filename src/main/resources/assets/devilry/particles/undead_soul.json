@@ -1,15 +1,15 @@
 {
   "textures": [
-    "devilry:undead_soul_0",
-    "devilry:undead_soul_1",
-    "devilry:undead_soul_2",
-    "devilry:undead_soul_3",
-    "devilry:undead_soul_4",
-    "devilry:undead_soul_5",
-    "devilry:undead_soul_6",
-    "devilry:undead_soul_7",
-    "devilry:undead_soul_8",
-    "devilry:undead_soul_9",
-    "devilry:undead_soul_10"
+    "devilry:undead_soul/undead_soul_0",
+    "devilry:undead_soul/undead_soul_1",
+    "devilry:undead_soul/undead_soul_2",
+    "devilry:undead_soul/undead_soul_3",
+    "devilry:undead_soul/undead_soul_4",
+    "devilry:undead_soul/undead_soul_5",
+    "devilry:undead_soul/undead_soul_6",
+    "devilry:undead_soul/undead_soul_7",
+    "devilry:undead_soul/undead_soul_8",
+    "devilry:undead_soul/undead_soul_9",
+    "devilry:undead_soul/undead_soul_10"
   ]
 }

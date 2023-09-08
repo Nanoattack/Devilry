@@ -35,7 +35,7 @@ public class ForgeEvents {
             pos.ifPresent(blockPos -> ((DemonicAltarBlockEntity) Objects.requireNonNull(level.getBlockEntity(blockPos))).setSacrifice(event.getEntity()));
         }
         if (level.isClientSide()) {
-            var particle = Minecraft.getInstance().particleEngine.createParticle(new PathParticleOptions(PathParticleOptions.Interpolation.LINEAR, List.of(), 20, 20, PathParticleOptions.End.LINGER, PathParticleOptions.End.REPEAT, 20), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 0, 0, 0);
+            var particle = Minecraft.getInstance().particleEngine.createParticle(new PathParticleOptions(ModParticles.UNDEAD_SOUL.get(),PathParticleOptions.Interpolation.LINEAR, List.of(), 20, 20, PathParticleOptions.End.LINGER, PathParticleOptions.End.REPEAT, 20), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 0, 0, 0);
         }
     }
 }

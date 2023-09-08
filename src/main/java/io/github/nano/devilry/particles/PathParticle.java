@@ -4,16 +4,12 @@ import io.github.nano.devilry.particles.PathParticleOptions.End;
 import io.github.nano.devilry.particles.PathParticleOptions.Interpolation;
 import io.github.nano.devilry.util.Utils;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.ParticleEngine.MutableSpriteSet;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.util.Mth;
 import org.joml.Math;
 import org.joml.Vector3f;
-import org.lwjgl.system.MathUtil;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.List;
 
 public abstract class PathParticle extends TextureSheetParticle {
@@ -41,6 +37,7 @@ public abstract class PathParticle extends TextureSheetParticle {
 
     abstract int spriteCount();
 
+
     @Override
     public void tick() {
         super.tick();
@@ -60,7 +57,7 @@ public abstract class PathParticle extends TextureSheetParticle {
                 interpolatedPos = getLinearPos(end == End.REPEAT ? time % (nodes.size() - 1) : ((int)time > nodes.size() -2) ? (nodes.size() - 2) + 0.999999f : time);
             }
         }
-        if (end == End.VANISH && interpolation == Interpolation.LINEAR ? ((int)time > nodes.size() - 2) : ((int)time > nodes.size() - 4)) {
+        if (end == End.VANISH && (interpolation == Interpolation.LINEAR ? ((int)time > nodes.size() - 2) : ((int)time > nodes.size() - 4))) {
             this.remove();
         }
         this.setPos(interpolatedPos.x, interpolatedPos.y, interpolatedPos.z);
