@@ -79,9 +79,9 @@ public class ModItems
 
     public static final RegistryObject<Item> MORTAR = register("mortar", () -> new BlockItem(ModBlocks.MORTAR.get(), new Item.Properties()), Tab.DEVILRY_BLOCKS);
 
-    public static final RegistryObject<Item> FLINT_KNIFE  = register("flint_knife", () -> new Knife(new Item.Properties().stacksTo(1).durability(32)), Tab.DEVILRY_MISC);
+    public static final RegistryObject<Item> FLINT_KNIFE  = register("flint_knife", () -> new Knife(new Item.Properties().stacksTo(1).durability(32), 0), Tab.DEVILRY_MISC);
 
-    public static final RegistryObject<Item> BRONZE_KNIFE  = register("bronze_knife", () -> new Knife(new Item.Properties().stacksTo(1).durability(418)), Tab.DEVILRY_MISC);
+    public static final RegistryObject<Item> BRONZE_KNIFE  = register("bronze_knife", () -> new Knife(new Item.Properties().stacksTo(1).durability(418), 1), Tab.DEVILRY_MISC);
 
     public static final RegistryObject<Item> PESTLE  = register("pestle", () -> new Pestle(new Item.Properties().stacksTo(1).durability(131)), Tab.DEVILRY_MISC);
 

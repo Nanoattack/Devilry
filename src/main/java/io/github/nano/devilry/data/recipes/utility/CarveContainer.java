@@ -16,11 +16,13 @@ public class CarveContainer implements Container {
     private final ItemStack blockStateHolder = new ItemStack(Items.STONE);
     private final Boolean[][] pattern;
     private final Level level;
+    private final int knifeTier;
 
-    public CarveContainer(@NotNull BlockState blockState, Level level, Boolean[][] pattern) {
+    public CarveContainer(@NotNull BlockState blockState, Level level, Boolean[][] pattern, int knifeTier) {
         this.blockState = blockState;
         this.level = level;
         this.pattern = pattern;
+        this.knifeTier = knifeTier;
     }
 
     @Override
@@ -52,6 +54,10 @@ public class CarveContainer implements Container {
         blockState = Blocks.AIR.defaultBlockState();
         blockStateHolder.setTag(NbtUtils.writeBlockState(blockState));
         return blockStateHolder;
+    }
+
+    public int getKnifeTier() {
+        return knifeTier;
     }
 
     public void removeBlockState() {

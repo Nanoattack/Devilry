@@ -9,6 +9,7 @@ import io.github.nano.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.item.ModItems;
 import io.github.nano.devilry.networking.ModMessages;
 import io.github.nano.devilry.particles.ModParticles;
+import io.github.nano.devilry.screen.CarvingScreen;
 import io.github.nano.devilry.screen.DemonicAltarScreen;
 import io.github.nano.devilry.screen.MortarScreen;
 import io.github.nano.devilry.util.ModPOI;
@@ -63,6 +64,7 @@ public class ModMain
     {
         MenuScreens.register(ModContainers.MORTAR_CONTAINER.get(), MortarScreen::new);
         MenuScreens.register(ModContainers.DEMONIC_ALTAR_CONTAINER.get(), DemonicAltarScreen::new);
+        MenuScreens.register(ModContainers.CARVING_CONTAINER.get(), CarvingScreen::new);
         ModMessages.register();
     }
 }

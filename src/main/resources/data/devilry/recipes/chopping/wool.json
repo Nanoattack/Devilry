@@ -1,0 +1,8 @@
+{
+  "type": "devilry:chopping",
+  "durability": 2,
+  "ingredient": {
+    "item": "minecraft:white_wool"
+  },
+  "result": "devilry:chopping/string"
+}

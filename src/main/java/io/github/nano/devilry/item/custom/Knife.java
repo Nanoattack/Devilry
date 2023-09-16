@@ -1,103 +1,106 @@
 package io.github.nano.devilry.item.custom;
 
+import io.github.nano.devilry.container.CarvingMenu;
+import io.github.nano.devilry.data.recipes.CarveRecipe;
 import io.github.nano.devilry.data.recipes.ModRecipeTypes;
+import io.github.nano.devilry.data.recipes.utility.CarveContainer;
 import io.github.nano.devilry.events.ModSoundEvents;
 import io.github.nano.devilry.item.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 //fixme
 //todo
 
 @SuppressWarnings("unused")
 public class Knife extends Item {
+    private final int tier;
 
-    public int min = 1;
-    public int max;
-
-    public Knife(Properties properties) {
+    public Knife(Properties properties, int tier) {
         super(properties);
+        this.tier = tier;
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
-
-        ItemStack stack = player.getItemInHand(hand);
-
-        if (!level.isClientSide) {
-
-            SliceCraft(level, player, stack);
-
+    public @NotNull InteractionResult useOn(@NotNull UseOnContext pContext) {
+        CarveRecipe.CarvingMaterial material = CarveRecipe.CarvingMaterial.getMaterial(pContext.getLevel().getBlockState(pContext.getClickedPos()));
+        if (material == null || pContext.getPlayer().isShiftKeyDown()) {
+            return InteractionResult.PASS;
+        } else if (pContext.getLevel().isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
+        int x = 7;
+        int y = 7;
 
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+        NetworkHooks.openScreen(((ServerPlayer) pContext.getPlayer()), new MenuProvider() {
+            @Override
+            public @NotNull Component getDisplayName() {
+                return Component.translatableWithFallback("screen.devilry.carve", "Carving");
+            }
+
+            @Override
+            public @NotNull AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+                return new CarvingMenu(pContainerId, pPlayerInventory, pContext.getClickedPos(), x, y, material);
+            }
+        }, buffer -> {
+            buffer.writeBlockPos(pContext.getClickedPos());
+            buffer.writeInt(x);
+            buffer.writeInt(y);
+            buffer.writeEnum(material);
+        });
+        return InteractionResult.SUCCESS;
+//        var level = pContext.getLevel();
+//        RecipeManager recipeManager = level.getRecipeManager();
+//        BlockState blockState = level.getBlockState(pContext.getClickedPos());
+//        CarveContainer carveContainer = new CarveContainer(blockState, level, null, tier);
+//        var recipe = recipeManager.getRecipeFor(ModRecipeTypes.CARVING_RECIPE.get(), carveContainer, level);
+//        if (recipe.isPresent() && !level.isClientSide()) {
+//            BlockState result = NbtUtils.readBlockState(level.holderLookup(ForgeRegistries.BLOCKS.getRegistryKey()),recipe.get().assemble(carveContainer, level.registryAccess()).getOrCreateTag().getCompound("value"));
+//            level.setBlock(pContext.getClickedPos(), result, 3);
+//            return InteractionResult.SUCCESS;
+//        }
+//        return InteractionResult.FAIL;
     }
 
-    private void SliceCraft(Level level, Player player, ItemStack stack) {
-
-        if (ItemIsValidForSlicing(player)) {
-
-            SliceItem(player, stack);
-
-            GiveOutputItem(level, player);
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
+        ItemStack itemInHand = pPlayer.getItemInHand(pUsedHand);
+        if (pLevel.isClientSide()) return InteractionResultHolder.pass(itemInHand);
+        RecipeManager recipeManager = pLevel.getRecipeManager();
+        var recipe = recipeManager.getRecipeFor(ModRecipeTypes.KNIFE_RECIPE.get(), pPlayer.getInventory(), pLevel);
+        if (recipe.isPresent() && !pLevel.isClientSide()) {
+            recipe.get().doCut((ServerLevel) pLevel, pPlayer, itemInHand);
+            if (pUsedHand == InteractionHand.MAIN_HAND) {
+                pPlayer.getItemInHand(InteractionHand.OFF_HAND).shrink(1);
+            } else {
+                pPlayer.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
+            }
+            return InteractionResultHolder.success(itemInHand);
         }
-    }
-
-    private boolean ItemIsValidForSlicing(Player player) {
-        return player.getOffhandItem().getItem() == Items.WHITE_WOOL ||
-                player.getOffhandItem().getItem() == Items.ROTTEN_FLESH ||
-                player.getOffhandItem().getItem() == Items.PAINTING;
-    }
-
-    private void SliceItem(Player player, ItemStack stack) {
-        player.getOffhandItem().shrink(1);
-        coolDownSet(player);
-        stack.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(InteractionHand.MAIN_HAND));
-    }
-
-    private void PlayMetalNoise(Level level, Player player) {
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.KNIFE_SLASH_METAL.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-    }
-
-    private void PlayClothNoise(Level level, Player player) {
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSoundEvents.CLOTH_RIP.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-    }
-
-    private void GiveOutputItem(Level level, Player player) {
-
-        if (player.getOffhandItem().getItem() == Items.WHITE_WOOL ||
-                player.getOffhandItem().getItem() == Items.PAINTING) {
-
-            max = 4;
-            int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
-            player.addItem(new ItemStack(Items.STRING, random_int));
-            PlayClothNoise(level, player);
-
-        } else if (player.getOffhandItem().getItem() == Items.ROTTEN_FLESH) {
-
-            max = 1;
-            int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
-            player.addItem(new ItemStack(Items.LEATHER, random_int));
-            PlayMetalNoise(level, player);
-        }
-    }
-
-    private void coolDownSet(Player player) {
-        if (player.getMainHandItem().getItem() == ModItems.FLINT_KNIFE.get()) {
-            player.getCooldowns().addCooldown(this, 60);
-        }
-
-        else if (player.getMainHandItem().getItem() == ModItems.BRONZE_KNIFE.get()) {
-            player.getCooldowns().addCooldown(this, 30);
-        }
+        return super.use(pLevel, pPlayer, pUsedHand);
     }
 }

@@ -31,17 +31,23 @@ public class ModRecipeTypes
     public static final RegistryObject<CarveRecipe.Serializer> CARVING_SERIALIZER
             = RECIPE_SERIALIZER.register("carving", CarveRecipe.Serializer::new);
 
-    public static RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
+    public static final RegistryObject<KnifeRecipe.Serializer> KNIFE_SERIALIZER
+            = RECIPE_SERIALIZER.register("chopping", KnifeRecipe.Serializer::new);
+
+    public static final RegistryObject<RecipeType<MortarRecipe>> MORTAR_RECIPE =
             RECIPE_TYPE.register( "grinding", () -> createType("grinding"));
 
-    public static RegistryObject<RecipeType<PestleRecipe>> PESTLE_RECIPE =
+    public static final RegistryObject<RecipeType<PestleRecipe>> PESTLE_RECIPE =
             RECIPE_TYPE.register("crushing", () -> createType("crushing"));
 
-    public static RegistryObject<RecipeType<AltarRecipe>> DEMON_ALTAR_RECIPE =
+    public static final RegistryObject<RecipeType<AltarRecipe>> DEMON_ALTAR_RECIPE =
             RECIPE_TYPE.register("altar_crafting", () -> createType("altar_crafting"));
 
-    public static RegistryObject<RecipeType<CarveRecipe>> CARVING_RECIPE =
+    public static final RegistryObject<RecipeType<CarveRecipe>> CARVING_RECIPE =
             RECIPE_TYPE.register("carving", () -> createType("carving"));
+
+    public static RegistryObject<RecipeType<KnifeRecipe>> KNIFE_RECIPE =
+            RECIPE_TYPE.register("chopping", () -> createType("chopping"));
 
     private static <T extends Recipe<?>> RecipeType<T> createType(String identifier){
         return new RecipeType<>() {

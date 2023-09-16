@@ -1,6 +1,7 @@
 package io.github.nano.devilry.util.tags;
 
 import io.github.nano.devilry.ModMain;
+import io.github.nano.devilry.data.recipes.CarveRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -21,6 +22,15 @@ public class DevilryTags
         private static TagKey<Block> createForgeTag(String name) {
             return BlockTags.create(new ResourceLocation("forge", name));
         }
+
+        public static final TagKey<Block> CARVING_MATERIAL_WOOD =
+                createTag("carving_material_wood");
+        public static final TagKey<Block> CARVING_MATERIAL_SOFT_STONE =
+                createTag("carving_material_soft_stone");
+        public static final TagKey<Block> CARVING_MATERIAL_STONE =
+                createTag("carving_material_stone");
+        public static final TagKey<Block> CARVING_MATERIAL_OBSIDIAN =
+                createTag("carving_material_obsidian");
     }
 
     public static class Items{
