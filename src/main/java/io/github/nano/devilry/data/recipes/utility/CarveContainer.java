@@ -1,5 +1,6 @@
 package io.github.nano.devilry.data.recipes.utility;
 
+import io.github.nano.devilry.data.recipes.CarveRecipe;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -16,13 +17,13 @@ public class CarveContainer implements Container {
     private final ItemStack blockStateHolder = new ItemStack(Items.STONE);
     private final Boolean[][] pattern;
     private final Level level;
-    private final int knifeTier;
+    private final CarveRecipe.CarvingMaterial material;
 
-    public CarveContainer(@NotNull BlockState blockState, Level level, Boolean[][] pattern, int knifeTier) {
+    public CarveContainer(@NotNull BlockState blockState, Level level, Boolean[][] pattern, CarveRecipe.CarvingMaterial material) {
         this.blockState = blockState;
         this.level = level;
         this.pattern = pattern;
-        this.knifeTier = knifeTier;
+        this.material = material;
     }
 
     @Override
@@ -56,8 +57,8 @@ public class CarveContainer implements Container {
         return blockStateHolder;
     }
 
-    public int getKnifeTier() {
-        return knifeTier;
+    public CarveRecipe.CarvingMaterial getCarvingMaterial() {
+        return material;
     }
 
     public void removeBlockState() {

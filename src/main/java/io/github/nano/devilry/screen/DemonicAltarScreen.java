@@ -19,15 +19,15 @@ public class DemonicAltarScreen extends AbstractContainerScreen<DemonicAltarMenu
     public DemonicAltarScreen(DemonicAltarMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
         titleLabelX = 149;
+        imageWidth = 220;
+        imageHeight = 167;
     }
 
     @Override
     protected void renderBg(@NotNull GuiGraphics guiGraphics, float x, int y, int partialTicks) {
         final int i = (this.width - imageWidth) / 2;
         final int j = (this.height - imageHeight) / 2;
-        imageWidth = 220;
-        imageHeight = 167;
-        this.minecraft.screen.resize(this.minecraft, this.minecraft.getWindow().getGuiScaledWidth(), this.minecraft.getWindow().getGuiScaledHeight());
+
         guiGraphics.blit(GUI,  i, j, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 

@@ -87,11 +87,11 @@ public class CarveRecipe implements Recipe<CarveContainer> {
 
     @Override
     public boolean matches(CarveContainer pContainer, Level pLevel) {
-        if (pContainer.getKnifeTier() < material.knifeTier) return false;
+        if (pContainer.getCarvingMaterial().knifeTier < material.knifeTier || pContainer.getCarvingMaterial() != material) return false;
         if (pattern.length == pContainer.getPattern().length) {
             for (int i = 0; i < pattern.length; i++) {
                 for (int j = 0; j < pattern[i].length; j++) {
-                    if (pattern[i][j] != pContainer.getPattern()[i][j]) {
+                    if (pattern[i][j] != pContainer.getPattern()[j][i]) {
                         return false;
                     }
                 }
@@ -104,7 +104,7 @@ public class CarveRecipe implements Recipe<CarveContainer> {
     @Override
     public ItemStack assemble(CarveContainer container, RegistryAccess registryAccess) {
         ItemStack holder = new ItemStack(Items.STONE);
-        holder.getOrCreateTag().put("value", NbtUtils.writeBlockState(container.getBlockState()));
+        holder.getOrCreateTag().put("value", NbtUtils.writeBlockState(this.output));
         return holder;
     }
 
@@ -116,6 +116,10 @@ public class CarveRecipe implements Recipe<CarveContainer> {
     @Override
     public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registries) {
         return new ItemStack(output.getBlock().asItem());
+    }
+
+    public int getDurability() {
+        return durability;
     }
 
     @Override

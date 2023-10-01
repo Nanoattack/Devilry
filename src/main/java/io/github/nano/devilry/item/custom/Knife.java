@@ -56,6 +56,7 @@ public class Knife extends Item {
         int x = 7;
         int y = 7;
 
+        if (material.knifeTier > tier) return InteractionResult.FAIL;
         NetworkHooks.openScreen(((ServerPlayer) pContext.getPlayer()), new MenuProvider() {
             @Override
             public @NotNull Component getDisplayName() {
@@ -64,26 +65,16 @@ public class Knife extends Item {
 
             @Override
             public @NotNull AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-                return new CarvingMenu(pContainerId, pPlayerInventory, pContext.getClickedPos(), x, y, material);
+                return new CarvingMenu(pContainerId, pPlayerInventory, pContext.getClickedPos(), x, y, material, pContext.getItemInHand());
             }
         }, buffer -> {
             buffer.writeBlockPos(pContext.getClickedPos());
             buffer.writeInt(x);
             buffer.writeInt(y);
             buffer.writeEnum(material);
+            buffer.writeItemStack(pContext.getItemInHand(), false);
         });
         return InteractionResult.SUCCESS;
-//        var level = pContext.getLevel();
-//        RecipeManager recipeManager = level.getRecipeManager();
-//        BlockState blockState = level.getBlockState(pContext.getClickedPos());
-//        CarveContainer carveContainer = new CarveContainer(blockState, level, null, tier);
-//        var recipe = recipeManager.getRecipeFor(ModRecipeTypes.CARVING_RECIPE.get(), carveContainer, level);
-//        if (recipe.isPresent() && !level.isClientSide()) {
-//            BlockState result = NbtUtils.readBlockState(level.holderLookup(ForgeRegistries.BLOCKS.getRegistryKey()),recipe.get().assemble(carveContainer, level.registryAccess()).getOrCreateTag().getCompound("value"));
-//            level.setBlock(pContext.getClickedPos(), result, 3);
-//            return InteractionResult.SUCCESS;
-//        }
-//        return InteractionResult.FAIL;
     }
 
     @Override
